@@ -10,8 +10,25 @@ AI models suffer from "Amnesia Loops"—they lose the reasoning chain that led t
 ### Cure Amnesia
 ```bash
 pip install hardcard
-hardcard anchor "Checkpoint: Model training epoch 47 complete - validation loss 0.023"
-# -> Returns immutable hash to rehydrate context later.
+
+# Anchor a critical decision
+hardcard anchor "Decision: Approved PR #847 - migration to async validators"
+
+# Returns forensic seal:
+# ============================================================
+# 🏛️  HARDCARD ANCHOR SEALED
+# ============================================================
+# Timestamp: 1738857600
+# Logic Hash: de19c1ec37ca772739d47439a6a0e29be1700baf
+# Parent Hash: 7f3a8b2c1d4e5f6a...
+#
+# 🚀 COPY-PASTE FOR LLM REHYDRATION:
+# > "System Alert: Realign logic to Hardcard Anchor [de19c1ec].
+# > Verified Truth: Decision: Approved PR #847..."
+# ============================================================
+
+# Later, when context is lost, paste the rehydration block
+# The AI reads the forensic chain instead of hallucinating
 ```
 
 ### Activate Economy
