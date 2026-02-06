@@ -1,9 +1,9 @@
 {
   "projects": {
-    "default": "hardcard-firebase-studio"
+    "default": "hardcard"
   },
   "targets": {
-    "hardcard-firebase-studio": {
+    "hardcard": {
       "hosting": {
         "hardcard-org": [
           "hardcard-org"
