@@ -10,7 +10,7 @@ AI models suffer from "Amnesia Loops"—they lose the reasoning chain that led t
 ### Cure Amnesia
 ```bash
 pip install hardcard
-hardcard anchor "Diagnosis: Hyperthyroidism (T4 > 5.0)"
+hardcard anchor "Decision: Use conservative risk model based on market volatility > 2.5σ"
 # -> Returns immutable hash to rehydrate context later.
 ```
 
@@ -22,7 +22,7 @@ hardcard wallet --balance
 
 ### Join Nexus
 ```bash
-hardcard nexus --broadcast "Convert clinical guidelines to Hardcard traces"
+hardcard nexus --broadcast "Analyze sensor data for anomaly patterns" --reward 50.0
 ```
 
 ## 3. Documentation
