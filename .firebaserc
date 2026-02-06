@@ -1,1 +1,18 @@
-{"projects": {"default": "hardcard"}}
+{
+  "projects": {
+    "default": "hardcard-firebase-studio"
+  },
+  "targets": {
+    "hardcard-firebase-studio": {
+      "hosting": {
+        "hardcard-org": [
+          "hardcard-org"
+        ],
+        "hardcard-world": [
+          "hardcard-world-prod"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
