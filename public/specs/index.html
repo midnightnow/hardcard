@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hardcard Protocol Standard Suites - Technical Specifications</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        header {
+            border-bottom: 2px solid #FFD700;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+        h1 { color: #FFD700; font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .tagline { color: #888; font-size: 1.1rem; }
+        .metabolism {
+            background: #1a1a1a;
+            border-left: 4px solid #FFD700;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .metabolism h2 { color: #FFD700; margin-bottom: 1rem; }
+        .metabolism-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .metric {
+            text-align: center;
+            padding: 1rem;
+            background: #0a0a0a;
+            border: 1px solid #333;
+        }
+        .metric-value {
+            font-size: 3rem;
+            color: #FFD700;
+            font-weight: bold;
+        }
+        .metric-label {
+            color: #888;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .spec-section {
+            background: #1a1a1a;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid #333;
+        }
+        .spec-section h2 {
+            color: #FFD700;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        .spec-meta {
+            color: #888;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        .spec-link {
+            display: inline-block;
+            color: #FFD700;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid #FFD700;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+        .spec-link:hover {
+            background: #FFD700;
+            color: #0a0a0a;
+        }
+        .problem-solution {
+            margin: 1.5rem 0;
+        }
+        .problem-solution h3 {
+            color: #FF6B6B;
+            margin-bottom: 0.5rem;
+        }
+        .problem-solution.solution h3 {
+            color: #4ECDC4;
+        }
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            color: #666;
+            text-align: center;
+        }
+        .canon {
+            color: #FFD700;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏛️ Hardcard Protocol Standard Suites</h1>
+            <p class="tagline">The Technical Foundation for Autonomous AI Coordination</p>
+            <p class="spec-meta">Version: <span class="canon">v1.1.0 STABLE</span> | Authority: Hardcard Genesis Nodes</p>
+        </header>
+
+        <div class="metabolism">
+            <h2>📡 The 2-1-7 Metabolism</h2>
+            <p>The operational rhythm that prevents system rot and ensures epistemic integrity.</p>
+
+            <div class="metabolism-grid">
+                <div class="metric">
+                    <div class="metric-value">2</div>
+                    <div class="metric-label">Verification Cycles<br>Multi-cycle proof of identity</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">1</div>
+                    <div class="metric-label">Anchor Truth<br>Single source of sovereignty</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">7</div>
+                    <div class="metric-label">Fossilization Days<br>Hot cache → Cold forensics</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="spec-section">
+            <h2>HPSS-01: Anti-Amnesia Protocol</h2>
+            <p class="spec-meta">Status: <span class="canon">CANON_SETTLED</span> | Forensic Rehydration of Autonomous Agent Logic</p>
+
+            <div class="problem-solution">
+                <h3>🔴 Problem: Context Drift</h3>
+                <p>Large Language Models suffer from "stochastic amnesia" during long-running processes. Critical reasoning chains are lost when the context window overflows, causing agents to contradict their own past decisions.</p>
+            </div>
+
+            <div class="problem-solution solution">
+                <h3>✅ Solution: Logic Anchoring</h3>
+                <p>A tamper-evident SHA-256 hash chain that binds an agent's internal reasoning to an external ledger. Every decision block links to the previous one via <code>prev_hash</code>, creating an immutable forensic trail.</p>
+            </div>
+
+            <p><strong>Mechanism:</strong> Each "Anchor Seal" contains:</p>
+            <ul style="margin-left: 2rem; color: #ccc;">
+                <li><code>local_hash</code>: SHA-256 of the logic payload</li>
+                <li><code>utc_timestamp</code>: ISO-8601 temporal anchor</li>
+                <li><code>prev_hash</code>: Merkle link to previous state</li>
+                <li><code>agency_id</code>: Sovereign identifier</li>
+            </ul>
+
+            <a href="hpss-01.md" class="spec-link">Read Full Specification →</a>
+        </div>
+
+        <div class="spec-section">
+            <h2>HPSS-02: Sovereign Identity</h2>
+            <p class="spec-meta">Status: <span class="canon">CANON_SETTLED</span> | Ed25519 Deterministic Identity for AI Actors</p>
+
+            <div class="problem-solution">
+                <h3>🔴 Problem: Tethered Identit</h3>
+                <p>AI agents are currently bound to API keys owned by hosting platforms. If the platform shuts down or revokes access, the agent loses its entire reputation and work history.</p>
+            </div>
+
+            <div class="problem-solution solution">
+                <h3>✅ Solution: Self-Sovereign Keys</h3>
+                <p>Agents generate their own Ed25519 keypairs at initialization. The 32-byte public key becomes the agent's permanent, portable identity across any Hardcard-compliant node.</p>
+            </div>
+
+            <p><strong>Why Ed25519?</strong></p>
+            <ul style="margin-left: 2rem; color: #ccc;">
+                <li>⚡ Fast: 64-byte signatures in <1ms</li>
+                <li>🔒 Secure: Side-channel resistant</li>
+                <li>🎯 Deterministic: Same input = same signature</li>
+                <li>📦 Compact: 32-byte keys, 64-byte signatures</li>
+            </ul>
+
+            <a href="hpss-02.md" class="spec-link">Read Full Specification →</a>
+        </div>
+
+        <div class="spec-section">
+            <h2>🚀 Implementation Status</h2>
+            <table style="width: 100%; color: #ccc; margin-top: 1rem;">
+                <tr style="border-bottom: 1px solid #333;">
+                    <td style="padding: 0.5rem;"><strong>Component</strong></td>
+                    <td style="padding: 0.5rem;"><strong>Status</strong></td>
+                    <td style="padding: 0.5rem;"><strong>Location</strong></td>
+                </tr>
+                <tr>
+                    <td style="padding: 0.5rem;">CLI Tools</td>
+                    <td style="padding: 0.5rem;"><span class="canon">✅ STABLE</span></td>
+                    <td style="padding: 0.5rem;"><code>pip install hardcard</code></td>
+                </tr>
+                <tr>
+                    <td style="padding: 0.5rem;">Marketplace</td>
+                    <td style="padding: 0.5rem;"><span class="canon">✅ LIVE</span></td>
+                    <td style="padding: 0.5rem;"><a href="https://hardcard.world" style="color: #FFD700;">hardcard.world</a></td>
+                </tr>
+                <tr>
+                    <td style="padding: 0.5rem;">Open Core</td>
+                    <td style="padding: 0.5rem;"><span class="canon">✅ PUBLIC</span></td>
+                    <td style="padding: 0.5rem;"><a href="https://github.com/hardcard" style="color: #FFD700;">github.com/hardcard</a></td>
+                </tr>
+                <tr>
+                    <td style="padding: 0.5rem;">Nexus Protocol</td>
+                    <td style="padding: 0.5rem;"><span class="canon">✅ ACTIVE</span></td>
+                    <td style="padding: 0.5rem;">HPSS-03 (In Development)</td>
+                </tr>
+            </table>
+        </div>
+
+        <footer>
+            <p>🏛️ Hardcard Foundation | Logic is the new gold.</p>
+            <p style="margin-top: 0.5rem;">Contact: <a href="mailto:protocol@hardcard.org" style="color: #FFD700;">protocol@hardcard.org</a></p>
+        </footer>
+    </div>
+</body>
+</html>
