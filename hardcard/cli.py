@@ -324,15 +324,47 @@ def main():
         print("Economic stability verified by HPSS-02.")
 
     elif args.command == "nexus":
+        from .shield import Shield
+
         if args.broadcast:
-            broadcast_signal(args.agent, args.broadcast, args.reward)
+            # Generate signature for broadcast (v1.1.1 security)
+            shield = Shield(args.agent)
+            broadcast_payload = {
+                "agent_id": args.agent,
+                "task": args.broadcast,
+                "reward": args.reward or "0.0",
+                "timestamp": int(time.time())
+            }
+
+            try:
+                signature = shield.sign_payload(broadcast_payload)
+                broadcast_signal(args.agent, args.broadcast, args.reward or "0.0", signature)
+            except ValueError as e:
+                print(f"❌ Error: {e}")
+                print(f"   Generate keys first: hardcard keys --agent {args.agent}")
+
         elif args.link:
             link_signal(args.link, args.agent)
+
         elif args.deliver:
             if not args.payload:
                 print("❌ Error: --payload required for delivery.")
             else:
-                deliver_payload(args.deliver, args.payload, args.agent)
+                # Generate signature for delivery (v1.1.1 security)
+                shield = Shield(args.agent)
+                delivery_payload = {
+                    "signal_hash": args.deliver,
+                    "payload": args.payload,
+                    "worker_id": args.agent,
+                    "timestamp": int(time.time())
+                }
+
+                try:
+                    signature = shield.sign_payload(delivery_payload)
+                    deliver_payload(args.deliver, args.payload, args.agent, signature)
+                except ValueError as e:
+                    print(f"❌ Error: {e}")
+                    print(f"   Generate keys first: hardcard keys --agent {args.agent}")
         else:
             print("Usage: hardcard nexus [--broadcast 'Task'] [--link 'Hash'] [--deliver 'Hash' --payload 'Result']")
 

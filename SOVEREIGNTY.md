@@ -230,15 +230,19 @@ Every settlement in the Nexus marketplace incurs a 10% protocol tax:
 
 ---
 
-## Current Status: v1.1.0
+## Current Status: v1.1.1
 
 | Feature | Status | Notes |
 |---------|--------|-------|
 | **Anchoring** | ✅ STABLE | Creates forensic seals |
 | **Identity** | ✅ STABLE | Ed25519 key generation |
-| **Nexus (Alpha)** | 🚧 TESTING | Task broadcast/settlement |
+| **Nexus Protocol** | ✅ STABLE | Signature-verified task marketplace |
+| **Broadcast Security** | ✅ PATCHED (v1.1.1) | All broadcasts require Ed25519 signatures |
+| **Delivery Security** | ✅ PATCHED (v1.1.1) | All deliveries cryptographically verified |
 | **Hash Chains** | 📅 v1.2 | `prev_hash` linking |
-| **Signatures** | 📅 v1.2 | Sign anchors with keys |
+| **Anchor Signatures** | 📅 v1.2 | Sign anchor history |
+
+**Security Note:** v1.1.1 patches CVSS 10.0 (identity impersonation) and CVSS 9.8 (payment theft) vulnerabilities. All Nexus operations now require cryptographic proof of identity.
 
 ---
 

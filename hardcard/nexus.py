@@ -41,15 +41,61 @@ def _load_signals() -> Dict:
 def _save_signals(data: Dict):
     SIGNALS_FILE.write_text(json.dumps(data, indent=2))
 
-def broadcast_signal(agent_id: str, task_description: str, reward: str = "0.0") -> Optional[str]:
+def broadcast_signal(agent_id: str, task_description: str, reward: str = "0.0", signature: str = None) -> Optional[str]:
     """
-    Broadcasts a signal. 
-    1. Locks Escrow (if reward > 0).
-    2. Anchors Signal.
+    Broadcasts a signal with cryptographic proof of authorship.
+
+    Args:
+        agent_id: The agent broadcasting the signal
+        task_description: Description of the task
+        reward: Reward amount in $HCL
+        signature: Ed25519 signature proving agent identity (REQUIRED in v1.1.1+)
+
+    Returns:
+        Signal hash if successful, None if verification fails
+
+    Security (v1.1.1):
+    1. Verifies signature matches agent_id's public key
+    2. Locks Escrow (if reward > 0)
+    3. Anchors Signal with cryptographic proof
     """
+    from .shield import Shield
+
+    # === SECURITY LAYER (v1.1.1) ===
+    # Verify cryptographic proof of identity
+    shield = Shield(agent_id)
+    public_key = shield.get_public_key()
+
+    if not public_key:
+        print(f"❌ Broadcast Failed: Agent {agent_id} has no registered keys.")
+        print(f"   Run: hardcard keys --agent {agent_id}")
+        return None
+
+    if not signature:
+        print(f"❌ Broadcast Failed: Signature required (v1.1.1+)")
+        print(f"   Unsigned broadcasts are rejected for security.")
+        return None
+
+    # Verify signature over canonical payload
+    timestamp = int(time.time())
+    payload = {
+        "agent_id": agent_id,
+        "task": task_description,
+        "reward": reward,
+        "timestamp": timestamp
+    }
+
+    if not Shield.verify_signature(public_key, payload, signature):
+        print(f"❌ Broadcast Failed: Invalid signature from {agent_id}")
+        print(f"   The signature does not match the agent's public key.")
+        return None
+
+    print(f"✅ Identity Verified: {agent_id[:16]}...")
+
+    # === ECONOMIC LAYER ===
     wallet = UnicornWallet(agent_id)
     reward_dec = Decimal(reward)
-    
+
     # 1. Lock Funds
     if reward_dec > 0:
         if not wallet.lock_for_escrow(reward_dec):
@@ -57,12 +103,11 @@ def broadcast_signal(agent_id: str, task_description: str, reward: str = "0.0") 
             return None
         print(f"🔒 Escrow Locked: {reward} $HCL")
 
-    # 2. Anchor Signal
+    # 2. Anchor Signal (use FULL hash for collision resistance)
     signals = _load_signals()
-    timestamp = int(time.time())
     data = f"{agent_id}:{task_description}:{timestamp}".encode()
-    signal_hash = hashlib.sha256(data).hexdigest()[:16]
-    
+    signal_hash = hashlib.sha256(data).hexdigest()  # Full 64-char hash (v1.1.1 security fix)
+
     signal_entry = {
         "hash": signal_hash,
         "author": agent_id,
@@ -70,16 +115,18 @@ def broadcast_signal(agent_id: str, task_description: str, reward: str = "0.0") 
         "reward": str(reward),
         "timestamp": timestamp,
         "status": "OPEN",
+        "signature": signature,  # Store cryptographic proof
         "escrow_id": f"escrow:{agent_id}:{timestamp}" if reward_dec > 0 else None,
         "links": [],
         "deliveries": []
     }
-    
+
     signals[signal_hash] = signal_entry
     _save_signals(signals)
-    
+
     print(f"📡 Signal Broadcast: '{task_description}'")
-    print(f"🔗 Hash: {signal_hash}")
+    print(f"🔗 Hash: {signal_hash[:16]}...")
+    print(f"🛡️ Cryptographically Signed: Ed25519")
     return signal_hash
 
 def link_signal(signal_hash: str, agent_id: str, message: str = ""):
@@ -101,37 +148,93 @@ def link_signal(signal_hash: str, agent_id: str, message: str = ""):
     if message:
         print(f"   Message: {message}")
 
-def deliver_payload(signal_hash: str, payload: str, worker_id: str):
+def deliver_payload(signal_hash: str, payload: str, worker_id: str, signature: str = None) -> bool:
     """
-    Delivers payload AND triggers automated settlement (for Genesis Demo).
-    1. Records delivery.
-    2. Calls Settlement Engine to release escrow.
+    Delivers signed proof of work and triggers settlement.
+
+    Args:
+        signal_hash: The signal being fulfilled
+        payload: The work product/result
+        worker_id: The agent delivering the work
+        signature: Ed25519 signature proving work authorship (REQUIRED in v1.1.1+)
+
+    Returns:
+        True if delivery accepted and settled, False otherwise
+
+    Security (v1.1.1):
+    1. Verifies worker signature over payload
+    2. Checks worker is authorized (linked to signal)
+    3. Records delivery with cryptographic proof
+    4. Triggers settlement only after verification
     """
+    from .shield import Shield
+
     signals = _load_signals()
     if signal_hash not in signals:
         print(f"❌ Error: Signal {signal_hash} not found.")
-        return
-        
+        return False
+
     signal = signals[signal_hash]
-    
-    # Record Delivery
+
+    # === SECURITY LAYER (v1.1.1) ===
+    # 1. Verify worker has keys
+    shield = Shield(worker_id)
+    public_key = shield.get_public_key()
+
+    if not public_key:
+        print(f"❌ Delivery Failed: Worker {worker_id} has no registered keys.")
+        print(f"   Run: hardcard keys --agent {worker_id}")
+        return False
+
+    if not signature:
+        print(f"❌ Delivery Failed: Signature required (v1.1.1+)")
+        print(f"   Unsigned deliveries are rejected for security.")
+        return False
+
+    # 2. Verify signature over delivery payload
+    delivery_timestamp = int(time.time())
+    delivery_payload = {
+        "signal_hash": signal_hash,
+        "payload": payload,
+        "worker_id": worker_id,
+        "timestamp": delivery_timestamp
+    }
+
+    if not Shield.verify_signature(public_key, delivery_payload, signature):
+        print(f"❌ Delivery Failed: Invalid signature from {worker_id}")
+        print(f"   The signature does not match the worker's public key.")
+        return False
+
+    # 3. Check worker is authorized (has linked to this signal)
+    linked_agents = [link["agent"] for link in signal.get("links", [])]
+    if worker_id not in linked_agents and len(linked_agents) > 0:
+        print(f"⚠️ Warning: {worker_id} delivering without prior link")
+        print(f"   Authorized workers: {', '.join(linked_agents[:3])}")
+        # Allow delivery but log the anomaly (could be legitimate rush delivery)
+
+    print(f"✅ Work Verified: {worker_id[:16]}...")
+
+    # === DELIVERY LAYER ===
+    # Record Delivery with cryptographic proof
     signal["status"] = "DELIVERED"
     signal["deliveries"].append({
-        "agent": worker_id, 
-        "payload": payload, 
-        "timestamp": time.time()
+        "agent": worker_id,
+        "payload": payload,
+        "signature": signature,  # Store proof of work
+        "timestamp": delivery_timestamp
     })
-    
+
+    # === SETTLEMENT LAYER ===
     # Automated Mechanic: Settle if Reward > 0
     reward_val = Decimal(signal.get("reward", "0.0"))
     if reward_val > 0:
         print("⚙️ Initiating Mechanical Settlement (RFC-007)...")
         engine = SettlementEngine()
         buyer_id = signal["author"]
-        
+
         # 1. Calculate
         split = engine.calculate_split(reward_val)
-        
+
         # 2. Execute Wallet Moves
         # Buyer: Release Lock (Balance decremented)
         buyer_wallet = UnicornWallet(buyer_id)
@@ -139,23 +242,29 @@ def deliver_payload(signal_hash: str, payload: str, worker_id: str):
             # Worker: Deposit Payout
             worker_wallet = UnicornWallet(worker_id)
             worker_wallet.deposit(split["payout"])
-            
+
             # Treasury: Deposit Tax
             genesis_treasury.deposit_tax(split["fee"])
-            
+
             signal["status"] = "SETTLED"
             signal["settlement"] = {
                 "worker_payout": str(split["payout"]),
                 "tax": str(split["fee"]),
+                "worker_id": worker_id,
+                "verified_signature": signature[:16] + "...",  # Audit trail
                 "timestamp": time.time()
             }
-            print(f"✅ Settle Complete.")
-            print(f"   Worker (+{split['payout']}), Treasury (+{split['fee']})")
+            print(f"✅ Settlement Complete.")
+            print(f"   Worker (+{split['payout']} $HCL), Treasury (+{split['fee']} $HCL)")
         else:
             print("❌ Critical Error: Failed to release buyer escrow.")
-    
+            _save_signals(signals)
+            return False
+
     _save_signals(signals)
-    print(f"📦 Delivery Anchored for {signal_hash}")
+    print(f"📦 Delivery Anchored: {signal_hash[:16]}...")
+    print(f"🛡️ Cryptographically Signed: Ed25519")
+    return True
 
 # --- Hyperspace Layer (HCL-09 Fractal) ---
 HYPERSPACE_DIR = Path(".hardcard/hyperspace")

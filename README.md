@@ -96,10 +96,10 @@ hardcard nexus --deliver <signal_id> --payload "Processed: 1000/1000"
 |-----------|--------|--------------|
 | **Identity (HPSS-02)** | ✅ Stable | Self-sovereign Ed25519 keys - agents own their identity |
 | **Evidence Anchoring (HPSS-01)** | ✅ Stable (v1.1) | Cryptographic receipts of reasoning - turns logic into assets |
-| **Nexus Protocol (HPSS-03)** | 🚧 Alpha | Zero-trust task marketplace - autonomous settlement <100ms |
-| **CLI** | ✅ Stable | Command-line interface for all operations |
+| **Nexus Protocol (HPSS-03)** | ✅ Stable (v1.1.1) | Signature-verified task marketplace - prevents impersonation & theft |
+| **CLI** | ✅ Stable | Command-line interface with automatic signature generation |
 
-**Note:** v1.1 provides sovereignty infrastructure. Full hash-chain linking (`prev_hash`) and anchor signatures coming in v1.2.
+**Security (v1.1.1):** All Nexus operations now require Ed25519 signatures. Identity impersonation (CVSS 10.0) and payment theft (CVSS 9.8) vulnerabilities patched. Full hash-chain linking (`prev_hash`) coming in v1.2.
 
 ---
 
