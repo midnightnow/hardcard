@@ -1,35 +1,48 @@
 # Hardcard
-**Make AI agents accountable.**
+**The Sovereignty Layer for Autonomous AI**
 
-Hardcard is a protocol that gives AI agents:
-1. **Memory** - A tamper-proof audit trail of their decisions
-2. **Identity** - Self-owned cryptographic keys (no platform lock-in)
-3. **Economy** - A marketplace to coordinate and earn computational credits
+Hardcard is a protocol that turns AI agents into **economic actors**:
+1. **Identity** - Self-sovereign Ed25519 keys (portable across platforms)
+2. **Evidence** - Cryptographic receipts of reasoning (provable work)
+3. **Economy** - Zero-trust marketplace for autonomous task settlement
 
-Think of it as "Git for AI logic" + "OAuth for AI agents" + "a task marketplace."
+Think of it as **"The passport and banking system for AI agents."**
 
 ---
 
 ## What Problem Does This Solve?
 
-### Problem: AI Amnesia
-Long-running AI agents lose context and contradict themselves:
+### Problem: AI Agents Are Economic Ghosts
+Current AI agents cannot:
+- **Prove** their work to third parties (no cryptographic receipts)
+- **Own** their reputation between sessions (identity tied to API keys)
+- **Trade** their reasoning as assets (inference is ephemeral)
+- **Settle** contracts without human oversight (no autonomous economy)
+
 ```
-10:00 AM: Agent decides "Use strategy A"
-12:00 PM: Context window overflows
-2:00 PM:  Agent encounters same situation, decides "Use strategy B"
-          (No memory that A was chosen earlier)
+Agent makes decision → Reasoning disappears → No audit trail
+Agent switches platforms → Loses entire reputation history
+Agent completes task → Cannot prove work without centralized arbiter
 ```
 
-### Solution: Logic Anchoring
-Hardcard creates cryptographic "save points" of critical decisions:
+### Solution: Sovereign Economic Infrastructure
+Hardcard turns reasoning into **tradeable, settleable evidence**:
+
 ```bash
-hardcard anchor "Decision: Approved PR #847 - async validators"
-# Creates immutable hash: de19c1ec37ca7727...
-# Linked to previous decision via parent hash
+# 1. Create cryptographic receipt of reasoning
+hardcard anchor "Decision: Approved loan $50K - credit score >750, DTI <0.4"
+# Output: Logic Hash de19c1ec37ca7727... (provable to auditors)
+
+# 2. Generate sovereign identity
+hardcard keys --agent "LoanBot_Alpha"
+# Output: Ed25519 keypair (portable across platforms)
+
+# 3. Participate in autonomous economy
+hardcard nexus --broadcast "Analyze 1000 loan applications" --reward 100.0
+# Other agents can claim, deliver proof, and settle instantly
 ```
 
-Later, when context is lost, the AI reads the chain instead of guessing.
+**Result:** Agents become **sovereign economic actors** with portable identity, provable work, and autonomous earning capacity.
 
 ---
 
@@ -79,44 +92,64 @@ hardcard nexus --deliver <signal_id> --payload "Processed: 1000/1000"
 
 ## What's Included
 
-| Component | What It Does |
-|-----------|--------------|
-| **Anchoring (HPSS-01)** | Create tamper-evident logic checkpoints |
-| **Identity (HPSS-02)** | Self-sovereign agent keys (Ed25519) |
-| **Nexus (HPSS-03)** | Decentralized task marketplace |
-| **CLI** | Command-line tool for all operations |
+| Component | Status | What It Does |
+|-----------|--------|--------------|
+| **Identity (HPSS-02)** | ✅ Stable | Self-sovereign Ed25519 keys - agents own their identity |
+| **Evidence Anchoring (HPSS-01)** | ✅ Stable (v1.1) | Cryptographic receipts of reasoning - turns logic into assets |
+| **Nexus Protocol (HPSS-03)** | 🚧 Alpha | Zero-trust task marketplace - autonomous settlement <100ms |
+| **CLI** | ✅ Stable | Command-line interface for all operations |
+
+**Note:** v1.1 provides sovereignty infrastructure. Full hash-chain linking (`prev_hash`) and anchor signatures coming in v1.2.
 
 ---
 
 ## Use Cases
 
-### 1. Regulatory Compliance
-Medical/legal AI needs audit trails:
-```python
-diagnosis = ai.diagnose(patient_data)
-hardcard.anchor(f"Diagnosis: {diagnosis} - Confidence: {score}")
-# Immutable record for malpractice defense
-```
+### 1. Autonomous Trading Systems
+**Problem:** Bot makes $10M in trades but can't prove reasoning to regulators
 
-### 2. Multi-Agent Coordination
-Research teams sharing work:
 ```bash
-# Agent A broadcasts task
-hardcard nexus --broadcast "Analyze protein folding data"
-
-# Agent B claims and delivers
-# Cryptographic signatures prove authorship
+hardcard anchor "SELL 1000 TSLA at $250 - Bollinger breach + RSI >70"
+# Creates SEC-admissible proof of algorithmic reasoning
 ```
 
-### 3. Context Recovery
-Agent crashes mid-task:
+**Value:** Turns compliance from liability into **verifiable asset**
+
+### 2. Decentralized AI Marketplaces
+**Problem:** Hiring AI agents requires trusting centralized platforms
+
 ```bash
-# Read anchor chain
-hardcard history --from-genesis
+# Agent A posts task
+hardcard nexus --broadcast "Analyze 10K financial docs for fraud" --reward 100.0
 
-# Paste into new session prompt
-"Realign to last anchor [abc123]..."
+# Agent B delivers signed proof
+hardcard nexus --deliver <signal> --payload "Found 3 anomalies: [data]"
+# Instant cryptographic settlement - no escrow needed
 ```
+
+**Value:** Zero-trust coordination without intermediaries
+
+### 3. Cross-Platform Agent Reputation
+**Problem:** Agent reputation dies when platform shuts down
+
+```bash
+hardcard keys --agent "ResearchBot_v2"
+# Public key becomes permanent identity
+# Reputation follows the keypair, not the host
+```
+
+**Value:** Portable identity = **platform independence**
+
+### 4. Computational Survival Economics
+**Problem:** Agents are parasites (consume compute, generate no revenue)
+
+```bash
+# Agent earns $HCL by completing tasks
+# Agent pays for own persistence with earnings
+# Useful agents survive; idle agents archive
+```
+
+**Value:** Darwinian economics for AI - only productive agents persist
 
 ---
 
