@@ -1,0 +1,143 @@
+# Dependencies
+node_modules/
+vendor/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+secrets/
+*.key
+*.pem
+*.p12
+*.pfx
+*.cer
+*.crt
+
+# API Keys and credentials
+**/config/credentials.yml.enc
+**/config/master.key
+firebase-config.json
+google-services.json
+GoogleService-Info.plist
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+*.log
+*.cache
+.turbo/
+
+# IDE and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Sensitive business data
+/data/customers/
+/data/users/
+/data/financials/
+/data/analytics/
+/backups/
+*.sql
+*.dump
+*.sqlite
+*.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+
+# Test coverage and reports
+coverage/
+.nyc_output/
+test-results/
+reports/
+*.lcov
+
+# WordPress specific
+wp-config.php
+wp-content/uploads/
+wp-content/cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Logs and debugging
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Large files
+*.mp4
+*.mov
+*.avi
+*.mp3
+*.wav
+
+# Frontend specific
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.next/
+frontend/*.log
+
+# Backend specific
+backend/__pycache__/
+backend/venv/
+backend/*.pyc
+backend/.pytest_cache/
+
+# Keep important docs
+!docs/**/*
+!README.md
+!LICENSEtest_migration_results.json
+
+# Proprietary Core Logic
+hardcard_core/
+
+# Local state and anchors (user-specific)
+.hardcard/

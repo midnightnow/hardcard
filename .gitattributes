@@ -1,0 +1,3 @@
+# Hardcard Git Attributes
+*.md linguist-documentation
+*.py linguist-language=Python
