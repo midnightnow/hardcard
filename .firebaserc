@@ -9,6 +9,9 @@
           "hardcard-org"
         ],
         "hardcard-world": [
+          "hardcard-world"
+        ],
+        "hardcard-world-staging": [
           "hardcard-world-prod"
         ]
       }
