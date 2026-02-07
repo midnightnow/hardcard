@@ -2,7 +2,7 @@
   "hosting": [
     {
       "target": "hardcard-org",
-      "public": "public",
+      "public": "deploy/org",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -101,14 +101,13 @@
     },
     {
       "target": "hardcard-world",
-      "public": "public",
+      "public": "deploy/world",
       "ignore": [
         "firebase.json",
         "**/.*",
         "**/node_modules/**",
         ".git/**",
         ".env*",
-        "*.json",
         ".gitignore"
       ],
       "cleanUrls": true,
@@ -199,15 +198,91 @@
       ]
     },
     {
-      "target": "hardcard-world-staging",
-      "public": "public",
+      "target": "hardcard-ai",
+      "public": "deploy/ai",
       "ignore": [
         "firebase.json",
         "**/.*",
         "**/node_modules/**",
         ".git/**",
         ".env*",
-        "*.json",
+        ".gitignore"
+      ],
+      "cleanUrls": true,
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "headers": [
+        {
+          "source": "**",
+          "headers": [
+            {
+              "key": "Strict-Transport-Security",
+              "value": "max-age=31536000; includeSubDomains; preload"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "X-XSS-Protection",
+              "value": "1; mode=block"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            },
+            {
+              "key": "Permissions-Policy",
+              "value": "geolocation=(), microphone=(), camera=()"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(js|css)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=31536000, immutable"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(jpg|jpeg|png|gif|ico|svg|webp)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=31536000, immutable"
+            }
+          ]
+        },
+        {
+          "source": "/index.html",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=300"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target": "hardcard-world-staging",
+      "public": "deploy/world",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**",
+        ".git/**",
+        ".env*",
         ".gitignore"
       ],
       "cleanUrls": true,

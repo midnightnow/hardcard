@@ -1,18 +1,41 @@
 {
   "projects": {
-    "default": "hardcard"
+    "default": "hardcard-firebase-studio"
   },
   "targets": {
     "hardcard": {
       "hosting": {
         "hardcard-org": [
           "hardcard-org"
+        ]
+      }
+    },
+    "hardcard-firebase-studio": {
+      "hosting": {
+        "hardcard-org": [
+          "hardcard-org-docs"
         ],
         "hardcard-world": [
-          "hardcard-world"
-        ],
-        "hardcard-world-staging": [
           "hardcard-world-prod"
+        ],
+        "hardcard-ai": [
+          "hardcard-ai"
+        ],
+        "alexandria-research": [
+          "alexandria-research"
+        ]
+      }
+    },
+    "hardcard-e107f": {
+      "hosting": {
+        "hardcard-world": [
+          "hardcard-e107f"
+        ],
+        "hardcard-ai": [
+          "hardcard-e107f-ai"
+        ],
+        "hardcard-org": [
+          "hardcard-e107f-org"
         ]
       }
     }

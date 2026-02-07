@@ -1,143 +1,259 @@
-# Dependencies
-node_modules/
-vendor/
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
-
-# Environment variables and secrets
-.env
-.env.*
-!.env.example
-!.env.sample
-secrets/
-*.key
-*.pem
-*.p12
-*.pfx
-*.cer
-*.crt
-
-# API Keys and credentials
-**/config/credentials.yml.enc
-**/config/master.key
-firebase-config.json
-google-services.json
-GoogleService-Info.plist
-
-# Build outputs
-dist/
-build/
-out/
-.next/
-.nuxt/
-.output/
-*.log
-*.cache
-.turbo/
-
-# IDE and editors
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.DS_Store
-Thumbs.db
-
-# Sensitive business data
-/data/customers/
-/data/users/
-/data/financials/
-/data/analytics/
-/backups/
-*.sql
-*.dump
-*.sqlite
-*.db
-
-# Temporary files
-tmp/
-temp/
-*.tmp
-*.temp
-*.bak
-*.backup
-*.old
-
-# Test coverage and reports
-coverage/
-.nyc_output/
-test-results/
-reports/
-*.lcov
-
-# WordPress specific
-wp-config.php
-wp-content/uploads/
-wp-content/cache/
-
 # Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+.venv/
 venv/
-env/
 ENV/
+env/
 
-# Logs and debugging
-logs/
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-.pnpm-debug.log*
-
-# OS generated files
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Desktop.ini
 
-# Archives
-*.zip
-*.tar.gz
-*.rar
-*.7z
+# Environment files
+.env
+.env.local
+.env.*.local
 
-# Large files
-*.mp4
-*.mov
-*.avi
-*.mp3
-*.wav
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
 
-# Frontend specific
-frontend/node_modules/
-frontend/dist/
-frontend/build/
-frontend/.next/
-frontend/*.log
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
 
-# Backend specific
-backend/__pycache__/
-backend/venv/
-backend/*.pyc
-backend/.pytest_cache/
+# Experimental/Test Projects (cult of done cleanup)
+# VetSorcery test files
+vetsorcery-*.py
+vetsorcery-*.js
+vetsorcery-*.html
+vetsorcery_*.py
+vetsorcery_*.js
+vetsorcery_*.json
+vetsorcery_*.md
+VETSORCERY_*.md
 
-# Keep important docs
-!docs/**/*
+# AIVA test files
+AIVA_*.md
+aiva_*.md
+aiva_*.py
+
+# Alexandria test files
+alexandria_*.py
+ALEXANDRIA_*.md
+
+# MacAgent test files
+macagent_*.py
+MACAGENT_*.md
+
+# MOEX test files
+moex_*.py
+MOEX_*.md
+
+# Test directories
+ab_testing/
+agent-communication/
+agent-coordination/
+agent-status/
+ai_integration/
+AIVA_PILOT_CAMPAIGN/
+alexandria-deploy/
+alexandria_library/
+audit-tools/
+backend/apps/
+apps/
+audit_logs/
+blog/
+checklists/
+codegem_temp/
+context/
+dashboard/
+evidence_extracted/
+examples/
+fast_testing_reports/
+flakiness/
+frontend/
+games/
+gemini-analysis-results/
+gemini-results/
+greencross-enterprise/
+help_desk/
+inference/
+influential-site/
+keys/
+macagent-llm/
+macos_integration/
+master-enterprise/
+moex-workspace/
+monitor/
+monitoring/
+modules/
+"new apps/"
+page_reports/
+performance/
+private-enterprise/
+private-front-door/
+product_tours/
+qa_validation/
+quality-enforcement/
+realtime/
+redteam_results/
+sales_materials/
+screenshots/
+src/
+temp_analysis/
+tests/accessibility/
+tests/agentauth/
+tests/e2e/
+tests/integration/
+tests/performance/
+tests/security/
+tests/unit/
+timestamp-service/
+tools/
+treasury/
+validation/
+vetsorcery-deployment/
+visual-tests/
+waitlist/
+wallets/
+
+# Experimental standalone scripts
+*_demo.py
+*_test.py
+*_testing.py
+test_*.py
+comprehensive_*.py
+advanced_*.py
+experimental_*.py
+*_validation.py
+*_analyzer.py
+*_framework.py
+quick_*.py
+simple_*.py
+standalone_*.py
+pragmatic_*.py
+continuous-*.py
+*_showcase.py
+*_demo.html
+*_dashboard.html
+
+# Analysis and report files
+*_ANALYSIS.md
+*_REPORT.md
+*_SUMMARY.md
+*_STATUS.md
+*_GUIDE.md
+*_PLAN.md
+*_REVIEW.md
+*_BRIEFING.md
+*_COMPLETE.md
+*_VALIDATION.md
+*_FRAMEWORK.md
+*_IMPLEMENTATION.md
+*_DEPLOYMENT.md
+*_INTEGRATION.md
+*_ROADMAP.md
+*_DOCUMENTATION.md
+*_AUDIT.md
+*_CHECKLIST.md
+*_INSTRUCTIONS.md
+*_READY.md
+*_EXECUTION.md
+*_MONITORING.md
+*_FIXES.md
+*_CERTIFICATION.md
+*_BLUEPRINT.md
+*_PROPOSAL.md
+*_ARCHITECTURE.md
+
+# Generated/temporary files
+*.json.bak
+*.log
+*.jsonl
+*.config.js
+*.plist
+*-results.json
+*-report.json
+*-config.json
+*-data.json
+*.egg-info/
+
+# Shell scripts (mostly test/experimental)
+*-deploy.sh
+*-verify.sh
+*-launch.sh
+*-start.sh
+*-fix.sh
+*-setup.sh
+*-test.sh
+*.sh.bak
+
+# Docker experimental
+Dockerfile.*
+docker-compose.yml
+
+# Package lock files (managed separately)
+package-lock.json
+
+# Vendor/dependencies
+node_modules/
+
+# Keep only these essential docs in root
 !README.md
-!LICENSEtest_migration_results.json
+!LICENSE
+!ARCHITECTURE.md
+!GLOSSARY.md
+!pyproject.toml
+!requirements.txt
+!Makefile
 
-# Proprietary Core Logic
-hardcard_core/
+# Keep docs/ directory
+!docs/
+!docs/**/*.md
 
-# Local state and anchors (user-specific)
-.hardcard/
+# Keep hardcard and hardcard_core packages
+!hardcard/
+!hardcard/**/*.py
+!hardcard_core/
+!hardcard_core/**/*.py
+
+# Keep deploy directory
+!deploy/
+!deploy/**
+
+# Keep essential config
+!.firebaserc
+!firebase.json
+!.gitignore

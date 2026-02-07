@@ -32,8 +32,8 @@ dependencies = [
 hardcard = "hardcard.cli:main"
 
 [project.urls]
-"Homepage" = "https://github.com/hardcard/hardcard"
-"Documentation" = "https://hardcard.io/docs"
+"Homepage" = "https://github.com/midnightnow/hardcard"
+"Documentation" = "https://github.com/midnightnow/hardcard#readme"
 
 [tool.setuptools.packages.find]
 where = ["."]
