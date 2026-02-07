@@ -1,0 +1,27 @@
+{
+  "name": "hardcard",
+  "version": "1.1.0",
+  "type": "python-package",
+  "description": "Sovereignty layer for AI agents - Core primitives for Identity, Evidence, and Economy",
+  "main_packages": ["hardcard", "hardcard_core"],
+  "docs_path": "docs/",
+  "test_path": "tests/",
+  "deployment": {
+    "firebase_project": "hardcard-e107f",
+    "sites": {
+      "hardcard-ai": "https://hardcard-e107f-ai.web.app",
+      "hardcard-org": "https://hardcard-e107f-org.web.app",
+      "hardcard-world": "https://hardcard-e107f-world.web.app"
+    }
+  },
+  "core_concepts": {
+    "protocols": ["HPSS-01: Anti-Amnesia", "HPSS-02: Sovereign Identity", "HPSS-03: Nexus Marketplace"],
+    "economic_constants": {
+      "K": 0.10,
+      "split": "2-1-7 (70% anchor, 20% bedrock, 10% oxygen)"
+    }
+  },
+  "license": "MIT (Open Core)",
+  "repository": "https://github.com/midnightnow/hardcard",
+  "updated": "2026-02-07"
+}
