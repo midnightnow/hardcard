@@ -128,9 +128,13 @@ hardcard/
 ├── docs/
 │   └── mike/              # Mike Documentation (NEW)
 │       ├── MANIFEST.md    # This file
-│       ├── COWORKER_GUIDE.md
-│       ├── STATE_EXPORT_TEMPLATE.md
-│       └── PERSONALITY_DNA_TEMPLATE.md
+│       ├── WEAVING.md     # Intelligence Weaver Protocol
+│       ├── CROSS_PROJECT_LEDGER.md # Awareness of all spokes
+│       ├── EMULATION_CARD.md # Portable bootloader
+│       ├── PERSONALITY_DNA.md # Signed Persona
+│       ├── exports/       # Session handshakes
+│       └── templates/
+│           └── PERSONALITY_INTERVIEW.md # Extract DNA
 │
 └── .hardcard/
     ├── mike/              # Mike Runtime State (NEW)
