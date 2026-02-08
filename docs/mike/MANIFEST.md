@@ -128,6 +128,7 @@ hardcard/
 ├── docs/
 │   └── mike/              # Mike Documentation (NEW)
 │       ├── MANIFEST.md    # This file
+│       ├── COWORKER_GUIDE.md # Instructions for the AI
 │       ├── WEAVING.md     # Intelligence Weaver Protocol
 │       ├── CROSS_PROJECT_LEDGER.md # Awareness of all spokes
 │       ├── EMULATION_CARD.md # Portable bootloader
