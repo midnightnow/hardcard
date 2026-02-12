@@ -1,0 +1,38 @@
+# Workspace version: 1.46.11
+ipykernel==6.29.5
+python-multipart==0.0.9
+# databutton==0.38.34  # This version doesn't exist
+uvicorn[standard]==0.34.2
+fastapi==0.115.12
+python-dotenv
+openai
+beautifulsoup4
+requests
+Pillow
+numpy
+# mcp-agent
+mcp-server-package
+firebase-admin
+python-slugify
+
+# Missing dependencies from import errors
+python-jose[cryptography]
+pydantic[email]
+jsonschema
+bitcoinlib
+stripe
+pycryptodome
+streamlit
+librosa
+httpx
+boto3
+google-cloud-firestore
+google-cloud-storage
+pandas
+scikit-learn
+redis
+celery
+pytest
+pytest-asyncio
+cryptography
+aiofiles

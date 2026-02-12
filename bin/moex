@@ -1,0 +1,112 @@
+#!/usr/bin/env python3
+"""
+MOEX - Simple Multi-AI Consultation
+Just ask your question, like talking to Claude
+"""
+
+import sys
+import os
+import asyncio
+
+# Add parent directory to path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from moex_unified import MOEXUnified
+
+async def main():
+    """Main entry point."""
+
+    if len(sys.argv) < 2:
+        print("""
+╔══════════════════════════════════════════════════════════════╗
+║  🧠 MOEX - Multi-AI Consultation                            ║
+║  Simple, like Claude. Just ask your question.               ║
+╚══════════════════════════════════════════════════════════════╝
+
+USAGE:
+    moex "your question"
+
+OPTIONS:
+    --explain       Show why this intent was detected
+    --all           Show all AI responses (not just best)
+    --quick         Force quick mode (4 AIs, fast)
+    --heavy         Force heavy mode (6+ agents, deep analysis)
+    --gauntlet      Force gauntlet testing mode
+
+EXAMPLES:
+    # Security question - auto-triggers Gauntlet tests
+    moex "Is the authentication system secure?"
+
+    # Performance question - auto-triggers performance tests
+    moex "How fast is the API?"
+
+    # Architecture question - heavy mode automatically
+    moex "Design a microservices architecture for VetSorcery"
+
+    # Debugging - quick mode, best answer wins
+    moex "Fix this TypeError in React useState"
+
+    # Show all responses from each AI
+    moex --all "Should I use TypeScript or JavaScript?"
+
+    # Explain the detection logic
+    moex --explain "Test the login flow"
+
+WORKFLOW:
+    1. 🎯 Auto-detects your intent
+    2. 🧠 Consults AI collective (or runs tests)
+    3. ✨ Auto-selects best response
+    4. 📋 Copies to clipboard automatically
+    5. ✅ Paste into Claude Code with Cmd+V
+
+NO COMPLICATED COMMANDS. JUST ASK.
+        """)
+        sys.exit(0)
+
+    # Parse arguments
+    explain = '--explain' in sys.argv
+    show_all = '--all' in sys.argv
+    force_mode = None
+
+    if '--quick' in sys.argv:
+        force_mode = 'quick'
+    elif '--heavy' in sys.argv:
+        force_mode = 'heavy'
+    elif '--gauntlet' in sys.argv:
+        force_mode = 'gauntlet'
+
+    # Get query (everything except flags)
+    query_parts = [
+        arg for arg in sys.argv[1:]
+        if not arg.startswith('--')
+    ]
+    query = ' '.join(query_parts)
+
+    if not query:
+        print("❌ Error: Please provide a question")
+        print("\nExample: moex \"Is authentication secure?\"")
+        sys.exit(1)
+
+    # Run MOEX
+    try:
+        moex = MOEXUnified()
+        result = await moex.ask(
+            query,
+            explain=explain,
+            show_all=show_all,
+            force_mode=force_mode
+        )
+        print(result)
+
+    except KeyboardInterrupt:
+        print("\n\n👋 Cancelled")
+        sys.exit(0)
+    except Exception as e:
+        print(f"\n❌ Error: {e}")
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

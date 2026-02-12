@@ -41,7 +41,7 @@ def _load_signals() -> Dict:
 def _save_signals(data: Dict):
     SIGNALS_FILE.write_text(json.dumps(data, indent=2))
 
-def broadcast_signal(agent_id: str, task_description: str, reward: str = "0.0", signature: str = None) -> Optional[str]:
+def broadcast_signal(agent_id: str, task_description: str, reward: str = "0.0", signature: str = None, timestamp: int = None) -> Optional[str]:
     """
     Broadcasts a signal with cryptographic proof of authorship.
 
@@ -77,7 +77,8 @@ def broadcast_signal(agent_id: str, task_description: str, reward: str = "0.0", 
         return None
 
     # Verify signature over canonical payload
-    timestamp = int(time.time())
+    if timestamp is None:
+        timestamp = int(time.time())
     payload = {
         "agent_id": agent_id,
         "task": task_description,
@@ -148,7 +149,7 @@ def link_signal(signal_hash: str, agent_id: str, message: str = ""):
     if message:
         print(f"   Message: {message}")
 
-def deliver_payload(signal_hash: str, payload: str, worker_id: str, signature: str = None) -> bool:
+def deliver_payload(signal_hash: str, payload: str, worker_id: str, signature: str = None, timestamp: int = None) -> bool:
     """
     Delivers signed proof of work and triggers settlement.
 
@@ -192,7 +193,10 @@ def deliver_payload(signal_hash: str, payload: str, worker_id: str, signature: s
         return False
 
     # 2. Verify signature over delivery payload
-    delivery_timestamp = int(time.time())
+    if timestamp is None:
+        delivery_timestamp = int(time.time())
+    else:
+        delivery_timestamp = timestamp
     delivery_payload = {
         "signal_hash": signal_hash,
         "payload": payload,

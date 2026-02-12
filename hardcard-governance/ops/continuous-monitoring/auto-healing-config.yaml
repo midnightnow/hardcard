@@ -1,0 +1,380 @@
+# Auto-Healing Configuration for Hardcard Governance
+# Defines automated responses to system issues
+
+auto_healing:
+  enabled: true
+  max_attempts: 3
+  cooldown_period: 300  # 5 minutes between attempts
+  escalation_delay: 900  # 15 minutes before human escalation
+  
+healing_strategies:
+  high_cpu:
+    trigger:
+      metric: cpu_usage_percent
+      threshold: 80
+      duration: 120  # 2 minutes sustained
+    actions:
+      - type: scale_up
+        parameters:
+          target: compute_instances
+          scale_factor: 1.5
+          max_instances: 10
+        timeout: 300
+        
+      - type: restart_services
+        parameters:
+          services: ['api-server', 'analytics-engine']
+          order: sequential
+          delay_between: 30
+        timeout: 180
+        
+      - type: throttle_processes
+        parameters:
+          processes: ['non_critical_*']
+          cpu_limit: 50
+        timeout: 60
+    
+    verification:
+      metric: cpu_usage_percent
+      target_threshold: 70
+      check_duration: 180
+    
+    rewards:
+      success: 100
+      partial_success: 50
+      failure: 0
+
+  high_memory:
+    trigger:
+      metric: memory_usage_percent
+      threshold: 85
+      duration: 60
+    actions:
+      - type: clear_caches
+        parameters:
+          caches: ['redis', 'application', 'system']
+        timeout: 60
+        
+      - type: restart_memory_hogs
+        parameters:
+          max_memory_mb: 1000
+          grace_period: 30
+        timeout: 120
+        
+      - type: trigger_gc
+        parameters:
+          services: ['node_services', 'python_services']
+        timeout: 30
+    
+    verification:
+      metric: memory_usage_percent
+      target_threshold: 75
+      check_duration: 120
+    
+    rewards:
+      success: 150
+      partial_success: 75
+
+  api_timeout:
+    trigger:
+      metric: api_response_time
+      threshold: 5000  # 5 seconds
+      failure_count: 5
+    actions:
+      - type: restart_service
+        parameters:
+          service: governance-api
+          health_check: true
+        timeout: 60
+        
+      - type: clear_connection_pool
+        parameters:
+          pools: ['database', 'redis', 'ethereum']
+        timeout: 30
+        
+      - type: scale_api_instances
+        parameters:
+          min_instances: 3
+          max_instances: 8
+        timeout: 180
+    
+    verification:
+      metric: api_response_time
+      target_threshold: 2000
+      success_count: 10
+    
+    rewards:
+      success: 200
+
+  database_slow:
+    trigger:
+      metric: query_response_time
+      threshold: 5000  # 5 seconds
+      slow_query_count: 10
+    actions:
+      - type: kill_long_queries
+        parameters:
+          max_duration: 30000  # 30 seconds
+          exclude_tables: ['critical_operations']
+        timeout: 15
+        
+      - type: update_statistics
+        parameters:
+          tables: 'all'
+          analyze: true
+        timeout: 300
+        
+      - type: restart_connection_pool
+        parameters:
+          pool_name: 'main_db_pool'
+        timeout: 60
+    
+    verification:
+      metric: query_response_time
+      target_threshold: 1000
+      check_duration: 300
+    
+    rewards:
+      success: 300
+
+  guardian_unresponsive:
+    trigger:
+      metric: guardian_last_ping
+      threshold: 900  # 15 minutes
+      guardian_count_below: 3
+    actions:
+      - type: ping_guardian
+        parameters:
+          guardian_id: '${guardian_id}'
+          timeout: 30
+          retries: 3
+        timeout: 120
+        
+      - type: activate_backup
+        parameters:
+          backup_guardian_pool: 'backup_guardians'
+          activation_timeout: 180
+        timeout: 300
+        
+      - type: alert_guardian_team
+        parameters:
+          channels: ['sms', 'email', 'slack']
+          urgency: 'high'
+        timeout: 60
+    
+    verification:
+      metric: responsive_guardian_count
+      target_threshold: 3
+      check_duration: 600
+    
+    rewards:
+      success: 1000
+
+  contract_error:
+    trigger:
+      metric: transaction_failure_rate
+      threshold: 0.1  # 10% failure rate
+      timeframe: 300  # 5 minutes
+    actions:
+      - type: pause_contract_interactions
+        parameters:
+          contracts: ['${failing_contract}']
+          duration: 1800  # 30 minutes
+        timeout: 60
+        
+      - type: switch_rpc_provider
+        parameters:
+          fallback_providers: ['alchemy', 'infura_backup']
+        timeout: 120
+        
+      - type: alert_security_team
+        parameters:
+          severity: 'critical'
+          escalation: 'immediate'
+        timeout: 30
+    
+    verification:
+      metric: transaction_failure_rate
+      target_threshold: 0.02
+      check_duration: 600
+    
+    rewards:
+      success: 2000
+
+  disk_full:
+    trigger:
+      metric: disk_usage_percent
+      threshold: 90
+      duration: 60
+    actions:
+      - type: cleanup_logs
+        parameters:
+          retention_days: 7
+          compress_older: 3
+        timeout: 300
+        
+      - type: cleanup_temp_files
+        parameters:
+          directories: ['/tmp', '/var/tmp', '/var/log']
+          age_days: 1
+        timeout: 180
+        
+      - type: archive_old_data
+        parameters:
+          tables: ['historical_metrics', 'old_proposals']
+          archive_location: 's3://hardcard-archive'
+        timeout: 1800
+    
+    verification:
+      metric: disk_usage_percent
+      target_threshold: 80
+      check_duration: 300
+    
+    rewards:
+      success: 150
+
+  network_partition:
+    trigger:
+      metric: network_connectivity
+      threshold: 0.8  # 80% connectivity
+      check_endpoints: ['ethereum_mainnet', 'monitoring_services']
+    actions:
+      - type: switch_network_provider
+        parameters:
+          primary: 'infura'
+          fallback: 'alchemy'
+        timeout: 60
+        
+      - type: activate_local_cache
+        parameters:
+          cache_duration: 3600
+          stale_threshold: 1800
+        timeout: 30
+        
+      - type: enable_degraded_mode
+        parameters:
+          features: ['read_only_governance', 'cached_analytics']
+        timeout: 120
+    
+    verification:
+      metric: network_connectivity
+      target_threshold: 0.95
+      check_duration: 300
+    
+    rewards:
+      success: 500
+
+escalation_rules:
+  auto_heal_failure:
+    conditions:
+      - healing_attempts: 3
+      - success_rate: 0
+    actions:
+      - create_incident_ticket
+      - alert_human_operators
+      - activate_emergency_protocol
+    
+  partial_success:
+    conditions:
+      - healing_attempts: 2
+      - success_rate: 0.5
+    actions:
+      - continue_monitoring
+      - prepare_human_escalation
+    
+  critical_system_failure:
+    conditions:
+      - severity: critical
+      - affected_components: ['governance', 'security']
+    actions:
+      - immediate_human_alert
+      - activate_incident_commander
+      - create_flash_bounty
+
+notification_channels:
+  slack:
+    webhook_url: "${SLACK_WEBHOOK_URL}"
+    channels:
+      - '#ops-alerts'
+      - '#security-incidents'
+  
+  email:
+    smtp_server: "${SMTP_SERVER}"
+    recipients:
+      - 'ops-team@hardcard.io'
+      - 'security@hardcard.io'
+  
+  sms:
+    provider: 'twilio'
+    numbers:
+      - '+1-XXX-XXX-XXXX'  # Ops Lead
+      - '+1-XXX-XXX-XXXY'  # Security Lead
+
+monitoring_integration:
+  prometheus:
+    pushgateway_url: 'http://prometheus-pushgateway:9091'
+    job_name: 'auto_healing'
+  
+  grafana:
+    dashboard_id: 'auto_healing_status'
+    alert_rules: true
+  
+  elasticsearch:
+    index_pattern: 'hardcard-healing-*'
+    retention_days: 90
+
+reward_distribution:
+  payment_methods:
+    - type: 'cryptocurrency'
+      token: 'HGOV'
+      contract: '0x...'
+    
+    - type: 'stablecoin'
+      token: 'USDC'
+      contract: '0x...'
+  
+  distribution_schedule:
+    frequency: 'daily'
+    time: '00:00 UTC'
+    batch_size: 100
+  
+  verification_requirements:
+    min_success_rate: 0.8
+    min_healing_attempts: 5
+    verification_period: '24h'
+
+chaos_engineering:
+  enabled: true
+  schedules:
+    - name: 'cpu_stress_test'
+      cron: '0 2 * * 1'  # Every Monday at 2 AM
+      duration: 1800  # 30 minutes
+      target: 'non_production'
+    
+    - name: 'network_partition'
+      cron: '0 3 * * 3'  # Every Wednesday at 3 AM
+      duration: 900   # 15 minutes
+      target: 'staging'
+    
+    - name: 'guardian_failure'
+      cron: '0 4 * * 5'  # Every Friday at 4 AM
+      duration: 1200  # 20 minutes
+      target: 'testnet'
+
+learning_system:
+  enabled: true
+  ml_model: 'healing_optimizer'
+  training_data: 
+    - healing_success_rates
+    - system_metrics
+    - incident_patterns
+  
+  optimization_targets:
+    - reduce_healing_time
+    - increase_success_rate
+    - minimize_false_positives
+  
+  model_updates:
+    frequency: 'weekly'
+    validation_threshold: 0.9
+    rollback_on_failure: true

@@ -1,0 +1,186 @@
+{
+  "test_run_id": "1750817853904",
+  "timestamp": "2025-06-25T02:17:33.904Z",
+  "config": {
+    "apps": [
+      {
+        "name": "main_frontend",
+        "url": "http://localhost:5173",
+        "expected_title": "HardCard Suite",
+        "critical_elements": [
+          "#root",
+          "[role=\"main\"]",
+          "nav"
+        ],
+        "user_flows": [
+          {
+            "action": "navigation",
+            "target": "/",
+            "expected": "dashboard"
+          },
+          {
+            "action": "click",
+            "target": "button",
+            "expected": "response"
+          }
+        ]
+      },
+      {
+        "name": "api_backend",
+        "url": "http://localhost:3001",
+        "expected_title": "Databutton",
+        "critical_elements": [
+          "body",
+          "#root"
+        ],
+        "api_endpoints": [
+          "/health",
+          "/api/status"
+        ]
+      },
+      {
+        "name": "hardcard_suite",
+        "url": "http://localhost:3002",
+        "expected_title": "HARDCARD Suite",
+        "critical_elements": [
+          "header",
+          "main",
+          "nav"
+        ],
+        "user_flows": [
+          {
+            "action": "load",
+            "expected": "dashboard_visible"
+          },
+          {
+            "action": "navigation",
+            "target": "/admin",
+            "expected": "admin_panel"
+          }
+        ]
+      }
+    ],
+    "output_dir": "/Users/studio/hardcard/screenshots",
+    "report_file": "/Users/studio/hardcard/enhanced_test_report.json"
+  },
+  "applications": {
+    "main_frontend": {
+      "name": "main_frontend",
+      "url": "http://localhost:5173",
+      "timestamp": "2025-06-25T02:17:34.117Z",
+      "status": "online",
+      "tests": {
+        "critical_elements": {
+          "#root": "found",
+          "[role=\"main\"]": "found",
+          "nav": "found"
+        },
+        "user_flows": [
+          {
+            "flow": "navigation",
+            "status": "failed",
+            "error": "page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL\nCall log:\n\u001b[2m  - navigating to \"/\", waiting until \"load\"\u001b[22m\n"
+          },
+          {
+            "flow": "click",
+            "status": "completed"
+          }
+        ],
+        "accessibility": {
+          "has_title": true,
+          "has_lang": true,
+          "has_headings": true,
+          "has_main_landmark": true,
+          "has_nav_landmark": true,
+          "images_have_alt": true
+        }
+      },
+      "load_time": 1052,
+      "title": "HardCard Suite",
+      "screenshot": "/Users/studio/hardcard/screenshots/main_frontend_1750817855172.png",
+      "performance": {
+        "dom_content_loaded": 0.09999999962747097,
+        "load_complete": 0,
+        "first_paint": 188,
+        "first_contentful_paint": 188
+      }
+    },
+    "api_backend": {
+      "name": "api_backend",
+      "url": "http://localhost:3001",
+      "timestamp": "2025-06-25T02:17:36.919Z",
+      "status": "online",
+      "tests": {
+        "critical_elements": {
+          "body": "found",
+          "#root": "found"
+        },
+        "accessibility": {
+          "has_title": true,
+          "has_lang": true,
+          "has_headings": true,
+          "has_main_landmark": false,
+          "has_nav_landmark": false,
+          "images_have_alt": true
+        }
+      },
+      "load_time": 561,
+      "title": "HardCard Suite",
+      "screenshot": "/Users/studio/hardcard/screenshots/api_backend_1750817857482.png",
+      "performance": {
+        "dom_content_loaded": 0,
+        "load_complete": 0,
+        "first_paint": 40,
+        "first_contentful_paint": 140
+      }
+    },
+    "hardcard_suite": {
+      "name": "hardcard_suite",
+      "url": "http://localhost:3002",
+      "timestamp": "2025-06-25T02:17:37.752Z",
+      "status": "online",
+      "tests": {
+        "critical_elements": {
+          "header": "found",
+          "main": "found",
+          "nav": "found"
+        },
+        "user_flows": [
+          {
+            "flow": "load",
+            "status": "completed"
+          },
+          {
+            "flow": "navigation",
+            "status": "failed",
+            "error": "page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL\nCall log:\n\u001b[2m  - navigating to \"/admin\", waiting until \"load\"\u001b[22m\n"
+          }
+        ],
+        "accessibility": {
+          "has_title": true,
+          "has_lang": true,
+          "has_headings": true,
+          "has_main_landmark": true,
+          "has_nav_landmark": true,
+          "images_have_alt": true
+        }
+      },
+      "load_time": 1346,
+      "title": "HARDCARD Suite",
+      "screenshot": "/Users/studio/hardcard/screenshots/hardcard_suite_1750817859099.png",
+      "performance": {
+        "dom_content_loaded": 0,
+        "load_complete": 0,
+        "first_paint": 96,
+        "first_contentful_paint": 148
+      }
+    }
+  },
+  "summary": {
+    "total": 3,
+    "online": 3,
+    "offline": 0,
+    "errors": 0
+  },
+  "recommendations": []
+}

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIVA Pilot Pack - Transform Your Veterinary Practice with AI</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header */
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1rem 0; }
+        .logo { font-size: 2rem; font-weight: bold; }
+        
+        /* Hero Section */
+        .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 4rem 0; text-align: center; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; font-weight: 700; }
+        .hero .subtitle { font-size: 1.5rem; margin-bottom: 2rem; opacity: 0.9; }
+        .hero .urgency { background: #ff6b6b; padding: 1rem 2rem; border-radius: 50px; display: inline-block; margin-bottom: 2rem; font-weight: bold; }
+        
+        /* Value Proposition */
+        .value-props { padding: 4rem 0; background: #f8f9fa; }
+        .props-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .prop-card { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; }
+        .prop-card .icon { font-size: 3rem; margin-bottom: 1rem; }
+        .prop-card h3 { color: #667eea; margin-bottom: 1rem; }
+        
+        /* ROI Section */
+        .roi-section { padding: 4rem 0; text-align: center; }
+        .roi-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 3rem 0; }
+        .roi-stat { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 10px; }
+        .roi-stat .number { font-size: 3rem; font-weight: bold; display: block; }
+        .roi-stat .label { font-size: 1.1rem; opacity: 0.9; }
+        
+        /* Pricing */
+        .pricing { padding: 4rem 0; background: #f8f9fa; text-align: center; }
+        .price-card { background: white; border-radius: 15px; padding: 3rem; max-width: 500px; margin: 2rem auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .price-original { font-size: 1.5rem; color: #999; text-decoration: line-through; }
+        .price-pilot { font-size: 4rem; color: #667eea; font-weight: bold; margin: 1rem 0; }
+        .savings { background: #ff6b6b; color: white; padding: 0.5rem 1rem; border-radius: 25px; display: inline-block; margin-bottom: 2rem; }
+        
+        /* CTA Button */
+        .cta-button { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); color: white; padding: 1.5rem 3rem; font-size: 1.3rem; border: none; border-radius: 50px; cursor: pointer; text-decoration: none; display: inline-block; font-weight: bold; transition: transform 0.3s ease; }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(238, 90, 36, 0.3); }
+        
+        /* Countdown Timer */
+        .countdown { background: #2c3e50; color: white; padding: 2rem; text-align: center; margin: 2rem 0; border-radius: 10px; }
+        .timer { display: flex; justify-content: center; gap: 2rem; margin-top: 1rem; }
+        .timer-unit { text-align: center; }
+        .timer-number { font-size: 2.5rem; font-weight: bold; display: block; }
+        .timer-label { font-size: 0.9rem; opacity: 0.8; }
+        
+        /* Social Proof */
+        .social-proof { padding: 4rem 0; text-align: center; }
+        .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 3rem 0; }
+        .testimonial { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .testimonial .quote { font-style: italic; margin-bottom: 1rem; color: #555; }
+        .testimonial .author { font-weight: bold; color: #667eea; }
+        
+        /* Spots Remaining */
+        .spots-remaining { background: #ff6b6b; color: white; padding: 1rem; text-align: center; font-weight: bold; position: sticky; top: 0; z-index: 1000; }
+        
+        /* Footer */
+        footer { background: #2c3e50; color: white; padding: 2rem 0; text-align: center; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero .subtitle { font-size: 1.2rem; }
+            .timer { flex-direction: column; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Spots Remaining Banner -->
+    <div class="spots-remaining">
+        🔥 ONLY <span id="spotsLeft">7</span> PILOT SPOTS REMAINING - LIMITED TIME OFFER
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">🐾 AIVA</div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Transform Your Veterinary Practice with AI in 30 Days</h1>
+            <p class="subtitle">Join the first 10 practices to experience 420% ROI with AIVA's AI-powered automation</p>
+            <div class="urgency">⚡ LIMITED TO FIRST 10 PRACTICES ONLY ⚡</div>
+            <a href="#pricing" class="cta-button">Secure Your Spot - Only $1,500</a>
+        </div>
+    </section>
+
+    <!-- Value Propositions -->
+    <section class="value-props">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 1rem;">What You Get in Your Pilot Pack</h2>
+            <div class="props-grid">
+                <div class="prop-card">
+                    <div class="icon">🤖</div>
+                    <h3>Intelligent Chatbot</h3>
+                    <p>Handles 80% of client inquiries automatically, freeing up your staff for critical patient care. Works 24/7 with veterinary-specific knowledge.</p>
+                </div>
+                <div class="prop-card">
+                    <div class="icon">📊</div>
+                    <h3>Real-Time Analytics</h3>
+                    <p>Identify $15,000+ in annual savings with our practice optimization dashboard. Track efficiency, revenue, and client satisfaction in real-time.</p>
+                </div>
+                <div class="prop-card">
+                    <div class="icon">🎯</div>
+                    <h3>Complete Implementation</h3>
+                    <p>Full setup, staff training, and 30-day support included. We handle everything so you can focus on what matters - your patients.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Section -->
+    <section class="roi-section">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Proven Results from Early Adopters</h2>
+            <div class="roi-stats">
+                <div class="roi-stat">
+                    <span class="number">420%</span>
+                    <span class="label">ROI in First Year</span>
+                </div>
+                <div class="roi-stat">
+                    <span class="number">62%</span>
+                    <span class="label">Reduction in Admin Time</span>
+                </div>
+                <div class="roi-stat">
+                    <span class="number">36%</span>
+                    <span class="label">Increase in Revenue</span>
+                </div>
+                <div class="roi-stat">
+                    <span class="number">3.2</span>
+                    <span class="label">Month Payback Period</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Countdown Timer -->
+    <section class="countdown">
+        <div class="container">
+            <h3>Pilot Program Ends In:</h3>
+            <div class="timer">
+                <div class="timer-unit">
+                    <span class="timer-number" id="days">03</span>
+                    <span class="timer-label">DAYS</span>
+                </div>
+                <div class="timer-unit">
+                    <span class="timer-number" id="hours">14</span>
+                    <span class="timer-label">HOURS</span>
+                </div>
+                <div class="timer-unit">
+                    <span class="timer-number" id="minutes">27</span>
+                    <span class="timer-label">MINUTES</span>
+                </div>
+                <div class="timer-unit">
+                    <span class="timer-number" id="seconds">45</span>
+                    <span class="timer-label">SECONDS</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">Exclusive Pilot Pricing</h2>
+            <div class="price-card">
+                <h3>AIVA Pilot Pack</h3>
+                <div class="price-original">Regular Price: $3,000</div>
+                <div class="price-pilot">$1,500</div>
+                <div class="savings">Save $1,500 (50% OFF)</div>
+                
+                <ul style="text-align: left; margin: 2rem 0;">
+                    <li>✅ AI Chatbot Widget (Custom-trained for your practice)</li>
+                    <li>✅ Analytics Dashboard (Real-time insights)</li>
+                    <li>✅ Complete Setup & Integration</li>
+                    <li>✅ Staff Training Session (2 hours)</li>
+                    <li>✅ 30-Day Implementation Support</li>
+                    <li>✅ 30-Day Satisfaction Guarantee</li>
+                    <li>✅ Priority Support Channel</li>
+                </ul>
+                
+                <a href="https://buy.stripe.com/pilot-pack-1500" class="cta-button" style="width: 100%; text-align: center; margin-top: 2rem;">
+                    Secure Your Spot Now - $1,500
+                </a>
+                
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                    💳 Secure payment via Stripe • 🔒 30-day money-back guarantee
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="social-proof">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">What Veterinarians Are Saying</h2>
+            <div class="testimonials">
+                <div class="testimonial">
+                    <div class="quote">"AIVA saved us 15 hours per week on client communications. Our staff can finally focus on patient care instead of answering the same questions repeatedly."</div>
+                    <div class="author">- Dr. Sarah Mitchell, VetCare Clinic</div>
+                </div>
+                <div class="testimonial">
+                    <div class="quote">"The ROI was immediate. We identified $23,000 in annual savings in the first month alone. This is the future of veterinary practice management."</div>
+                    <div class="author">- Dr. Michael Chen, Paws & Wellness</div>
+                </div>
+                <div class="testimonial">
+                    <div class="quote">"Setup was seamless. The AIVA team handled everything, and our clients love the instant responses. Our satisfaction scores increased by 40%."</div>
+                    <div class="author">- Dr. Jennifer Rodriguez, Animal Health Center</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 4rem 0; text-align: center;">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Don't Miss This Opportunity</h2>
+            <p style="font-size: 1.3rem; margin-bottom: 2rem;">Join the veterinary AI revolution with 50% off our pilot program</p>
+            <a href="https://buy.stripe.com/pilot-pack-1500" class="cta-button" style="font-size: 1.5rem; padding: 2rem 4rem;">
+                Get AIVA Pilot Pack - $1,500
+            </a>
+            <p style="margin-top: 2rem; opacity: 0.9;">Questions? Email us at pilot@aiva.vet or call (555) 123-AIVA</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AIVA - AI Veterinary Assistant. All rights reserved.</p>
+            <p>Transform your practice with artificial intelligence.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const targetDate = new Date();
+            targetDate.setDate(targetDate.getDate() + 3);
+            targetDate.setHours(23, 59, 59, 999);
+            
+            const now = new Date().getTime();
+            const distance = targetDate.getTime() - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Spots remaining animation
+        function updateSpotsRemaining() {
+            const spots = Math.floor(Math.random() * 3) + 5; // Random between 5-7
+            document.getElementById('spotsLeft').textContent = spots;
+        }
+        
+        // Update spots every 30 seconds to create urgency
+        setInterval(updateSpotsRemaining, 30000);
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Track button clicks (replace with actual analytics)
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('click', function() {
+                console.log('CTA clicked:', this.textContent);
+                // Add your analytics tracking here
+            });
+        });
+    </script>
+</body>
+</html>

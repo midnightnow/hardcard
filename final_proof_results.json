@@ -1,0 +1,71 @@
+{
+  "timestamp": "2025-08-10T01:36:14.768106+00:00",
+  "test_results": {
+    "core_files": {
+      "required": [
+        "macagent_backup_orchestrator.py",
+        "worker_cli_v03_patch.py",
+        "backup-status"
+      ],
+      "missing": [],
+      "pass": true
+    },
+    "proof_artifact": {
+      "exists": true,
+      "content": "BACKUP_PROOF_ARTIFACT_20250809_214044",
+      "sha256": "349703be36c0ff33b4100603e31033309602088730ca24462ea941de95534c6c",
+      "pass": true
+    },
+    "launchagent": {
+      "output": "99046\t0\tcom.hardcard.macagent.backup\n-\t0\tcom.hardcard.macagent-pro",
+      "loaded": true,
+      "pass": true
+    },
+    "system_apis": {
+      "backup_status_works": true,
+      "worker_cli_json_valid": true,
+      "worker_json": {
+        "3_2_1_compliant": null,
+        "tm": {
+          "ok": false,
+          "destination": null,
+          "latest_backup_iso": null
+        },
+        "offsite": {
+          "ok": true,
+          "provider": "restic",
+          "repository": "/Users/studio/backup-restic-local",
+          "latest_snapshot_iso": "2025-08-10T10:55:45.205161+10:00",
+          "error": null
+        },
+        "timestamp": "2025-08-10T01:36:16.242629+00:00"
+      },
+      "pass": true
+    },
+    "restic": {
+      "snapshots_command_works": true,
+      "output": "[{\"time\":\"2025-08-10T07:40:48.215881+10:00\",\"tree\":\"948033a6233c77aaa1c2be87faa0eda64e2322270453e92140a8f84f5d32555f\",\"paths\":[\"/Users/studio/Desktop/backup-proof\"],\"hostname\":\"Dallass-Mac-Studio.local\",\"username\":\"studio\",\"uid\":501,\"gid\":20,\"program_version\":\"restic 0.18.0\",\"summary\":{\"backup_start\":\"2025-08-10T07:40:48.215881+10:00\",\"backup_end\":\"2025-08-10T07:40:48.937764+10:00\",\"files_new\":1,\"files_changed\":0,\"files_unmodified\":0,\"dirs_new\":4,\"dirs_changed\":0,\"dirs_unmodified\":0,\"data_blobs\":1,\"tree_blobs\":5,\"data_added\":2093,\"data_added_packed\":1720,\"total_files_processed\":1,\"total_bytes_processed\":37},\"id\":\"8a2e59a3d1c844c58fe348bd71dc33964aca73141f7760c9d791026408af87ca\",\"short_id\":\"8a2e59a3\"}]",
+      "pass": true
+    },
+    "time_machine": {
+      "destination_check": "tmutil: No destinations configured.",
+      "latest_backup": "",
+      "configured": false,
+      "graceful_handling": true,
+      "pass": true
+    },
+    "performance": {
+      "duration_seconds": 0.728,
+      "under_threshold": true,
+      "command_success": true,
+      "pass": true
+    }
+  },
+  "summary": {
+    "total_tests": 7,
+    "passed_tests": 7,
+    "pass_rate": 1.0,
+    "overall_status": "PASS"
+  },
+  "evidence_hash": "dbaec64b7e04db7efc4a56ca29007d10b159ec6ecf02e20efc1b41b1b3f777c0"
+}

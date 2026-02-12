@@ -1,0 +1,27 @@
+{
+  "google_analytics": {
+    "measurement_id": "G-HARDCARD-BETA",
+    "events_tracked": [
+      "framework_completion",
+      "metric_update",
+      "evidence_upload",
+      "progress_milestone",
+      "billing_event"
+    ]
+  },
+  "firebase_analytics": {
+    "custom_events": [
+      "beta_client_onboarded",
+      "framework_started",
+      "framework_completed",
+      "transformation_documented",
+      "collins_evidence_generated"
+    ]
+  },
+  "performance_monitoring": {
+    "page_load_times": true,
+    "api_response_times": true,
+    "error_tracking": true,
+    "user_engagement": true
+  }
+}

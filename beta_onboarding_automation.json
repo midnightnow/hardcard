@@ -1,0 +1,57 @@
+{
+  "welcome_email_sequence": [
+    {
+      "trigger": "subscription_created",
+      "delay_hours": 0,
+      "template": "beta_welcome",
+      "personalization": [
+        "practice_name",
+        "owner_name",
+        "specialties"
+      ]
+    },
+    {
+      "trigger": "after_welcome",
+      "delay_hours": 24,
+      "template": "onboarding_reminder",
+      "condition": "no_initial_login"
+    },
+    {
+      "trigger": "first_framework_start",
+      "delay_hours": 0,
+      "template": "framework_encouragement",
+      "personalization": [
+        "framework_name",
+        "completion_tips"
+      ]
+    }
+  ],
+  "milestone_celebrations": [
+    {
+      "milestone": "first_framework_complete",
+      "email_template": "framework_celebration",
+      "badge_awarded": "Framework Pioneer"
+    },
+    {
+      "milestone": "evidence_uploaded",
+      "email_template": "evidence_acknowledgment",
+      "collins_readiness_boost": true
+    },
+    {
+      "milestone": "transformation_documented",
+      "email_template": "transformation_celebration",
+      "case_study_invitation": true
+    }
+  ],
+  "weekly_check_ins": {
+    "frequency": "weekly",
+    "duration_weeks": 4,
+    "automation_after": "monthly",
+    "content_themes": [
+      "progress_review",
+      "framework_deep_dive",
+      "evidence_documentation",
+      "partnership_preparation"
+    ]
+  }
+}

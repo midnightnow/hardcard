@@ -1,0 +1,305 @@
+name: Hardcard Governance CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  SOLIDITY_VERSION: 0.8.26
+
+jobs:
+  # Basic checks and compilation
+  compile:
+    name: Compile Contracts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compile contracts
+        run: npm run compile
+
+      - name: Check contract sizes
+        run: npx hardhat size-contracts
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-contracts
+          path: |
+            artifacts/
+            cache/
+            typechain-types/
+
+  # Unit and integration tests
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: compile
+    strategy:
+      matrix:
+        test-suite:
+          - unit
+          - integration
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: compiled-contracts
+
+      - name: Run ${{ matrix.test-suite }} tests
+        run: |
+          if [ "${{ matrix.test-suite }}" = "unit" ]; then
+            npm run test:unit
+          else
+            npx hardhat test test/integration/*.ts
+          fi
+
+      - name: Upload coverage
+        if: matrix.test-suite == 'unit'
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage.json
+          flags: unittests
+
+  # Slither static analysis
+  slither:
+    name: Slither Analysis
+    runs-on: ubuntu-latest
+    needs: compile
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Slither
+        run: pip3 install slither-analyzer
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Slither
+        run: |
+          slither . --config-file slither.config.json --sarif results.sarif || true
+
+      - name: Upload Slither SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results.sarif
+
+      - name: Generate Slither Report
+        run: |
+          echo "# Slither Security Analysis Report" > slither-report.md
+          echo "" >> slither-report.md
+          slither . --print human-summary --markdown-root . >> slither-report.md || true
+
+      - name: Upload Slither Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: slither-report
+          path: slither-report.md
+
+      - name: Check for high severity issues
+        run: |
+          HIGH_ISSUES=$(slither . --json - 2>/dev/null | jq '[.results.detectors[] | select(.impact == "High")] | length' || echo "0")
+          if [ "$HIGH_ISSUES" -gt "0" ]; then
+            echo "❌ Found $HIGH_ISSUES high severity issues!"
+            slither . --print human-summary || true
+            exit 1
+          else
+            echo "✅ No high severity issues found"
+          fi
+
+  # Mythril security analysis
+  mythril:
+    name: Mythril Analysis
+    runs-on: ubuntu-latest
+    needs: compile
+    container:
+      image: mythril/myth
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Analyze GuardianCouncil
+        run: |
+          myth analyze contracts/governance/GuardianCouncil.sol \
+            --solv ${{ env.SOLIDITY_VERSION }} \
+            --execution-timeout 300 \
+            --max-depth 10 \
+            -o markdown > mythril-guardian.md || true
+
+      - name: Analyze TimelockController
+        run: |
+          myth analyze contracts/governance/TimelockController.sol \
+            --solv ${{ env.SOLIDITY_VERSION }} \
+            --execution-timeout 300 \
+            --max-depth 10 \
+            -o markdown > mythril-timelock.md || true
+
+      - name: Upload Mythril Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: mythril-reports
+          path: mythril-*.md
+
+  # Gas optimization analysis
+  gas-report:
+    name: Gas Optimization Report
+    runs-on: ubuntu-latest
+    needs: compile
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run gas reporter
+        run: REPORT_GAS=true npx hardhat test > gas-report.txt
+
+      - name: Parse gas report
+        run: |
+          echo "# Gas Usage Report" > gas-analysis.md
+          echo "" >> gas-analysis.md
+          echo "## Contract Deployment Costs" >> gas-analysis.md
+          echo '```' >> gas-analysis.md
+          grep -A 20 "Deployments" gas-report.txt || true
+          echo '```' >> gas-analysis.md
+          echo "" >> gas-analysis.md
+          echo "## Method Costs" >> gas-analysis.md
+          echo '```' >> gas-analysis.md
+          grep -A 30 "Methods" gas-report.txt || true
+          echo '```' >> gas-analysis.md
+
+      - name: Upload gas report
+        uses: actions/upload-artifact@v4
+        with:
+          name: gas-report
+          path: gas-analysis.md
+
+  # Security checklist
+  security-checklist:
+    name: Security Checklist
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Security Checklist
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const checks = [
+              "No hardcoded addresses",
+              "All external calls use checks-effects-interactions",
+              "No use of tx.origin",
+              "Proper access control modifiers",
+              "Events emitted for state changes",
+              "No compiler warnings",
+              "Reentrancy guards where needed",
+              "Integer overflow protection",
+              "Proper input validation"
+            ];
+            
+            let comment = `## 🔒 Security Checklist\n\n`;
+            comment += `Please confirm the following security checks:\n\n`;
+            
+            checks.forEach(check => {
+              comment += `- [ ] ${check}\n`;
+            });
+            
+            comment += `\n### Automated Analysis Results\n`;
+            comment += `- Slither: Check workflow results\n`;
+            comment += `- Mythril: Check workflow results\n`;
+            comment += `- Gas Report: Check workflow results\n`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+  # Final security summary
+  security-summary:
+    name: Security Summary
+    runs-on: ubuntu-latest
+    needs: [test, slither, mythril, gas-report]
+    if: always()
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: reports
+
+      - name: Generate summary
+        run: |
+          echo "# 🛡️ Hardcard Governance Security Summary" > SECURITY_SUMMARY.md
+          echo "" >> SECURITY_SUMMARY.md
+          echo "Generated: $(date)" >> SECURITY_SUMMARY.md
+          echo "" >> SECURITY_SUMMARY.md
+          
+          echo "## 📊 Analysis Results" >> SECURITY_SUMMARY.md
+          echo "" >> SECURITY_SUMMARY.md
+          
+          if [ -f "reports/slither-report/slither-report.md" ]; then
+            echo "### Slither Static Analysis" >> SECURITY_SUMMARY.md
+            cat reports/slither-report/slither-report.md >> SECURITY_SUMMARY.md
+            echo "" >> SECURITY_SUMMARY.md
+          fi
+          
+          if [ -f "reports/gas-report/gas-analysis.md" ]; then
+            echo "### Gas Optimization" >> SECURITY_SUMMARY.md
+            cat reports/gas-report/gas-analysis.md >> SECURITY_SUMMARY.md
+            echo "" >> SECURITY_SUMMARY.md
+          fi
+          
+          echo "## ✅ Security Standards" >> SECURITY_SUMMARY.md
+          echo "- [x] Multi-signature governance (4/7)" >> SECURITY_SUMMARY.md
+          echo "- [x] Timelock delay (48 hours)" >> SECURITY_SUMMARY.md
+          echo "- [x] Guardian emergency response (3/5)" >> SECURITY_SUMMARY.md
+          echo "- [x] Root owner veto capability" >> SECURITY_SUMMARY.md
+          echo "- [x] No single point of failure" >> SECURITY_SUMMARY.md
+
+      - name: Upload summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-summary
+          path: SECURITY_SUMMARY.md

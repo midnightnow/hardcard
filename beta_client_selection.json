@@ -1,0 +1,130 @@
+{
+  "selected_cohort": [
+    {
+      "clinic": "ClinicProfile(name='Peak Performance Veterinary', owner='Dr. Sarah Chen', monthly_revenue=85000, team_size=12, years_in_business=7, engagement_score=9, growth_trajectory='rapidly_growing', tech_adoption=9, feedback_quality=9, referral_potential=8, geographic_location='Austin, TX', specialties=['Emergency Medicine', 'Surgery'])",
+      "score": 9.0,
+      "adjusted_score": 16.0,
+      "breakdown": {
+        "revenue_stability": 9,
+        "engagement": 9,
+        "growth_potential": 10,
+        "feedback_quality": 9,
+        "referral_potential": 8
+      },
+      "selection_reasons": [
+        "Strong revenue base ($85,000/month)",
+        "High engagement with VetSorcery platform",
+        "Strong growth trajectory (rapidly_growing)",
+        "History of providing valuable feedback",
+        "High likelihood to refer other practices",
+        "Established practice (7 years)"
+      ]
+    },
+    {
+      "clinic": "ClinicProfile(name='Coastal Veterinary Services', owner='Dr. Amanda Foster', monthly_revenue=55000, team_size=7, years_in_business=6, engagement_score=9, growth_trajectory='growing', tech_adoption=8, feedback_quality=9, referral_potential=8, geographic_location='San Diego, CA', specialties=['Marine Animal Care', 'Surgery'])",
+      "score": 8.6,
+      "adjusted_score": 15.6,
+      "breakdown": {
+        "revenue_stability": 8,
+        "engagement": 8,
+        "growth_potential": 10,
+        "feedback_quality": 9,
+        "referral_potential": 8
+      },
+      "selection_reasons": [
+        "Strong revenue base ($55,000/month)",
+        "High engagement with VetSorcery platform",
+        "Strong growth trajectory (growing)",
+        "History of providing valuable feedback",
+        "High likelihood to refer other practices",
+        "Established practice (6 years)"
+      ]
+    },
+    {
+      "clinic": "ClinicProfile(name='Riverside Animal Hospital', owner='Dr. Michael Rodriguez', monthly_revenue=65000, team_size=8, years_in_business=12, engagement_score=8, growth_trajectory='growing', tech_adoption=7, feedback_quality=8, referral_potential=9, geographic_location='Portland, OR', specialties=['General Practice', 'Dentistry'])",
+      "score": 8.4,
+      "adjusted_score": 15.4,
+      "breakdown": {
+        "revenue_stability": 8,
+        "engagement": 7,
+        "growth_potential": 10,
+        "feedback_quality": 8,
+        "referral_potential": 9
+      },
+      "selection_reasons": [
+        "Strong revenue base ($65,000/month)",
+        "Strong growth trajectory (growing)",
+        "History of providing valuable feedback",
+        "High likelihood to refer other practices",
+        "Established practice (12 years)"
+      ]
+    },
+    {
+      "clinic": "ClinicProfile(name='Mountain View Veterinary Clinic', owner='Dr. Jennifer Park', monthly_revenue=45000, team_size=6, years_in_business=4, engagement_score=9, growth_trajectory='growing', tech_adoption=8, feedback_quality=9, referral_potential=7, geographic_location='Denver, CO', specialties=['General Practice', 'Exotic Animals'])",
+      "score": 7.9,
+      "adjusted_score": 14.9,
+      "breakdown": {
+        "revenue_stability": 6,
+        "engagement": 8,
+        "growth_potential": 9,
+        "feedback_quality": 9,
+        "referral_potential": 7
+      },
+      "selection_reasons": [
+        "High engagement with VetSorcery platform",
+        "Strong growth trajectory (growing)",
+        "History of providing valuable feedback"
+      ]
+    },
+    {
+      "clinic": "ClinicProfile(name='Happy Paws Veterinary', owner='Dr. Lisa Thompson', monthly_revenue=35000, team_size=4, years_in_business=3, engagement_score=8, growth_trajectory='rapidly_growing', tech_adoption=9, feedback_quality=8, referral_potential=6, geographic_location='Nashville, TN', specialties=['General Practice'])",
+      "score": 7.7,
+      "adjusted_score": 12.7,
+      "breakdown": {
+        "revenue_stability": 6,
+        "engagement": 8,
+        "growth_potential": 10,
+        "feedback_quality": 8,
+        "referral_potential": 6
+      },
+      "selection_reasons": [
+        "High engagement with VetSorcery platform",
+        "Strong growth trajectory (rapidly_growing)",
+        "History of providing valuable feedback"
+      ]
+    },
+    {
+      "clinic": "ClinicProfile(name='Sunset Boulevard Pet Care', owner='Dr. David Kim', monthly_revenue=95000, team_size=15, years_in_business=8, engagement_score=7, growth_trajectory='stable', tech_adoption=6, feedback_quality=7, referral_potential=8, geographic_location='Los Angeles, CA', specialties=['Surgery', 'Oncology', 'Cardiology'])",
+      "score": 7.4,
+      "adjusted_score": 14.4,
+      "breakdown": {
+        "revenue_stability": 9,
+        "engagement": 6,
+        "growth_potential": 8,
+        "feedback_quality": 7,
+        "referral_potential": 8
+      },
+      "selection_reasons": [
+        "Strong revenue base ($95,000/month)",
+        "Strong growth trajectory (stable)",
+        "High likelihood to refer other practices",
+        "Established practice (8 years)"
+      ]
+    }
+  ],
+  "total_qualified": 6,
+  "cohort_stats": {
+    "cohort_size": 6,
+    "total_monthly_revenue": 380000,
+    "average_score": 8.2,
+    "projected_beta_revenue": 1194,
+    "growth_distribution": {
+      "rapidly_growing": 2,
+      "growing": 3,
+      "stable": 1
+    },
+    "geographic_coverage": 6,
+    "specialty_coverage": 8
+  },
+  "selection_timestamp": "2025-08-05T20:28:05.573687"
+}

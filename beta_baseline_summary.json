@@ -1,0 +1,64 @@
+{
+  "baseline_date": "2025-08-05T20:39:20.222449",
+  "cohort_size": 6,
+  "total_monthly_revenue": 380000,
+  "beta_program_revenue": 1194,
+  "avg_strategic_clarity": 5.8,
+  "avg_leadership_confidence": 6.5,
+  "baseline_metrics": [
+    {
+      "clinic_id": "peak_performance_vet",
+      "clinic_name": "Peak Performance Veterinary",
+      "owner_name": "Dr. Sarah Chen",
+      "monthly_revenue": 85000,
+      "strategic_clarity_score": 6,
+      "leadership_confidence_score": 7,
+      "team_satisfaction_score": 6
+    },
+    {
+      "clinic_id": "coastal_veterinary",
+      "clinic_name": "Coastal Veterinary Services",
+      "owner_name": "Dr. Amanda Foster",
+      "monthly_revenue": 55000,
+      "strategic_clarity_score": 5,
+      "leadership_confidence_score": 6,
+      "team_satisfaction_score": 7
+    },
+    {
+      "clinic_id": "riverside_animal",
+      "clinic_name": "Riverside Animal Hospital",
+      "owner_name": "Dr. Michael Rodriguez",
+      "monthly_revenue": 65000,
+      "strategic_clarity_score": 7,
+      "leadership_confidence_score": 8,
+      "team_satisfaction_score": 6
+    },
+    {
+      "clinic_id": "mountain_view_vet",
+      "clinic_name": "Mountain View Veterinary Clinic",
+      "owner_name": "Dr. Jennifer Park",
+      "monthly_revenue": 45000,
+      "strategic_clarity_score": 5,
+      "leadership_confidence_score": 6,
+      "team_satisfaction_score": 8
+    },
+    {
+      "clinic_id": "happy_paws_vet",
+      "clinic_name": "Happy Paws Veterinary",
+      "owner_name": "Dr. Lisa Thompson",
+      "monthly_revenue": 35000,
+      "strategic_clarity_score": 4,
+      "leadership_confidence_score": 5,
+      "team_satisfaction_score": 7
+    },
+    {
+      "clinic_id": "sunset_boulevard",
+      "clinic_name": "Sunset Boulevard Pet Care",
+      "owner_name": "Dr. David Kim",
+      "monthly_revenue": 95000,
+      "strategic_clarity_score": 8,
+      "leadership_confidence_score": 7,
+      "team_satisfaction_score": 5
+    }
+  ]
+}

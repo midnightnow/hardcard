@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hardcard: Portfolio Resonance Check</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #050505;
+            font-family: 'Courier New', monospace;
+        }
+
+        #ui-layer {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #00ff9d;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .stat {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+
+        #meta-panel {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background: rgba(0, 20, 10, 0.9);
+            border: 1px solid #00ff9d;
+            padding: 15px;
+            color: #fff;
+            font-size: 12px;
+            display: none;
+        }
+
+        .meta-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 2px;
+        }
+
+        .meta-label {
+            color: #888;
+        }
+
+        .meta-val {
+            color: #00ff9d;
+            text-align: right;
+        }
+
+        .btn {
+            background: #00ff9d;
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            pointer-events: auto;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            background: #fff;
+        }
+
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #00ff9d;
+            font-size: 24px;
+            text-align: center;
+        }
+    </style>
+    <!-- Import Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+</head>
+
+<body>
+
+    <div id="ui-layer">
+        <h1>TOTAL VISIBILITY DASHBOARD</h1>
+        <div class="stat">SIGNATURE: 30-07-73</div>
+        <div class="stat">PROTOCOL: GEMINI_WIKI_SYNC_V1</div>
+        <div class="stat">UNIT SPACE: GLOBAL_RESONANCE</div>
+        <div style="margin-top: 20px;">
+            <div style="color: #00ff9d">■ LAND TITLES (EARTH AXIS)</div>
+            <div style="color: #ffaa00">■ BITCOIN (SCARCITY AXIS)</div>
+            <div style="color: #00aaff">■ FIAT LIQUIDITY (FLOW AXIS)</div>
+        </div>
+    </div>
+
+    <div id="loading">CONNECTING TO GEMINI REVERSE INDEX...</div>
+
+    <div id="meta-panel">
+        <div
+            style="text-align: center; margin-bottom: 10px; font-weight: bold; border-bottom: 1px solid #00ff9d; padding-bottom: 5px;">
+            FORENSIC LEDGER</div>
+        <div class="meta-row"><span class="meta-label">ID:</span> <span class="meta-val" id="m-id">--</span></div>
+        <div class="meta-row"><span class="meta-label">TYPE:</span> <span class="meta-val" id="m-type">--</span></div>
+        <div class="meta-row"><span class="meta-label">VALUE:</span> <span class="meta-val" id="m-val">--</span></div>
+        <div class="meta-row"><span class="meta-label">FREQ:</span> <span class="meta-val" id="m-freq">--</span></div>
+        <div class="meta-row"><span class="meta-label">COORD:</span> <span class="meta-val" id="m-coord">--</span></div>
+        <div style="margin-top: 10px; font-size: 10px; color: #666; word-break: break-all;" id="m-hash">HASH: ...</div>
+    </div>
+
+    <script>
+        // --- 3D SCENE SETUP ---
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x050505);
+        scene.fog = new THREE.FogExp2(0x050505, 0.03);
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 10, 20);
+        camera.lookAt(0, 0, 0);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Grid Helper
+        const gridHelper = new THREE.GridHelper(50, 50, 0x111111, 0x111111);
+        scene.add(gridHelper);
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0x404040);
+        scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(0xffffff, 1, 100);
+        pointLight.position.set(10, 10, 10);
+        scene.add(pointLight);
+
+        // Group to hold the spiral
+        const pivot = new THREE.Group();
+        scene.add(pivot);
+
+        // Interactivity
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        let intersectedNode = null;
+
+        // --- DATA LOADING ---
+        async function loadPortfolio() {
+            try {
+                const response = await fetch('hardcard_total_portfolio.json');
+                const data = await response.json();
+
+                document.getElementById('loading').style.display = 'none';
+                buildSpiral(data);
+            } catch (e) {
+                console.error(e);
+                document.getElementById('loading').innerText = "ERROR: LEDGER DISCONNECTED";
+            }
+        }
+
+        function getAssetColor(type) {
+            if (type === 'LAND') return 0x00ff9d; // Emerald
+            if (type === 'BTC') return 0xffaa00;  // Bitcoin Orange
+            if (type === 'FIAT') return 0x00aaff; // Cyan
+            return 0xffffff;
+        }
+
+        function buildSpiral(nodes) {
+            const geometry = new THREE.SphereGeometry(0.2, 16, 16);
+
+            // Connectors per type
+            const pointsByType = { 'LAND': [], 'BTC': [], 'FIAT': [] };
+
+            nodes.forEach((node, i) => {
+                const color = getAssetColor(node.asset_type);
+                const material = new THREE.MeshStandardMaterial({
+                    color: color,
+                    emissive: color,
+                    emissiveIntensity: 0.5
+                });
+
+                const sphere = new THREE.Mesh(geometry, material);
+                const [x, y, z] = node.coordinate;
+
+                sphere.position.set(x, y, z);
+                sphere.userData = node; // Store data for raycasting
+
+                pivot.add(sphere);
+
+                // Collect points for lines
+                if (pointsByType[node.asset_type]) {
+                    pointsByType[node.asset_type].push(new THREE.Vector3(x, y, z));
+                }
+            });
+
+            // Draw connecting lines (The Arms)
+            Object.keys(pointsByType).forEach(type => {
+                const pts = pointsByType[type];
+                if (pts.length > 1) {
+                    const lineGeo = new THREE.BufferGeometry().setFromPoints(pts);
+                    const lineMat = new THREE.LineBasicMaterial({
+                        color: getAssetColor(type),
+                        transparent: true,
+                        opacity: 0.3
+                    });
+                    const line = new THREE.Line(lineGeo, lineMat);
+                    pivot.add(line);
+                }
+            });
+
+            // Animate Camera Entry
+            gsap.to(camera.position, {
+                x: 10, y: 5, z: 15,
+                duration: 3,
+                ease: "power2.out"
+            });
+        }
+
+        // --- ANIMATION LOOP ---
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Slow rotation of the entire multiverse
+            pivot.rotation.y += 0.002;
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // --- INPUT HANDLING ---
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(pivot.children);
+
+            if (intersects.length > 0) {
+                const obj = intersects[0].object;
+                if (obj.userData && obj !== intersectedNode) {
+                    if (intersectedNode) intersectedNode.material.emissiveIntensity = 0.5;
+                    intersectedNode = obj;
+                    intersectedNode.material.emissiveIntensity = 2.0;
+
+                    showMeta(obj.userData);
+                }
+            } else {
+                if (intersectedNode) {
+                    intersectedNode.material.emissiveIntensity = 0.5;
+                    intersectedNode = null;
+                    document.getElementById('meta-panel').style.display = 'none';
+                }
+            }
+        });
+
+        function showMeta(data) {
+            const pan = document.getElementById('meta-panel');
+            pan.style.display = 'block';
+
+            document.getElementById('m-id').innerText = data.identifier.substring(0, 15) + '...';
+            document.getElementById('m-type').innerText = data.asset_type;
+            document.getElementById('m-val').innerText = data.value_raw;
+            document.getElementById('m-freq').innerText = data.resonance_frequency;
+            document.getElementById('m-coord').innerText = `[${data.coordinate.join(',')}]`;
+            document.getElementById('m-hash').innerText = 'HASH: ' + (data.meta.geostamp || data.identifier);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Start
+        loadPortfolio();
+
+    </script>
+</body>
+
+</html>

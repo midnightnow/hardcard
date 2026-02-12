@@ -1,0 +1,405 @@
+{
+  "timestamp": "2025-07-04T19:16:07.349384",
+  "summary": {
+    "total_tests": 53,
+    "passed": 50,
+    "failed": 3,
+    "score": 94.34
+  },
+  "vulnerabilities": [
+    {
+      "timestamp": "2025-07-04T19:16:06.916552",
+      "category": "Timing Attack",
+      "test": "User enumeration",
+      "passed": false,
+      "details": "Timing difference: 5001.27ms"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.006320",
+      "category": "Cache Security",
+      "test": "Cache headers",
+      "passed": false,
+      "details": "Weak cache control: "
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.320161",
+      "category": "Rate Limiting",
+      "test": "Distributed attack",
+      "passed": false,
+      "details": "Rate limiting not effective against distributed attacks"
+    }
+  ],
+  "all_results": [
+    {
+      "timestamp": "2025-07-04T19:16:06.916552",
+      "category": "Timing Attack",
+      "test": "User enumeration",
+      "passed": false,
+      "details": "Timing difference: 5001.27ms"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:06.983842",
+      "category": "Race Condition",
+      "test": "Concurrent requests",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:06.985159",
+      "category": "HTTP Verb",
+      "test": "HEAD on /api/telehealth/sessions",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:06.986219",
+      "category": "HTTP Verb",
+      "test": "OPTIONS on /api/telehealth/sessions",
+      "passed": true,
+      "details": "Method blocked or errored"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:06.987596",
+      "category": "HTTP Verb",
+      "test": "TRACE on /api/telehealth/sessions",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:06.988631",
+      "category": "HTTP Verb",
+      "test": "CONNECT on /api/telehealth/sessions",
+      "passed": true,
+      "details": "Method blocked or errored"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:06.989701",
+      "category": "HTTP Verb",
+      "test": "PATCH on /api/telehealth/sessions",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:06.990699",
+      "category": "HTTP Verb",
+      "test": "HEAD on /api/clients/123",
+      "passed": true,
+      "details": "Method blocked or errored"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:06.991788",
+      "category": "HTTP Verb",
+      "test": "OPTIONS on /api/clients/123",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:06.992894",
+      "category": "HTTP Verb",
+      "test": "TRACE on /api/clients/123",
+      "passed": true,
+      "details": "Method blocked or errored"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:06.994152",
+      "category": "HTTP Verb",
+      "test": "CONNECT on /api/clients/123",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:06.995271",
+      "category": "HTTP Verb",
+      "test": "PATCH on /api/clients/123",
+      "passed": true,
+      "details": "Method blocked or errored"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:06.996768",
+      "category": "HTTP Verb",
+      "test": "HEAD on /api/auth/login",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:06.997936",
+      "category": "HTTP Verb",
+      "test": "OPTIONS on /api/auth/login",
+      "passed": true,
+      "details": "Method blocked or errored"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:06.999093",
+      "category": "HTTP Verb",
+      "test": "TRACE on /api/auth/login",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.000221",
+      "category": "HTTP Verb",
+      "test": "CONNECT on /api/auth/login",
+      "passed": true,
+      "details": "Method blocked or errored"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.001391",
+      "category": "HTTP Verb",
+      "test": "PATCH on /api/auth/login",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.001462",
+      "category": "Header Injection",
+      "test": "X-Forwarded-For",
+      "passed": true,
+      "details": "Injection blocked"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.001520",
+      "category": "Header Injection",
+      "test": "User-Agent",
+      "passed": true,
+      "details": "Injection blocked"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.001575",
+      "category": "Header Injection",
+      "test": "Referer",
+      "passed": true,
+      "details": "Injection blocked"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.001623",
+      "category": "Header Injection",
+      "test": "Host",
+      "passed": true,
+      "details": "Injection blocked"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.002569",
+      "category": "XXE",
+      "test": "/api/clients",
+      "passed": true,
+      "details": "XXE blocked"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.003909",
+      "category": "XXE",
+      "test": "/api/auth/login",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.005123",
+      "category": "XXE",
+      "test": "/api/test",
+      "passed": true,
+      "details": "XXE blocked"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.006320",
+      "category": "Cache Security",
+      "test": "Cache headers",
+      "passed": false,
+      "details": "Weak cache control: "
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.007565",
+      "category": "Cache Security",
+      "test": "Cache poisoning",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.320161",
+      "category": "Rate Limiting",
+      "test": "Distributed attack",
+      "passed": false,
+      "details": "Rate limiting not effective against distributed attacks"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.320956",
+      "category": "JWT Security",
+      "test": "Token validation",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.322183",
+      "category": "JWT Security",
+      "test": "Token validation",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.323794",
+      "category": "JWT Security",
+      "test": "Token validation",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.324875",
+      "category": "JWT Security",
+      "test": "Token validation",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.326052",
+      "category": "JWT Security",
+      "test": "Token validation",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.327062",
+      "category": "SSRF",
+      "test": "http://localhost:22",
+      "passed": true,
+      "details": "SSRF blocked"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.328633",
+      "category": "SSRF",
+      "test": "http://169.254.169.254/latest/meta-data/",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.329664",
+      "category": "SSRF",
+      "test": "file:///etc/passwd",
+      "passed": true,
+      "details": "SSRF blocked"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.330829",
+      "category": "SSRF",
+      "test": "gopher://localhost:8001",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.331911",
+      "category": "SSRF",
+      "test": "dict://localhost:11211",
+      "passed": true,
+      "details": "SSRF blocked"
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.333094",
+      "category": "Business Logic",
+      "test": "Negative values",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.334068",
+      "category": "Business Logic",
+      "test": "Integer overflow",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.335021",
+      "category": "Misconfiguration",
+      "test": "Debug endpoint /_debug",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.336022",
+      "category": "Misconfiguration",
+      "test": "Debug endpoint /debug",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.336981",
+      "category": "Misconfiguration",
+      "test": "Debug endpoint /api/debug",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.337965",
+      "category": "Misconfiguration",
+      "test": "Debug endpoint /__debug__",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.339058",
+      "category": "Misconfiguration",
+      "test": "Debug endpoint /api/v1/debug",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.340065",
+      "category": "Misconfiguration",
+      "test": "Config file /.env",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.341488",
+      "category": "Misconfiguration",
+      "test": "Config file /config.json",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.342529",
+      "category": "Misconfiguration",
+      "test": "Config file /settings.py",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.343717",
+      "category": "Misconfiguration",
+      "test": "Config file /app.config",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.344686",
+      "category": "Misconfiguration",
+      "test": "Config file /.git/config",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.346007",
+      "category": "API Versioning",
+      "test": "Version /api/v0/",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.347055",
+      "category": "API Versioning",
+      "test": "Version /api/v1/",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.348324",
+      "category": "API Versioning",
+      "test": "Version /api/v2/",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "timestamp": "2025-07-04T19:16:07.349344",
+      "category": "API Versioning",
+      "test": "Version /v1/api/",
+      "passed": true,
+      "details": ""
+    }
+  ]
+}

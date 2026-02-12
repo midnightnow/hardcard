@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-07-07",
+  "files_analyzed": 20,
+  "code_quality": {},
+  "security_analysis": {},
+  "overall_score": 66.67,
+  "summary": {
+    "total_issues": 0,
+    "security_issues": 0,
+    "avg_maintainability": 0,
+    "security_score": 100,
+    "quality_score": 100
+  }
+}

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hardcard-suite
+  labels:
+    name: hardcard-suite
+    app: hardcard
+    version: v1

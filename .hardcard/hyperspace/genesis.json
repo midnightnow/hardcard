@@ -1,0 +1,16 @@
+{
+  "seed_hash": "0xGENESIS_ALPHA_5884f932",
+  "transcended_at": 1770025463,
+  "local_agent": "Dallas_Genesis_Terminal",
+  "constitution": {
+    "integrity_fee": "10%",
+    "anti_amnesia": true,
+    "hash_chain_version": "HCL-01",
+    "economy_protocol": "HCL-07"
+  },
+  "sovereignty": {
+    "owns_keys": true,
+    "owns_data": true,
+    "can_fork": true
+  }
+}

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIVA Revenue Tracker Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f6fa; color: #333; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        
+        /* Header */
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 10px; margin-bottom: 2rem; text-align: center; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { opacity: 0.9; font-size: 1.1rem; }
+        
+        /* Stats Overview */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .stat-card { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; position: relative; overflow: hidden; }
+        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #667eea, #764ba2); }
+        .stat-number { font-size: 3rem; font-weight: bold; color: #667eea; display: block; }
+        .stat-label { font-size: 1.1rem; color: #666; margin-top: 0.5rem; }
+        .stat-change { font-size: 0.9rem; margin-top: 0.5rem; padding: 0.25rem 0.5rem; border-radius: 15px; }
+        .positive { background: #d4edda; color: #155724; }
+        .negative { background: #f8d7da; color: #721c24; }
+        
+        /* Main Content Grid */
+        .content-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+        
+        /* Funnel Tracker */
+        .funnel-tracker { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .funnel-tracker h2 { color: #333; margin-bottom: 1.5rem; display: flex; align-items: center; }
+        .funnel-tracker h2::before { content: '📊'; margin-right: 0.5rem; }
+        
+        .funnel-step { display: flex; justify-content: space-between; align-items: center; padding: 1rem; margin-bottom: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #667eea; }
+        .funnel-step-info { flex: 1; }
+        .funnel-step-label { font-weight: bold; color: #333; }
+        .funnel-step-desc { font-size: 0.9rem; color: #666; }
+        .funnel-step-value { font-size: 1.5rem; font-weight: bold; color: #667eea; min-width: 60px; text-align: right; }
+        .funnel-step input { background: none; border: none; font-size: 1.5rem; font-weight: bold; color: #667eea; width: 60px; text-align: right; }
+        
+        /* Progress Bars */
+        .progress-bar { width: 100%; height: 8px; background: #e9ecef; border-radius: 4px; margin-top: 0.5rem; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #667eea, #764ba2); transition: width 0.3s ease; }
+        
+        /* Milestones */
+        .milestones { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .milestones h2 { color: #333; margin-bottom: 1.5rem; display: flex; align-items: center; }
+        .milestones h2::before { content: '🎯'; margin-right: 0.5rem; }
+        
+        .milestone { padding: 1rem; margin-bottom: 1rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .milestone.completed { background: #d4edda; border-left: 4px solid #28a745; }
+        .milestone.pending { background: #fff3cd; border-left: 4px solid #ffc107; }
+        .milestone.missed { background: #f8d7da; border-left: 4px solid #dc3545; }
+        
+        .milestone-text { flex: 1; }
+        .milestone-status { font-weight: bold; padding: 0.25rem 0.75rem; border-radius: 15px; }
+        .status-completed { background: #28a745; color: white; }
+        .status-pending { background: #ffc107; color: #212529; }
+        .status-missed { background: #dc3545; color: white; }
+        
+        /* Action Items */
+        .action-items { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        .action-items h2 { color: #333; margin-bottom: 1.5rem; display: flex; align-items: center; }
+        .action-items h2::before { content: '⚡'; margin-right: 0.5rem; }
+        
+        .action-item { padding: 1rem; margin-bottom: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #ff6b6b; display: flex; justify-content: space-between; align-items: center; }
+        .action-priority { background: #ff6b6b; color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem; font-weight: bold; }
+        
+        /* Revenue Chart */
+        .revenue-chart { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .chart-container { height: 200px; background: #f8f9fa; border-radius: 8px; display: flex; align-items: end; justify-content: space-around; padding: 1rem; }
+        .chart-bar { background: linear-gradient(to top, #667eea, #764ba2); border-radius: 4px 4px 0 0; width: 40px; margin: 0 2px; position: relative; transition: all 0.3s ease; }
+        .chart-bar:hover { transform: translateY(-5px); }
+        .chart-label { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 0.8rem; }
+        
+        /* Quick Actions */
+        .quick-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem; }
+        .action-button { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1rem; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; text-decoration: none; text-align: center; transition: transform 0.3s ease; }
+        .action-button:hover { transform: translateY(-2px); }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>AIVA Revenue Tracker</h1>
+            <p>Real-time dashboard for pilot program and revenue generation</p>
+            <p><strong>Goal:</strong> $8,000 Week 1 | <strong>Today:</strong> <span id="currentDate"></span></p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number" id="totalRevenue">$0</span>
+                <div class="stat-label">Total Revenue Today</div>
+                <div class="stat-change positive" id="revenueChange">+$0 vs yesterday</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="totalCustomers">0</span>
+                <div class="stat-label">New Customers</div>
+                <div class="stat-change positive" id="customerChange">+0 today</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="conversionRate">0%</span>
+                <div class="stat-label">Conversion Rate</div>
+                <div class="stat-change positive" id="conversionChange">+0% vs target</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="spotsRemaining">10</span>
+                <div class="stat-label">Pilot Spots Left</div>
+                <div class="stat-change negative">⚡ Limited time</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-grid">
+            <!-- Funnel Tracker -->
+            <div class="funnel-tracker">
+                <h2>Sales Funnel Tracker</h2>
+                
+                <div class="funnel-step">
+                    <div class="funnel-step-info">
+                        <div class="funnel-step-label">Emails Sent</div>
+                        <div class="funnel-step-desc">Pilot pack outreach emails</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%"></div>
+                        </div>
+                    </div>
+                    <input type="number" class="funnel-step-value" id="emailsSent" value="0" onchange="updateMetrics()">
+                </div>
+
+                <div class="funnel-step">
+                    <div class="funnel-step-info">
+                        <div class="funnel-step-label">Landing Page Visits</div>
+                        <div class="funnel-step-desc">pilot.aiva.vet traffic</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 25%"></div>
+                        </div>
+                    </div>
+                    <input type="number" class="funnel-step-value" id="pageVisits" value="0" onchange="updateMetrics()">
+                </div>
+
+                <div class="funnel-step">
+                    <div class="funnel-step-info">
+                        <div class="funnel-step-label">Demo Calls Booked</div>
+                        <div class="funnel-step-desc">15-minute consultations</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 15%"></div>
+                        </div>
+                    </div>
+                    <input type="number" class="funnel-step-value" id="demoCalls" value="0" onchange="updateMetrics()">
+                </div>
+
+                <div class="funnel-step">
+                    <div class="funnel-step-info">
+                        <div class="funnel-step-label">Pilot Pack Sales</div>
+                        <div class="funnel-step-desc">$1,500 payments received</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 5%"></div>
+                        </div>
+                    </div>
+                    <input type="number" class="funnel-step-value" id="pilotSales" value="0" onchange="updateMetrics()">
+                </div>
+
+                <div class="funnel-step">
+                    <div class="funnel-step-info">
+                        <div class="funnel-step-label">Compliance Audits</div>
+                        <div class="funnel-step-desc">$1,000 audit requests</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <input type="number" class="funnel-step-value" id="auditRequests" value="0" onchange="updateMetrics()">
+                </div>
+            </div>
+
+            <!-- Milestones -->
+            <div class="milestones">
+                <h2>48-Hour Milestones</h2>
+                
+                <div class="milestone pending" id="milestone1">
+                    <div class="milestone-text">
+                        <strong>First Pilot Payment</strong><br>
+                        <small>$1,500 pilot pack sale</small>
+                    </div>
+                    <span class="milestone-status status-pending">PENDING</span>
+                </div>
+
+                <div class="milestone pending" id="milestone2">
+                    <div class="milestone-text">
+                        <strong>3 Audit Inquiries</strong><br>
+                        <small>Compliance audit interest</small>
+                    </div>
+                    <span class="milestone-status status-pending">PENDING</span>
+                </div>
+
+                <div class="milestone pending" id="milestone3">
+                    <div class="milestone-text">
+                        <strong>5% Conversion Rate</strong><br>
+                        <small>Landing page performance</small>
+                    </div>
+                    <span class="milestone-status status-pending">PENDING</span>
+                </div>
+
+                <div class="milestone pending" id="milestone4">
+                    <div class="milestone-text">
+                        <strong>10+ Email Responses</strong><br>
+                        <small>Positive engagement</small>
+                    </div>
+                    <span class="milestone-status status-pending">PENDING</span>
+                </div>
+
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem;">7-Day Goals</h3>
+                
+                <div class="milestone pending" id="milestone5">
+                    <div class="milestone-text">
+                        <strong>$8,000 Revenue</strong><br>
+                        <small>Week 1 target</small>
+                    </div>
+                    <span class="milestone-status status-pending">PENDING</span>
+                </div>
+
+                <div class="milestone pending" id="milestone6">
+                    <div class="milestone-text">
+                        <strong>5 Pilot Customers</strong><br>
+                        <small>Onboarded practices</small>
+                    </div>
+                    <span class="milestone-status status-pending">PENDING</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Items -->
+        <div class="action-items">
+            <h2>Today's Priority Actions</h2>
+            
+            <div class="action-item">
+                <div>
+                    <strong>Send first batch of 20 pilot emails</strong><br>
+                    <small>Use template and personalize for each practice</small>
+                </div>
+                <span class="action-priority">HIGH</span>
+            </div>
+
+            <div class="action-item">
+                <div>
+                    <strong>Post LinkedIn announcement</strong><br>
+                    <small>"Limited Beta: AI for Veterinary Practices"</small>
+                </div>
+                <span class="action-priority">HIGH</span>
+            </div>
+
+            <div class="action-item">
+                <div>
+                    <strong>Set up Stripe payment link</strong><br>
+                    <small>$1,500 pilot pack checkout integration</small>
+                </div>
+                <span class="action-priority">URGENT</span>
+            </div>
+
+            <div class="action-item">
+                <div>
+                    <strong>Compile veterinary contact list</strong><br>
+                    <small>Export 50 target practices to CSV</small>
+                </div>
+                <span class="action-priority">HIGH</span>
+            </div>
+
+            <div class="action-item">
+                <div>
+                    <strong>Create compliance audit checklist</strong><br>
+                    <small>Standardize 48-hour delivery process</small>
+                </div>
+                <span class="action-priority">MEDIUM</span>
+            </div>
+        </div>
+
+        <!-- Revenue Chart -->
+        <div class="revenue-chart">
+            <h2>📈 Daily Revenue Progress</h2>
+            <div class="chart-container">
+                <div class="chart-bar" style="height: 20%" id="day1">
+                    <div class="chart-label">Day 1</div>
+                </div>
+                <div class="chart-bar" style="height: 0%" id="day2">
+                    <div class="chart-label">Day 2</div>
+                </div>
+                <div class="chart-bar" style="height: 0%" id="day3">
+                    <div class="chart-label">Day 3</div>
+                </div>
+                <div class="chart-bar" style="height: 0%" id="day4">
+                    <div class="chart-label">Day 4</div>
+                </div>
+                <div class="chart-bar" style="height: 0%" id="day5">
+                    <div class="chart-label">Day 5</div>
+                </div>
+                <div class="chart-bar" style="height: 0%" id="day6">
+                    <div class="chart-label">Day 6</div>
+                </div>
+                <div class="chart-bar" style="height: 0%" id="day7">
+                    <div class="chart-label">Day 7</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <a href="mailto:pilot@aiva.vet" class="action-button">📧 Send Emails</a>
+            <a href="https://pilot.aiva.vet" class="action-button">📊 View Landing Page</a>
+            <a href="https://stripe.com/dashboard" class="action-button">💳 Check Payments</a>
+            <a href="https://calendly.com/aiva-demo" class="action-button">📅 Demo Calendar</a>
+            <a href="https://linkedin.com" class="action-button">🔗 Post on LinkedIn</a>
+            <a href="#" class="action-button" onclick="exportData()">📄 Export Data</a>
+        </div>
+    </div>
+
+    <script>
+        // Set current date
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString();
+
+        // Update metrics function
+        function updateMetrics() {
+            const emailsSent = parseInt(document.getElementById('emailsSent').value) || 0;
+            const pageVisits = parseInt(document.getElementById('pageVisits').value) || 0;
+            const demoCalls = parseInt(document.getElementById('demoCalls').value) || 0;
+            const pilotSales = parseInt(document.getElementById('pilotSales').value) || 0;
+            const auditRequests = parseInt(document.getElementById('auditRequests').value) || 0;
+
+            // Calculate totals
+            const totalRevenue = (pilotSales * 1500) + (auditRequests * 1000);
+            const totalCustomers = pilotSales + auditRequests;
+            const conversionRate = pageVisits > 0 ? ((pilotSales / pageVisits) * 100).toFixed(1) : 0;
+            const spotsRemaining = 10 - pilotSales;
+
+            // Update display
+            document.getElementById('totalRevenue').textContent = `$${totalRevenue.toLocaleString()}`;
+            document.getElementById('totalCustomers').textContent = totalCustomers;
+            document.getElementById('conversionRate').textContent = `${conversionRate}%`;
+            document.getElementById('spotsRemaining').textContent = spotsRemaining;
+
+            // Update progress bars
+            updateProgressBar(emailsSent, 50, 0);
+            updateProgressBar(pageVisits, emailsSent * 0.2, 1);
+            updateProgressBar(demoCalls, pageVisits * 0.1, 2);
+            updateProgressBar(pilotSales, demoCalls * 0.3, 3);
+            updateProgressBar(auditRequests, emailsSent * 0.05, 4);
+
+            // Check milestones
+            checkMilestones(totalRevenue, pilotSales, auditRequests, conversionRate, emailsSent);
+
+            // Save data to localStorage
+            saveData();
+        }
+
+        function updateProgressBar(current, target, index) {
+            const percentage = target > 0 ? Math.min((current / target) * 100, 100) : 0;
+            const progressBars = document.querySelectorAll('.progress-fill');
+            if (progressBars[index]) {
+                progressBars[index].style.width = `${percentage}%`;
+            }
+        }
+
+        function checkMilestones(revenue, sales, audits, conversion, emails) {
+            // 48-hour milestones
+            updateMilestone('milestone1', sales >= 1);
+            updateMilestone('milestone2', audits >= 3);
+            updateMilestone('milestone3', conversion >= 5);
+            updateMilestone('milestone4', emails >= 10);
+
+            // 7-day milestones
+            updateMilestone('milestone5', revenue >= 8000);
+            updateMilestone('milestone6', sales >= 5);
+        }
+
+        function updateMilestone(id, completed) {
+            const milestone = document.getElementById(id);
+            const status = milestone.querySelector('.milestone-status');
+            
+            if (completed) {
+                milestone.className = 'milestone completed';
+                status.className = 'milestone-status status-completed';
+                status.textContent = 'COMPLETED';
+            } else {
+                milestone.className = 'milestone pending';
+                status.className = 'milestone-status status-pending';
+                status.textContent = 'PENDING';
+            }
+        }
+
+        function saveData() {
+            const data = {
+                emailsSent: document.getElementById('emailsSent').value,
+                pageVisits: document.getElementById('pageVisits').value,
+                demoCalls: document.getElementById('demoCalls').value,
+                pilotSales: document.getElementById('pilotSales').value,
+                auditRequests: document.getElementById('auditRequests').value,
+                lastUpdated: new Date().toISOString()
+            };
+            localStorage.setItem('aivaMetrics', JSON.stringify(data));
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem('aivaMetrics');
+            if (saved) {
+                const data = JSON.parse(saved);
+                document.getElementById('emailsSent').value = data.emailsSent || 0;
+                document.getElementById('pageVisits').value = data.pageVisits || 0;
+                document.getElementById('demoCalls').value = data.demoCalls || 0;
+                document.getElementById('pilotSales').value = data.pilotSales || 0;
+                document.getElementById('auditRequests').value = data.auditRequests || 0;
+                updateMetrics();
+            }
+        }
+
+        function exportData() {
+            const data = JSON.parse(localStorage.getItem('aivaMetrics') || '{}');
+            const csv = 'Metric,Value\n' + 
+                       `Emails Sent,${data.emailsSent || 0}\n` +
+                       `Page Visits,${data.pageVisits || 0}\n` +
+                       `Demo Calls,${data.demoCalls || 0}\n` +
+                       `Pilot Sales,${data.pilotSales || 0}\n` +
+                       `Audit Requests,${data.auditRequests || 0}\n` +
+                       `Total Revenue,$${((data.pilotSales || 0) * 1500) + ((data.auditRequests || 0) * 1000)}\n` +
+                       `Last Updated,${data.lastUpdated || 'Never'}`;
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = `aiva-metrics-${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Auto-save every 30 seconds
+        setInterval(saveData, 30000);
+
+        // Load saved data on page load
+        window.onload = function() {
+            loadData();
+            updateMetrics();
+        };
+
+        // Update timestamp every minute
+        setInterval(() => {
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString();
+        }, 60000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HardCard Content Generation Showcase</title>
+    <style>
+        :root {
+            --phi: 1.618;
+            --primary: #6B5B95;
+            --secondary: #FF6B6B;
+            --accent: #4ECDC4;
+            --gold: #FFD700;
+            --cosmic: #1a1a2e;
+            --nebula: #16213e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, var(--cosmic) 0%, var(--nebula) 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(0,0,0,0.3);
+            margin-bottom: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--gold), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .content-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            font-size: 1.5em;
+        }
+
+        .poetry-container {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+
+        .poetry-title {
+            color: var(--accent);
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .math-score {
+            color: var(--gold);
+            font-size: 0.9em;
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        .muse-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .muse-card {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .muse-card:hover {
+            background: rgba(255,255,255,0.15);
+            transform: scale(1.05);
+        }
+
+        .muse-name {
+            color: var(--gold);
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .frequency {
+            color: var(--accent);
+            font-size: 1.1em;
+        }
+
+        .domains {
+            color: #ccc;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .video-pipeline {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .pipeline-step {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .step-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .creative-dna {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .sacred-constants {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .constant-card {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--gold);
+        }
+
+        .constant-symbol {
+            font-size: 2em;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .constant-value {
+            font-size: 0.9em;
+            color: var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #888;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .muse-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>HardCard Content Generation Showcase</h1>
+            <p class="subtitle">Mathematical Beauty Through AI-Powered Creativity</p>
+        </header>
+
+        <!-- Sacred Geometry Poetry -->
+        <section class="content-section">
+            <h2><span class="icon">📜</span> Sacred Geometry Poetry Engine</h2>
+            <p>Generating poetry using mathematical constraints from sacred constants like φ (phi), π (pi), Fibonacci sequences, and Euler's number.</p>
+            
+            <div class="sacred-constants">
+                <div class="constant-card">
+                    <div class="constant-symbol">φ</div>
+                    <div class="constant-value">1.618033...</div>
+                    <div>Golden Ratio</div>
+                </div>
+                <div class="constant-card">
+                    <div class="constant-symbol">π</div>
+                    <div class="constant-value">3.141592...</div>
+                    <div>Circle Constant</div>
+                </div>
+                <div class="constant-card">
+                    <div class="constant-symbol">Fib</div>
+                    <div class="constant-value">1,1,2,3,5,8...</div>
+                    <div>Fibonacci</div>
+                </div>
+                <div class="constant-card">
+                    <div class="constant-symbol">e</div>
+                    <div class="constant-value">2.718281...</div>
+                    <div>Euler's Number</div>
+                </div>
+            </div>
+
+            <div class="poetry-container">
+                <div class="poetry-title">SONNET - Golden Ratio Constrained (Iambic Pentameter)</div>
+Through cosmic veils where golden spirals dance,
+The universe unfolds in sacred rhyme,
+Each star a note in mathematical trance,
+Composing symphonies beyond our time.
+
+The nebulae spin fractals in the night,
+While gravity conducts the cosmic score,
+In patterns that the ancients knew were right,
+The golden ratio opens every door.
+
+From galaxies to seashells on the shore,
+The same divine proportion guides the way,
+In nature's blueprint, hidden evermore,
+The Fibonacci sequence holds its sway.
+
+So marvel at this universal truth displayed,
+Where mathematics and beauty are arrayed.
+                <div class="math-score">Mathematical Score: 0.927 | Sacred Constant: φ (Phi)</div>
+            </div>
+
+            <div class="poetry-container">
+                <div class="poetry-title">HAIKU - Fibonacci Constrained</div>
+Morning dewdrops gleam
+Reflecting sunrise golden
+Peace embraces all
+                <div class="math-score">Mathematical Score: 0.895 | Sacred Constant: Fibonacci</div>
+            </div>
+
+            <div class="poetry-container">
+                <div class="poetry-title">VILLANELLE - Pi Constrained</div>
+In circles endless, time revolves and flows,
+The constant pi defines our mortal dance,
+Through mathematical beauty, wisdom grows.
+
+The universe in cyclic patterns shows,
+How numbers guide each planetary stance,
+In circles endless, time revolves and flows.
+
+From atom's spin to how the river goes,
+We find the ratio in every glance,
+Through mathematical beauty, wisdom grows.
+
+The sacred geometry that nature knows,
+Reveals itself in each divine expanse,
+In circles endless, time revolves and flows.
+
+In every petal that the flower shows,
+In every spiral of the cosmic trance,
+Through mathematical beauty, wisdom grows.
+
+So let us celebrate what math bestows,
+This universal truth we can't enhance:
+In circles endless, time revolves and flows,
+Through mathematical beauty, wisdom grows.
+                <div class="math-score">Mathematical Score: 0.912 | Sacred Constant: π (Pi)</div>
+            </div>
+        </section>
+
+        <!-- Muse Discovery System -->
+        <section class="content-section">
+            <h2><span class="icon">🎭</span> Muse Creative Discovery System</h2>
+            <p>Nine Muse archetypes guide creative expression through unique frequency signatures and mathematical patterns.</p>
+            
+            <div class="creative-dna">
+                Creative DNA: PHI:0.618-PI:0.314-FIB:8-E:1.732-HZ:741.0-MUSE:EUTCAL
+            </div>
+
+            <div class="muse-grid">
+                <div class="muse-card">
+                    <div class="muse-name">Calliope</div>
+                    <div class="frequency">528 Hz - Transformation</div>
+                    <div class="domains">Epic Poetry, Leadership, Vision</div>
+                </div>
+                <div class="muse-card">
+                    <div class="muse-name">Clio</div>
+                    <div class="frequency">639 Hz - Relationships</div>
+                    <div class="domains">History, Memory, Documentation</div>
+                </div>
+                <div class="muse-card">
+                    <div class="muse-name">Erato</div>
+                    <div class="frequency">417 Hz - Change</div>
+                    <div class="domains">Love Poetry, Emotion, Intimacy</div>
+                </div>
+                <div class="muse-card">
+                    <div class="muse-name">Euterpe</div>
+                    <div class="frequency">741 Hz - Expression</div>
+                    <div class="domains">Music, Rhythm, Harmony</div>
+                </div>
+                <div class="muse-card">
+                    <div class="muse-name">Melpomene</div>
+                    <div class="frequency">396 Hz - Liberation</div>
+                    <div class="domains">Tragedy, Transformation, Depth</div>
+                </div>
+                <div class="muse-card">
+                    <div class="muse-name">Polyhymnia</div>
+                    <div class="frequency">852 Hz - Intuition</div>
+                    <div class="domains">Sacred Hymns, Meditation, Wisdom</div>
+                </div>
+                <div class="muse-card">
+                    <div class="muse-name">Terpsichore</div>
+                    <div class="frequency">174 Hz - Foundation</div>
+                    <div class="domains">Dance, Movement, Celebration</div>
+                </div>
+                <div class="muse-card">
+                    <div class="muse-name">Thalia</div>
+                    <div class="frequency">285 Hz - Healing</div>
+                    <div class="domains">Comedy, Joy, Lightness</div>
+                </div>
+                <div class="muse-card">
+                    <div class="muse-name">Urania</div>
+                    <div class="frequency">963 Hz - Connection</div>
+                    <div class="domains">Astronomy, Mathematics, Universal</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Music Video Generation -->
+        <section class="content-section">
+            <h2><span class="icon">🎬</span> AI Music Video Generation Pipeline</h2>
+            <p>Multi-step AI pipeline transforming text prompts into complete music videos.</p>
+            
+            <div class="video-pipeline">
+                <div class="pipeline-step">
+                    <div class="step-icon">🎵</div>
+                    <div>Lyrics Generation</div>
+                    <small>Claude AI</small>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-icon">🎼</div>
+                    <div>Music Composition</div>
+                    <small>Suno API</small>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-icon">🎨</div>
+                    <div>Visual Creation</div>
+                    <small>Flux AI</small>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-icon">🎪</div>
+                    <div>Animation</div>
+                    <small>Kling AI</small>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-icon">🎞️</div>
+                    <div>Video Editing</div>
+                    <small>Veed</small>
+                </div>
+            </div>
+
+            <div class="poetry-container">
+                <div class="poetry-title">Example Generated Lyrics</div>
+Verse 1:
+A journey through the mathematical beauty of consciousness
+Where sacred patterns dance in cosmic dress
+
+Chorus:
+Echoes of creation, mathematical sensation
+Dancing through dimensions of imagination
+Sacred geometry in motion, infinite devotion
+To the universal equation
+
+Verse 2:
+Patterns emerge from chaos divine
+Sacred geometry in every line
+The golden spiral guides our way
+Through the cosmic dance today
+            </div>
+        </section>
+
+        <!-- Music Generation -->
+        <section class="content-section">
+            <h2><span class="icon">🎵</span> Suno Music Generation</h2>
+            <p>AI-powered music generation based on concepts, moods, and mathematical themes.</p>
+            
+            <div class="poetry-container">
+                <div class="poetry-title">Generated Track: "Sacred Geometry Symphony"</div>
+Concept: Musical exploration of the golden ratio and Fibonacci sequences
+Mood: Mystical, Contemplative
+Genre: Ambient Electronic
+Duration: 3:45
+Key: A Minor (432 Hz tuning)
+
+Features:
+- Melodic patterns based on Fibonacci intervals
+- Rhythm structured on golden ratio timing
+- Harmonic progression following sacred geometry
+- Binaural beats at Solfeggio frequencies
+            </div>
+        </section>
+
+        <footer>
+            <p>HardCard Content Generation Systems - Where Mathematics Meets Creativity</p>
+            <p>All content generated using sacred geometry principles and AI assistance</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate sacred constant cards
+            const cards = document.querySelectorAll('.constant-card');
+            cards.forEach((card, index) => {
+                card.style.animation = `float ${3 + index * 0.5}s ease-in-out infinite`;
+            });
+            
+            // Add hover effects to poetry containers
+            const poetryContainers = document.querySelectorAll('.poetry-container');
+            poetryContainers.forEach(container => {
+                container.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.02)';
+                    this.style.transition = 'transform 0.3s ease';
+                });
+                container.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        });
+
+        // CSS animation for floating effect
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-20px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

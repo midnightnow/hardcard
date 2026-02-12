@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Million Monkey Shakespeare Theater</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .theater {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #FFD700, #FF6B6B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes shimmer {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        .stage {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid #FFD700;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .monkeys {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .monkey {
+            font-size: 2em;
+            animation: typing 0.5s infinite;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .monkey:hover {
+            transform: scale(1.2);
+        }
+
+        .monkey.active {
+            animation: typing 0.2s infinite;
+        }
+
+        @keyframes typing {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .shakespeare-quote {
+            font-size: 1.5em;
+            background: rgba(0,0,0,0.5);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #FFD700;
+        }
+
+        .attempt {
+            font-size: 1.3em;
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+        }
+
+        .correct {
+            color: #4ECDC4;
+            background-color: rgba(78, 205, 196, 0.2);
+        }
+
+        .incorrect {
+            color: #FF6B6B;
+            background-color: rgba(255, 107, 107, 0.2);
+        }
+
+        .score {
+            font-size: 1.2em;
+            margin: 10px 0;
+            color: #FFD700;
+        }
+
+        .controls {
+            margin: 20px 0;
+        }
+
+        button {
+            background: linear-gradient(45deg, #6B5B95, #4ECDC4);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .stats {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            color: #4ECDC4;
+            display: block;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFD700, #4ECDC4);
+            transition: width 0.3s ease;
+            border-radius: 15px;
+        }
+
+        .sacred-constants {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .constant {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: #FFD700;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .muse-active {
+            color: #FF6B6B;
+            animation: glow 1s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px #FF6B6B; }
+            50% { text-shadow: 0 0 20px #FF6B6B; }
+        }
+    </style>
+</head>
+<body>
+    <div class="theater">
+        <h1 class="title">🎭 Million Monkey Shakespeare Theater 🎭</h1>
+        
+        <div class="stage">
+            <div class="shakespeare-quote" id="target-quote">
+                "To be or not to be, that is the question"
+            </div>
+            
+            <div class="monkeys">
+                <div class="monkey">🐵</div>
+                <div class="monkey">🐵</div>
+                <div class="monkey">🐵</div>
+                <div class="monkey">🐵</div>
+                <div class="monkey">🐵</div>
+                <div class="monkey">🐵</div>
+                <div class="monkey">🐵</div>
+                <div class="monkey">🐵</div>
+                <div class="monkey">🐵</div>
+                <div class="monkey">🐵</div>
+            </div>
+            
+            <div class="sacred-constants">
+                <div class="constant" data-constant="phi">φ</div>
+                <div class="constant" data-constant="pi">π</div>
+                <div class="constant" data-constant="fib">Fib</div>
+                <div class="constant" data-constant="euler">e</div>
+            </div>
+            
+            <div class="attempt" id="current-attempt">
+                Click "Start Typing" to begin the experiment!
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress" style="width: 0%"></div>
+            </div>
+            
+            <div class="score" id="score">Score: 0%</div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="startTyping()">Start Typing</button>
+            <button onclick="stopTyping()">Stop</button>
+            <button onclick="resetExperiment()">Reset</button>
+            <button onclick="newQuote()">New Quote</button>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-value" id="attempts">0</span>
+                <div>Attempts</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="keystrokes">0</span>
+                <div>Keystrokes</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="best-score">0%</span>
+                <div>Best Score</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="time-elapsed">0s</span>
+                <div>Time Elapsed</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const shakespeareQuotes = [
+            "To be or not to be that is the question",
+            "All the world's a stage",
+            "Romeo Romeo wherefore art thou Romeo",
+            "Is this a dagger which I see before me",
+            "Double double toil and trouble",
+            "To thine own self be true",
+            "The course of true love never did run smooth",
+            "All that glisters is not gold",
+            "Brevity is the soul of wit",
+            "What's in a name"
+        ];
+
+        let currentQuote = shakespeareQuotes[0];
+        let isTyping = false;
+        let attempts = 0;
+        let keystrokes = 0;
+        let bestScore = 0;
+        let startTime = 0;
+        let currentAttempt = "";
+        let typingInterval;
+        let timeInterval;
+
+        // Sacred constants for character selection
+        const sacredConstants = {
+            phi: 1.618033988749895,
+            pi: 3.141592653589793,
+            euler: 2.718281828459045,
+            fibonacci: [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144]
+        };
+
+        function getRandomCharacter(position, constant) {
+            const chars = "abcdefghijklmnopqrstuvwxyz ";
+            let index;
+            
+            if (constant === 'fibonacci') {
+                const fib = sacredConstants.fibonacci;
+                index = fib[position % fib.length] % chars.length;
+            } else {
+                const value = sacredConstants[constant];
+                const influence = (position * value) % 1;
+                index = Math.floor(influence * chars.length);
+            }
+            
+            // Add some randomness
+            if (Math.random() < 0.3) {
+                index = Math.floor(Math.random() * chars.length);
+            }
+            
+            return chars[index];
+        }
+
+        function calculateScore(attempt, target) {
+            if (attempt.length !== target.length) {
+                return 0;
+            }
+            
+            let matches = 0;
+            for (let i = 0; i < attempt.length; i++) {
+                if (attempt[i] === target[i]) {
+                    matches++;
+                }
+            }
+            return matches / target.length;
+        }
+
+        function displayAttempt(attempt, target) {
+            const container = document.getElementById('current-attempt');
+            let html = '';
+            
+            for (let i = 0; i < attempt.length; i++) {
+                const char = attempt[i] || '_';
+                const isCorrect = i < target.length && char === target[i];
+                const className = isCorrect ? 'correct' : 'incorrect';
+                html += `<span class="${className}">${char}</span>`;
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function updateStats() {
+            document.getElementById('attempts').textContent = attempts;
+            document.getElementById('keystrokes').textContent = keystrokes.toLocaleString();
+            document.getElementById('best-score').textContent = (bestScore * 100).toFixed(2) + '%';
+            
+            if (startTime > 0) {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                document.getElementById('time-elapsed').textContent = elapsed + 's';
+            }
+        }
+
+        function activateMonkey(index) {
+            const monkeys = document.querySelectorAll('.monkey');
+            monkeys.forEach((monkey, i) => {
+                monkey.classList.toggle('active', i === index);
+            });
+        }
+
+        function activateConstant(constant) {
+            const constants = document.querySelectorAll('.constant');
+            constants.forEach(c => {
+                c.classList.toggle('muse-active', c.dataset.constant === constant);
+            });
+        }
+
+        function typeOneCharacter() {
+            if (!isTyping) return;
+            
+            const target = currentQuote.toLowerCase();
+            const position = currentAttempt.length;
+            
+            if (position >= target.length) {
+                // Attempt complete
+                attempts++;
+                const score = calculateScore(currentAttempt, target);
+                
+                if (score > bestScore) {
+                    bestScore = score;
+                }
+                
+                // Update progress
+                const progress = document.getElementById('progress');
+                progress.style.width = (score * 100) + '%';
+                
+                document.getElementById('score').textContent = `Score: ${(score * 100).toFixed(2)}%`;
+                
+                // Check if perfect
+                if (score === 1) {
+                    alert('🎉 SHAKESPEARE ACHIEVED! 🎉');
+                    stopTyping();
+                    return;
+                }
+                
+                // Start new attempt
+                currentAttempt = "";
+                return;
+            }
+            
+            // Select random sacred constant and monkey
+            const constants = ['phi', 'pi', 'euler', 'fibonacci'];
+            const selectedConstant = constants[Math.floor(Math.random() * constants.length)];
+            const monkeyIndex = Math.floor(Math.random() * 10);
+            
+            // Activate visual feedback
+            activateMonkey(monkeyIndex);
+            activateConstant(selectedConstant);
+            
+            // Type character using sacred geometry
+            const char = getRandomCharacter(position, selectedConstant);
+            currentAttempt += char;
+            keystrokes++;
+            
+            // Display current attempt
+            displayAttempt(currentAttempt, target);
+            updateStats();
+        }
+
+        function startTyping() {
+            if (isTyping) return;
+            
+            isTyping = true;
+            startTime = Date.now();
+            currentAttempt = "";
+            
+            typingInterval = setInterval(typeOneCharacter, 100);
+            timeInterval = setInterval(updateStats, 1000);
+        }
+
+        function stopTyping() {
+            isTyping = false;
+            clearInterval(typingInterval);
+            clearInterval(timeInterval);
+            
+            // Deactivate all monkeys and constants
+            document.querySelectorAll('.monkey').forEach(m => m.classList.remove('active'));
+            document.querySelectorAll('.constant').forEach(c => c.classList.remove('muse-active'));
+        }
+
+        function resetExperiment() {
+            stopTyping();
+            attempts = 0;
+            keystrokes = 0;
+            bestScore = 0;
+            startTime = 0;
+            currentAttempt = "";
+            
+            document.getElementById('current-attempt').textContent = "Click 'Start Typing' to begin!";
+            document.getElementById('progress').style.width = '0%';
+            document.getElementById('score').textContent = 'Score: 0%';
+            updateStats();
+        }
+
+        function newQuote() {
+            const randomIndex = Math.floor(Math.random() * shakespeareQuotes.length);
+            currentQuote = shakespeareQuotes[randomIndex];
+            document.getElementById('target-quote').textContent = `"${currentQuote}"`;
+            resetExperiment();
+        }
+
+        // Initialize
+        updateStats();
+        
+        // Add click handlers for monkeys
+        document.querySelectorAll('.monkey').forEach(monkey => {
+            monkey.addEventListener('click', () => {
+                if (isTyping) {
+                    typeOneCharacter();
+                }
+            });
+        });
+
+        // Add keyboard shortcut
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (isTyping) {
+                    stopTyping();
+                } else {
+                    startTyping();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

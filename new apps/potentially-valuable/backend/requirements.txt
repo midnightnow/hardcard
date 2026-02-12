@@ -1,0 +1,11 @@
+# Workspace version: 1.45.2
+ipykernel==6.29.5
+databutton==0.38.34
+python-multipart==0.0.9
+uvicorn[standard]==0.29.0
+fastapi==0.111.0
+openai
+beautifulsoup4
+requests
+firebase-admin
+psutil  # OS4AI hardware empathy and consciousness substrate

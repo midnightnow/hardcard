@@ -1,0 +1,3 @@
+"""
+HardCard API module initialization.
+"""

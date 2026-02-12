@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HardCard API Documentation</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui.css" />
+    <style>
+        html {
+            box-sizing: border-box;
+            overflow: -moz-scrollbars-vertical;
+            overflow-y: scroll;
+        }
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+        body {
+            margin:0;
+            background: #fafafa;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui;
+        }
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .header p {
+            margin: 1rem 0 0;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .api-info {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            padding: 0 2rem;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+        .feature-card h3 {
+            margin: 0 0 1rem;
+            color: #1f2937;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        .feature-card p {
+            margin: 0;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        .swagger-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .quick-start {
+            background: #f3f4f6;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 3rem;
+        }
+        .quick-start h2 {
+            margin: 0 0 1rem;
+            color: #1f2937;
+        }
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏥 HardCard API Documentation</h1>
+        <p>Comprehensive API for AI-powered veterinary practice management</p>
+    </div>
+    
+    <div class="api-info">
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>🤖 AI Phone Agents</h3>
+                <p>24/7 automated phone handling for appointments, client communication, and emergency triage</p>
+            </div>
+            <div class="feature-card">
+                <h3>📋 Practice Management</h3>
+                <p>Complete EMR system with client management, patient records, and appointment scheduling</p>
+            </div>
+            <div class="feature-card">
+                <h3>🎭 MUSE Integration</h3>
+                <p>Mathematical creativity validation framework for enhanced diagnostic capabilities</p>
+            </div>
+            <div class="feature-card">
+                <h3>📊 Real-time Analytics</h3>
+                <p>Comprehensive monitoring, metrics, and business intelligence for veterinary practices</p>
+            </div>
+        </div>
+        
+        <div class="quick-start">
+            <h2>🚀 Quick Start</h2>
+            <p>Get started with the HardCard API in minutes:</p>
+            <div class="code-block">
+# 1. Obtain API token from HardCard dashboard
+export HARDCARD_TOKEN="your_api_token_here"
+
+# 2. Test connection
+curl -H "Authorization: Bearer $HARDCARD_TOKEN" \
+     https://api.hardcard.com/health
+
+# 3. List clients
+curl -H "Authorization: Bearer $HARDCARD_TOKEN" \
+     https://api.hardcard.com/routes/clients
+
+# 4. Create appointment via phone agent
+curl -X POST -H "Authorization: Bearer $HARDCARD_TOKEN" \
+     -H "Content-Type: application/json" \
+     -d '{"phone_number": "+1234567890", "call_type": "appointment"}' \
+     https://api.hardcard.com/routes/phone-agent/call
+            </div>
+        </div>
+    </div>
+    
+    <div class="swagger-container">
+        <div id="swagger-ui"></div>
+    </div>
+
+    <script src="https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui-bundle.js"></script>
+    <script src="https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui-standalone-preset.js"></script>
+    <script>
+        window.onload = function() {
+            // Load OpenAPI spec
+            const spec = {
+                "openapi": "3.0.0",
+                "info": {
+                    "title": "HardCard Veterinary Intelligence API",
+                    "description": "Comprehensive API for veterinary practice management with AI phone agents",
+                    "version": "2.0.0",
+                    "contact": {
+                        "name": "HardCard Support",
+                        "email": "support@hardcard.com",
+                        "url": "https://hardcard.com/support"
+                    }
+                },
+                "servers": [
+                    {"url": "https://api.hardcard.com", "description": "Production server"},
+                    {"url": "http://localhost:8000", "description": "Development server"}
+                ],
+                "paths": {
+                    "/health": {
+                        "get": {
+                            "summary": "Health check",
+                            "tags": ["Monitoring"],
+                            "responses": {
+                                "200": {
+                                    "description": "System health status",
+                                    "content": {
+                                        "application/json": {
+                                            "example": {
+                                                "status": "healthy",
+                                                "application": {
+                                                    "name": "HardCard Veterinary Platform",
+                                                    "version": "2.0.0",
+                                                    "environment": "production"
+                                                },
+                                                "services": {
+                                                    "hardcard_api": "operational",
+                                                    "phone_agents": "operational",
+                                                    "monitoring": "enabled"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "/routes/clients": {
+                        "get": {
+                            "summary": "List clients",
+                            "tags": ["Clients"],
+                            "security": [{"BearerAuth": []}],
+                            "parameters": [
+                                {
+                                    "name": "limit",
+                                    "in": "query",
+                                    "schema": {"type": "integer", "default": 50}
+                                }
+                            ],
+                            "responses": {
+                                "200": {
+                                    "description": "List of clients",
+                                    "content": {
+                                        "application/json": {
+                                            "example": {
+                                                "clients": [
+                                                    {
+                                                        "id": "client_123",
+                                                        "name": "Dr. Sarah Johnson",
+                                                        "email": "sarah@example.com",
+                                                        "phone": "+1234567890",
+                                                        "created_at": "2025-01-15T10:00:00Z"
+                                                    }
+                                                ],
+                                                "total": 1,
+                                                "limit": 50,
+                                                "offset": 0
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "post": {
+                            "summary": "Create client",
+                            "tags": ["Clients"],
+                            "security": [{"BearerAuth": []}],
+                            "requestBody": {
+                                "required": true,
+                                "content": {
+                                    "application/json": {
+                                        "example": {
+                                            "name": "Dr. Sarah Johnson",
+                                            "email": "sarah@example.com",
+                                            "phone": "+1234567890",
+                                            "address": "123 Main St, City, State"
+                                        }
+                                    }
+                                }
+                            },
+                            "responses": {
+                                "201": {
+                                    "description": "Client created",
+                                    "content": {
+                                        "application/json": {
+                                            "example": {
+                                                "id": "client_123",
+                                                "name": "Dr. Sarah Johnson",
+                                                "email": "sarah@example.com",
+                                                "phone": "+1234567890",
+                                                "created_at": "2025-01-15T10:00:00Z"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "/routes/phone-agent/call": {
+                        "post": {
+                            "summary": "Initiate AI phone call",
+                            "tags": ["Phone Agent"],
+                            "security": [{"BearerAuth": []}],
+                            "requestBody": {
+                                "required": true,
+                                "content": {
+                                    "application/json": {
+                                        "example": {
+                                            "phone_number": "+1234567890",
+                                            "call_type": "appointment",
+                                            "context": {
+                                                "preferred_time": "morning",
+                                                "service_type": "checkup"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "responses": {
+                                "200": {
+                                    "description": "Call initiated",
+                                    "content": {
+                                        "application/json": {
+                                            "example": {
+                                                "call_id": "call_abc123",
+                                                "status": "initiated",
+                                                "estimated_duration": 300,
+                                                "webhook_url": "https://api.hardcard.com/webhooks/call_abc123"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "components": {
+                    "securitySchemes": {
+                        "BearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "tags": [
+                    {"name": "Monitoring", "description": "System monitoring and health"},
+                    {"name": "Clients", "description": "Client management operations"},
+                    {"name": "Phone Agent", "description": "AI phone agent operations"}
+                ]
+            };
+
+            // Initialize Swagger UI
+            const ui = SwaggerUIBundle({
+                url: 'openapi.json',
+                spec: spec,
+                dom_id: '#swagger-ui',
+                deepLinking: true,
+                presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIStandalonePreset
+                ],
+                plugins: [
+                    SwaggerUIBundle.plugins.DownloadUrl
+                ],
+                layout: "StandaloneLayout",
+                tryItOutEnabled: true,
+                requestInterceptor: (request) => {
+                    // Add custom headers or modify requests
+                    request.headers['X-API-Version'] = '2.0.0';
+                    return request;
+                },
+                responseInterceptor: (response) => {
+                    // Log responses for debugging
+                    console.log('API Response:', response);
+                    return response;
+                }
+            });
+        };
+    </script>
+</body>
+</html>

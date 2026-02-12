@@ -1,0 +1,33 @@
+{
+  "de19c1ec37ca772739d47439a6a0e29be1700baf0b029a8ae45777d7fa6b69f2": {
+    "timestamp": 1770348210,
+    "message": "Decision: Use Ed25519 for agent keys to ensure self-sovereignty.",
+    "hash": "de19c1ec37ca772739d47439a6a0e29be1700baf0b029a8ae45777d7fa6b69f2"
+  },
+  "0dc68044367a87169d4c6609e72d029816a6873acc3acabcaa39cc94898e68c5": {
+    "timestamp": 1770349137,
+    "message": "Hardcard Lite v1.1.0 Official Release - Open Core Launch",
+    "hash": "0dc68044367a87169d4c6609e72d029816a6873acc3acabcaa39cc94898e68c5"
+  },
+  "7579e58db0fc30fb6547ccd4a6ec221982c693ba2c1f46203afdfab80f7931f6": {
+    "timestamp": 1770461751,
+    "message": "Mike Personality DNA v1.0 \u2014 Intelligence Weaver founding session",
+    "hash": "7579e58db0fc30fb6547ccd4a6ec221982c693ba2c1f46203afdfab80f7931f6"
+  },
+  "a18db815570c879297eb5dd78970b92132b6d5b6b1de4ea0f909925f313fdeeb": {
+    "timestamp": 1770511501,
+    "message": "Strategic Plan: Expand to Mars via reusable rockets.",
+    "hash": "a18db815570c879297eb5dd78970b92132b6d5b6b1de4ea0f909925f313fdeeb",
+    "author": "StrategyBrain_01"
+  },
+  "675f7bc0ee502484891c90a132ea08e8631dad83e78a25e2cab72b9253d28966": {
+    "timestamp": 1770783848,
+    "message": "Session Summary: Successfully tested start script. Decision: Use .agent/memory/ for persistent context.",
+    "hash": "675f7bc0ee502484891c90a132ea08e8631dad83e78a25e2cab72b9253d28966"
+  },
+  "19d75e8610b1efae898437ce63a7a7198f47f0a30b2d3a1d437d438413109636": {
+    "timestamp": 1770784180,
+    "message": "Session Summary: Implemented Athena Heartbeat. Decision: CLAUDE.md acts as the AI BIOS.",
+    "hash": "19d75e8610b1efae898437ce63a7a7198f47f0a30b2d3a1d437d438413109636"
+  }
+}

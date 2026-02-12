@@ -1,0 +1,217 @@
+# HardCard Development Aliases
+
+# Navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias ~='cd ~'
+alias -- -='cd -'
+
+# List files
+alias ls='exa --group-directories-first'
+alias l='ls -la'
+alias ll='ls -l'
+alias la='ls -a'
+alias lt='ls --tree'
+
+# Git shortcuts
+alias g='git'
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gca='git commit -a'
+alias gcam='git commit -am'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gp='git push'
+alias gpu='git push -u origin HEAD'
+alias gl='git log --oneline --graph --decorate'
+alias gla='git log --oneline --graph --decorate --all'
+alias gb='git branch'
+alias gba='git branch -a'
+alias gco='git checkout'
+alias gcb='git checkout -b'
+alias gm='git merge'
+alias gr='git remote'
+alias gra='git remote add'
+alias grv='git remote -v'
+alias gst='git stash'
+alias gstp='git stash pop'
+alias gstl='git stash list'
+alias greset='git reset --hard HEAD'
+alias gclean='git clean -fd'
+
+# Docker shortcuts
+alias d='docker'
+alias dc='docker-compose'
+alias dps='docker ps'
+alias dpsa='docker ps -a'
+alias di='docker images'
+alias dex='docker exec -it'
+alias dlog='docker logs -f'
+alias dstop='docker stop $(docker ps -q)'
+alias drm='docker rm $(docker ps -a -q)'
+alias drmi='docker rmi $(docker images -q)'
+alias dprune='docker system prune -af'
+
+# Python shortcuts
+alias py='python'
+alias py3='python3'
+alias pip='pip3'
+alias venv='python -m venv'
+alias activate='source .venv/bin/activate'
+alias deactivate='deactivate'
+alias pipreq='pip freeze > requirements.txt'
+alias pipinst='pip install -r requirements.txt'
+
+# Django/FastAPI shortcuts
+alias manage='python manage.py'
+alias runserver='python manage.py runserver'
+alias makemigrations='python manage.py makemigrations'
+alias migrate='python manage.py migrate'
+alias shell='python manage.py shell'
+alias startapp='python manage.py startapp'
+alias test='python -m pytest'
+alias fastapi='uvicorn main:app --reload'
+
+# Node/NPM shortcuts
+alias n='npm'
+alias ni='npm install'
+alias nid='npm install --save-dev'
+alias nig='npm install -g'
+alias nr='npm run'
+alias nrs='npm run start'
+alias nrt='npm run test'
+alias nrb='npm run build'
+alias nrd='npm run dev'
+
+# Yarn shortcuts
+alias y='yarn'
+alias yi='yarn install'
+alias ya='yarn add'
+alias yad='yarn add --dev'
+alias yr='yarn run'
+alias ys='yarn start'
+alias yt='yarn test'
+alias yb='yarn build'
+alias yd='yarn dev'
+
+# System shortcuts
+alias c='clear'
+alias h='history'
+alias j='jobs'
+alias e='exit'
+alias reload='source ~/.zshrc'
+alias path='echo -e ${PATH//:/\\n}'
+alias now='date +"%Y-%m-%d %H:%M:%S"'
+alias week='date +%V'
+
+# Network
+alias ip='curl -s ifconfig.me'
+alias localip='ipconfig getifaddr en0'
+alias ports='netstat -tulanp'
+alias ping='ping -c 5'
+
+# Process management
+alias ps='ps aux | grep -v grep | grep'
+alias top='htop'
+alias kill='kill -9'
+alias killport='lsof -ti:$1 | xargs kill -9'
+
+# File operations
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias rm='rm -iv'
+alias mkdir='mkdir -pv'
+alias touch='touch'
+alias cat='bat'
+alias less='less -R'
+alias head='head -n 20'
+alias tail='tail -n 20'
+alias tailf='tail -f'
+
+# Search
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias find='find . -name'
+alias ff='find . -type f -name'
+alias fd='find . -type d -name'
+alias rg='rg --hidden --follow'
+
+# Archive
+alias targz='tar -czvf'
+alias untargz='tar -xzvf'
+alias zip='zip -r'
+alias unzip='unzip'
+
+# Permissions
+alias chx='chmod +x'
+alias chr='chmod -R'
+alias cho='chown -R'
+
+# HardCard specific
+alias hc='cd $HARDCARD_ROOT'
+alias hcauth='cd $HARDCARD_ROOT/modules/agentauth'
+alias hcvault='cd $HARDCARD_ROOT/modules/legacy-vault'
+alias hcvet='cd $HARDCARD_ROOT/modules/vetsorcery'
+alias hccore='cd $HARDCARD_ROOT/modules/hardcard-core'
+alias hctests='cd $HARDCARD_ROOT/tests'
+alias hcdocs='cd $HARDCARD_ROOT/docs'
+
+# Testing
+alias test-all='pytest -v --cov=. --cov-report=html'
+alias test-unit='pytest tests/unit -v'
+alias test-integration='pytest tests/integration -v'
+alias test-security='pytest tests/security -v'
+alias test-watch='pytest-watch -- -v'
+alias test-failed='pytest --lf -v'
+alias test-cov='pytest --cov=. --cov-report=term-missing'
+
+# Code quality
+alias fmt='black . && isort .'
+alias lint='flake8 . && pylint src/'
+alias type='mypy .'
+alias sec='bandit -r . && safety check'
+alias quality='fmt && lint && type && sec'
+
+# Database
+alias dbshell='psql -h localhost -U hardcard -d hardcard_dev'
+alias dbauth='psql -h localhost -U hardcard -d agentauth_dev'
+alias dbvault='psql -h localhost -U hardcard -d legacy_vault_dev'
+alias dbvet='psql -h localhost -U hardcard -d vetsorcery_dev'
+alias dbmigrate='alembic upgrade head'
+alias dbrollback='alembic downgrade -1'
+alias dbhistory='alembic history'
+alias dbcurrent='alembic current'
+
+# Redis
+alias redis='redis-cli -a hardcard_dev'
+alias redis-flush='redis-cli -a hardcard_dev FLUSHALL'
+alias redis-monitor='redis-cli -a hardcard_dev MONITOR'
+
+# Monitoring
+alias logs='tail -f logs/*.log'
+alias errors='grep ERROR logs/*.log'
+alias metrics='open http://localhost:9090'
+alias traces='open http://localhost:16686'
+alias grafana='open http://localhost:3001'
+alias mailhog='open http://localhost:8025'
+
+# API testing
+alias api='http --json'
+alias apiv='http --verbose --json'
+alias apis='http --session=dev --json'
+
+# Performance
+alias bench='python -m pytest tests/performance --benchmark-only'
+alias profile='python -m cProfile -s cumulative'
+alias memprof='python -m memory_profiler'
+alias loadtest='k6 run tests/load/script.js'
+
+# Cleanup
+alias clean-py='find . -type f -name "*.pyc" -delete && find . -type d -name "__pycache__" -delete'
+alias clean-node='find . -name "node_modules" -type d -prune -exec rm -rf {} +'
+alias clean-docker='docker system prune -af --volumes'
+alias clean-all='clean-py && clean-node && clean-docker'

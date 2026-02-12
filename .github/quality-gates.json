@@ -1,0 +1,189 @@
+{
+  "version": "1.0.0",
+  "description": "VetSorcery Quality Gates - Medical-grade validation criteria",
+  "updated": "2024-01-06",
+  
+  "medical_impact_levels": {
+    "high": {
+      "description": "Changes affecting patient safety, drug interactions, emergency protocols",
+      "keywords": ["drug", "medication", "prescription", "patient", "emergency", "critical", "surgery", "dosage", "formulary", "controlled"],
+      "requirements": {
+        "manual_review": true,
+        "medical_validation": true,
+        "test_coverage": 100,
+        "documentation_required": true,
+        "security_scan": true
+      }
+    },
+    "medium": {
+      "description": "Changes affecting clinical workflows, billing, diagnostics",
+      "keywords": ["pharmacy", "billing", "appointment", "diagnostic", "report", "clinical"],
+      "requirements": {
+        "manual_review": false,
+        "medical_validation": true,
+        "test_coverage": 85,
+        "documentation_required": false,
+        "security_scan": true
+      }
+    },
+    "low": {
+      "description": "UI/UX changes, configuration, documentation",
+      "keywords": ["ui", "style", "config", "docs", "readme"],
+      "requirements": {
+        "manual_review": false,
+        "medical_validation": false,
+        "test_coverage": 70,
+        "documentation_required": false,
+        "security_scan": false
+      }
+    }
+  },
+
+  "quality_thresholds": {
+    "code_coverage": {
+      "minimum": 70,
+      "target": 85,
+      "medical_critical": 100
+    },
+    "build_time": {
+      "warning_seconds": 300,
+      "failure_seconds": 600
+    },
+    "bundle_size": {
+      "warning_mb": 2.0,
+      "failure_mb": 5.0
+    },
+    "performance": {
+      "lighthouse_score": 85,
+      "load_time_ms": 3000
+    }
+  },
+
+  "security_requirements": {
+    "dependency_audit": {
+      "enabled": true,
+      "severity_threshold": "moderate",
+      "auto_fix": false
+    },
+    "code_scan": {
+      "enabled": true,
+      "tools": ["eslint-security", "semgrep"]
+    },
+    "secrets_detection": {
+      "enabled": true,
+      "block_commits": true
+    }
+  },
+
+  "medical_validation_rules": {
+    "drug_interactions": {
+      "enabled": true,
+      "database": "clinical_drug_db",
+      "severity_levels": ["contraindicated", "major", "moderate", "minor"]
+    },
+    "dosage_calculations": {
+      "enabled": true,
+      "validation_precision": 0.001,
+      "unit_conversion_check": true
+    },
+    "emergency_protocols": {
+      "enabled": true,
+      "response_time_validation": true,
+      "critical_path_testing": true
+    },
+    "controlled_substances": {
+      "enabled": true,
+      "dea_compliance": true,
+      "audit_trail": true,
+      "access_control": true
+    }
+  },
+
+  "test_requirements": {
+    "unit_tests": {
+      "minimum_coverage": 70,
+      "medical_coverage": 100,
+      "fast_fail": true
+    },
+    "integration_tests": {
+      "critical_paths": ["patient_workflow", "prescription_workflow", "emergency_workflow"],
+      "external_apis": true
+    },
+    "medical_scenario_tests": {
+      "drug_interaction_scenarios": 50,
+      "emergency_scenarios": 25,
+      "dosage_calculation_scenarios": 100
+    },
+    "accessibility": {
+      "wcag_level": "AA",
+      "screen_reader_compatible": true
+    }
+  },
+
+  "deployment_gates": {
+    "staging": {
+      "required_approvals": 1,
+      "smoke_tests": true,
+      "security_scan": true,
+      "medical_validation": "medium"
+    },
+    "production": {
+      "required_approvals": 2,
+      "full_test_suite": true,
+      "security_scan": true,
+      "medical_validation": "high",
+      "rollback_plan": true,
+      "monitoring_setup": true
+    }
+  },
+
+  "notification_settings": {
+    "medical_high_impact": {
+      "channels": ["email", "slack"],
+      "recipients": ["medical_team", "security_team", "qa_team"]
+    },
+    "security_alerts": {
+      "channels": ["email", "slack", "pagerduty"],
+      "recipients": ["security_team", "devops_team"]
+    },
+    "deployment_status": {
+      "channels": ["slack"],
+      "recipients": ["dev_team"]
+    }
+  },
+
+  "compliance_requirements": {
+    "hipaa": {
+      "enabled": true,
+      "data_encryption": true,
+      "access_logging": true,
+      "audit_trail": true
+    },
+    "dea": {
+      "enabled": true,
+      "controlled_substance_tracking": true,
+      "prescriber_verification": true
+    },
+    "fda": {
+      "enabled": true,
+      "medical_device_compliance": false,
+      "adverse_event_reporting": true
+    }
+  },
+
+  "automation_settings": {
+    "auto_merge": {
+      "enabled": false,
+      "conditions": ["low_medical_impact", "all_tests_pass", "security_clear"]
+    },
+    "auto_deploy": {
+      "staging": true,
+      "production": false
+    },
+    "rollback_triggers": {
+      "error_rate_threshold": 0.05,
+      "response_time_threshold": 5000,
+      "medical_alert_threshold": 1
+    }
+  }
+}

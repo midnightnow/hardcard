@@ -1,0 +1,125 @@
+#!/bin/bash
+# HardCard Time Machine Validation Aliases
+# Source this file to get convenient TM validation commands
+
+# Set HC_ROOT if not already set
+export HC_ROOT=${HC_ROOT:-$(pwd)}
+export HC_TM_DATA_DIR="${HC_ROOT}/data/tm_validation"
+
+# Core aliases
+alias hc-tm-discovery="${HC_ROOT}/hc-tm-discovery"
+alias hc-tm-index="python3 ${HC_ROOT}/tools/tm_indexer/tm_index.py"
+alias hc-tm-make="make -f ${HC_ROOT}/Makefile.tm"
+
+# Quick commands
+alias hc-tm-status="hc-tm-make tm-status"
+alias hc-tm-phase0="hc-tm-make tm-phase0"
+alias hc-tm-phase1="hc-tm-make tm-phase1"
+alias hc-tm-all="hc-tm-make all"
+
+# Analysis aliases
+alias hc-tm-query="hc-tm-make tm-query"
+alias hc-tm-extensions="hc-tm-make tm-extensions"
+alias hc-tm-dedup="sqlite3 ${HC_TM_DATA_DIR}/hc_tm.db 'SELECT COUNT(DISTINCT quick_sig)/CAST(COUNT(*) AS REAL) as dedup_ratio FROM files'"
+
+# Database shortcuts
+alias hc-tm-db="sqlite3 ${HC_TM_DATA_DIR}/hc_tm.db"
+alias hc-tm-schema="hc-tm-db '.schema'"
+alias hc-tm-size="du -h ${HC_TM_DATA_DIR}/hc_tm.db 2>/dev/null || echo 'No database found'"
+
+# Development helpers
+alias hc-tm-logs="tail -f /tmp/hc-tm-*.log 2>/dev/null || echo 'No log files found'"
+alias hc-tm-clean="hc-tm-make tm-clean"
+
+# Functions for complex operations
+hc-tm-find() {
+    if [ -z "$1" ]; then
+        echo "Usage: hc-tm-find <filename_pattern>"
+        return 1
+    fi
+    
+    hc-tm-db "SELECT DISTINCT filename, COUNT(*) as copies, relative_path 
+              FROM files 
+              WHERE filename LIKE '%$1%' 
+              GROUP BY filename 
+              ORDER BY copies DESC 
+              LIMIT 20"
+}
+
+hc-tm-versions() {
+    if [ -z "$1" ]; then
+        echo "Usage: hc-tm-versions <filename>"
+        return 1
+    fi
+    
+    hc-tm-db "SELECT s.name as snapshot, f.relative_path, f.size_bytes, 
+                     datetime(f.mtime, 'unixepoch') as modified
+              FROM files f
+              JOIN snapshots s ON f.snapshot_id = s.id
+              WHERE f.filename = '$1'
+              ORDER BY f.mtime DESC"
+}
+
+hc-tm-biggest() {
+    local limit=${1:-10}
+    echo "🗂️  Top $limit largest files:"
+    hc-tm-db "SELECT filename, 
+                     ROUND(size_bytes / 1024.0 / 1024.0, 1) as mb,
+                     COUNT(*) as copies
+              FROM files 
+              GROUP BY filename, size_bytes
+              ORDER BY size_bytes DESC 
+              LIMIT $limit"
+}
+
+hc-tm-recent() {
+    local days=${1:-7}
+    echo "📅 Files modified in last $days days:"
+    hc-tm-db "SELECT filename, relative_path, 
+                     datetime(mtime, 'unixepoch') as modified
+              FROM files 
+              WHERE mtime > strftime('%s', 'now', '-$days days')
+              ORDER BY mtime DESC 
+              LIMIT 20"
+}
+
+# Validation helpers
+hc-tm-validate() {
+    echo "🔍 HardCard Time Machine Validation Suite"
+    echo "========================================="
+    
+    if [ ! -f "${HC_TM_DATA_DIR}/hc_tm.db" ]; then
+        echo "❌ Database not found. Run: hc-tm-phase1"
+        return 1
+    fi
+    
+    echo "📊 Database status:"
+    hc-tm-status
+    
+    echo ""
+    echo "🔗 Dedup analysis:"
+    hc-tm-query | head -5
+    
+    echo ""
+    echo "📎 Extension breakdown:"
+    hc-tm-extensions | head -10
+    
+    echo ""
+    echo "✅ Validation complete. Ready for Hyperspace ingest!"
+}
+
+# Export functions so they're available in subshells
+export -f hc-tm-find hc-tm-versions hc-tm-biggest hc-tm-recent hc-tm-validate
+
+echo "🚀 HardCard Time Machine aliases loaded!"
+echo "Quick start:"
+echo "  hc-tm-phase0     # Discovery"
+echo "  hc-tm-phase1     # Indexing"  
+echo "  hc-tm-status     # Check status"
+echo "  hc-tm-validate   # Full validation"
+echo ""
+echo "Analysis:"
+echo "  hc-tm-find 'invoice'     # Find files by name"
+echo "  hc-tm-versions file.pdf  # Show all versions"
+echo "  hc-tm-biggest 10         # Top 10 largest files"
+echo "  hc-tm-recent 30          # Files from last 30 days"

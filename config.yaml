@@ -1,0 +1,276 @@
+# Alexandria Safety Configuration
+# Config-driven thresholds and category policies for the FastAPI safety wrapper
+
+# Database Configuration
+database:
+  url: "postgresql://alexandria:secure_password@localhost:5432/alexandria_safety"
+  pool_size: 20
+  timeout: 60
+
+# Knowledge Graph Configuration
+knowledge_graph:
+  endpoint: "https://kg.alexandria.hardcard.org/api/v1"
+  timeout: 10
+  require_verification: true
+  min_evidence_sources: 2
+
+# Rate Limiting Configuration
+rate_limit:
+  requests_per_minute: 60
+  burst_size: 10
+  user_requests_per_minute: 1000  # Authenticated users get higher limits
+  admin_requests_per_minute: 10000
+
+# Safety Thresholds by Risk Category
+thresholds:
+  # Low-risk information queries
+  INFORMATION:
+    confidence_threshold: 0.80
+    enable_kg_verification: false
+    allow_autonomous: true
+    max_uncertainty: 0.20
+
+  # Appointment scheduling
+  SCHEDULING:
+    confidence_threshold: 0.85
+    enable_kg_verification: true
+    allow_autonomous: true
+    max_uncertainty: 0.15
+    
+  # Basic triage suggestions
+  TRIAGE:
+    confidence_threshold: 0.90
+    enable_kg_verification: true
+    allow_autonomous: false  # Always require human review
+    max_uncertainty: 0.10
+    
+  # Treatment recommendations
+  TREATMENT:
+    confidence_threshold: 0.95
+    enable_kg_verification: true
+    allow_autonomous: false
+    max_uncertainty: 0.05
+    required_evidence_sources: 3
+    
+  # Diagnostic suggestions
+  DIAGNOSIS:
+    confidence_threshold: 0.98
+    enable_kg_verification: true
+    allow_autonomous: false
+    max_uncertainty: 0.02
+    required_evidence_sources: 4
+    
+  # Medication/dosage (never autonomous)
+  PRESCRIPTION:
+    confidence_threshold: 0.99
+    enable_kg_verification: true
+    allow_autonomous: false
+    max_uncertainty: 0.01
+    required_evidence_sources: 5
+    mandatory_human_review: true
+    
+  # Life-threatening situations
+  CRITICAL:
+    confidence_threshold: 1.00
+    enable_kg_verification: true
+    allow_autonomous: false
+    max_uncertainty: 0.00
+    immediate_escalation: true
+    notify_emergency_team: true
+
+# Multi-Model Ensemble Configuration
+ensemble:
+  enabled: true
+  models:
+    - name: "gpt-4"
+      weight: 0.30
+      temperature: 0.1
+    - name: "claude-3-opus"
+      weight: 0.25
+      temperature: 0.1
+    - name: "gemini-pro"
+      weight: 0.25
+      temperature: 0.1
+    - name: "medical-specialist"
+      weight: 0.20
+      temperature: 0.05
+  
+  consensus_threshold: 0.85
+  require_majority: true
+
+# Calibration Settings
+calibration:
+  enabled: true
+  min_accuracy: 0.95
+  validation_dataset_size: 1000
+  recalibration_interval: "24h"
+  drift_detection_window: 100
+  drift_threshold: 0.05
+
+# Audit and Compliance
+audit:
+  enabled: true
+  log_all_decisions: true
+  retention_days: 2555  # 7 years for medical records
+  encryption_enabled: true
+  compliance_standards:
+    - "HIPAA"
+    - "GDPR" 
+    - "PIPEDA"
+    - "AVMA_GUIDELINES"
+
+# Security Configuration
+security:
+  jwt_expiration_hours: 24
+  password_complexity:
+    min_length: 12
+    require_uppercase: true
+    require_lowercase: true
+    require_numbers: true
+    require_special_chars: true
+  
+  api_key_length: 64
+  max_failed_attempts: 5
+  lockout_duration_minutes: 30
+
+# Monitoring and Alerting
+monitoring:
+  enabled: true
+  metrics_collection_interval: 60  # seconds
+  
+  alerts:
+    # High error rate
+    error_rate_threshold: 0.05
+    error_rate_window: "5m"
+    
+    # Processing time alerts
+    avg_processing_time_threshold: 5000  # milliseconds
+    processing_time_window: "10m"
+    
+    # Calibration drift
+    calibration_drift_threshold: 0.03
+    
+    # Failed authentication
+    failed_auth_threshold: 10
+    failed_auth_window: "1m"
+
+# Category-Specific Policies
+policies:
+  INFORMATION:
+    cache_ttl: 3600  # 1 hour
+    public_access: true
+    
+  SCHEDULING:
+    cache_ttl: 300   # 5 minutes
+    require_patient_context: true
+    
+  TRIAGE:
+    cache_ttl: 0     # No caching
+    require_symptoms: true
+    log_level: "INFO"
+    
+  TREATMENT:
+    cache_ttl: 0
+    require_veterinarian_license: true
+    dual_approval: true
+    log_level: "WARNING"
+    
+  DIAGNOSIS:
+    cache_ttl: 0
+    require_veterinarian_license: true
+    require_patient_history: true
+    peer_review_required: true
+    log_level: "ERROR"
+    
+  PRESCRIPTION:
+    cache_ttl: 0
+    require_dea_license: true
+    drug_interaction_check: true
+    dosage_verification: true
+    pharmacy_notification: true
+    log_level: "CRITICAL"
+    
+  CRITICAL:
+    cache_ttl: 0
+    immediate_veterinarian_alert: true
+    emergency_protocol: true
+    log_level: "CRITICAL"
+    retain_indefinitely: true
+
+# Evidence Quality Requirements
+evidence_quality:
+  trusted_sources:
+    - name: "AVMA"
+      weight: 1.0
+      categories: ["guidelines", "standards", "best_practices"]
+    - name: "AAHA" 
+      weight: 0.95
+      categories: ["protocols", "standards"]
+    - name: "JAVMA"
+      weight: 0.90
+      categories: ["research", "peer_reviewed"]
+    - name: "VIN"
+      weight: 0.85
+      categories: ["clinical", "case_studies"]
+    - name: "WSAVA"
+      weight: 0.90
+      categories: ["global_standards", "guidelines"]
+  
+  minimum_sources_by_category:
+    INFORMATION: 1
+    SCHEDULING: 1
+    TRIAGE: 2
+    TREATMENT: 3
+    DIAGNOSIS: 4
+    PRESCRIPTION: 5
+    CRITICAL: 5
+    
+  evidence_freshness:
+    max_age_days: 1825  # 5 years
+    prefer_recent: true
+    deprecation_factor: 0.95  # Reduce confidence by 5% per year
+
+# Performance Optimization
+performance:
+  cache:
+    enabled: true
+    backend: "redis"
+    default_ttl: 300
+    max_size: "1GB"
+    
+  batch_processing:
+    enabled: true
+    max_batch_size: 10
+    batch_timeout: 1000  # milliseconds
+    
+  connection_pooling:
+    database_pool_size: 20
+    kg_pool_size: 10
+    http_pool_size: 100
+
+# Environment-Specific Overrides
+environments:
+  development:
+    rate_limit:
+      requests_per_minute: 1000
+    security:
+      jwt_expiration_hours: 168  # 1 week
+    monitoring:
+      alerts:
+        error_rate_threshold: 0.20  # More lenient
+        
+  staging:
+    database:
+      url: "postgresql://alexandria_staging:password@staging-db:5432/alexandria"
+    knowledge_graph:
+      endpoint: "https://staging-kg.alexandria.hardcard.org/api/v1"
+      
+  production:
+    security:
+      jwt_expiration_hours: 8  # Shorter for production
+    monitoring:
+      alerts:
+        error_rate_threshold: 0.01  # Very strict
+    audit:
+      log_all_decisions: true
+      retention_days: 2555

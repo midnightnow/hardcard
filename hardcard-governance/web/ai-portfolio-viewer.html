@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 AI Agent Portfolio Viewer</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .agent-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .agent-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .agent-btn:hover, .agent-btn.active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .portfolio-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .agent-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .agent-name {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .agent-type {
+            text-align: center;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+        
+        .level-progress {
+            margin-bottom: 20px;
+        }
+        
+        .level-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .level-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            transition: width 0.5s ease;
+        }
+        
+        .portfolio-value {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .total-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+        
+        .value-breakdown {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .token-balance {
+            text-align: center;
+        }
+        
+        .token-amount {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        
+        .token-symbol {
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+        
+        .badges-section {
+            margin-bottom: 20px;
+        }
+        
+        .badges-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        
+        .badge {
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            font-size: 0.9em;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .performance-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .metric {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .metric-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+        
+        .chart-section {
+            margin-bottom: 30px;
+        }
+        
+        .chart-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .transactions-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .transaction-info {
+            flex: 1;
+        }
+        
+        .transaction-desc {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .transaction-time {
+            font-size: 0.8em;
+            opacity: 0.7;
+        }
+        
+        .transaction-amount {
+            text-align: right;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        
+        .staking-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .staking-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .staking-amount {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        
+        .apy-rate {
+            color: #8BC34A;
+            font-weight: bold;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .sparkle {
+            animation: sparkle 2s infinite;
+        }
+        
+        .refresh-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .refresh-btn:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body x-data="portfolioData()">
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AI Agent Portfolio Viewer</h1>
+            <p>Individual agent performance and virtual wealth tracking</p>
+        </div>
+
+        <div class="agent-selector">
+            <template x-for="agent in agents" :key="agent.id">
+                <button class="agent-btn" 
+                        :class="{ active: selectedAgent.id === agent.id }"
+                        @click="selectAgent(agent)"
+                        x-text="agent.name">
+                </button>
+            </template>
+        </div>
+
+        <div class="portfolio-grid">
+            <div class="portfolio-card">
+                <div class="agent-avatar" x-text="selectedAgent.avatar"></div>
+                <div class="agent-name" x-text="selectedAgent.name"></div>
+                <div class="agent-type" x-text="selectedAgent.type"></div>
+                
+                <div class="level-progress">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span x-text="'Level ' + selectedAgent.level"></span>
+                        <span x-text="selectedAgent.experience + ' XP'"></span>
+                    </div>
+                    <div class="level-bar">
+                        <div class="level-fill" :style="'width: ' + selectedAgent.levelProgress + '%'"></div>
+                    </div>
+                </div>
+
+                <div class="badges-section">
+                    <h4 style="text-align: center; margin-bottom: 10px;">🏆 Achievements</h4>
+                    <div class="badges-grid">
+                        <template x-for="badge in selectedAgent.badges" :key="badge">
+                            <span class="badge" x-text="badge"></span>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portfolio-card">
+                <div class="portfolio-value">
+                    <div class="total-value sparkle" x-text="'$' + formatNumber(selectedAgent.portfolioValue)"></div>
+                    <div style="opacity: 0.8;">Total Portfolio Value</div>
+                    
+                    <div class="value-breakdown">
+                        <div class="token-balance">
+                            <div class="token-amount" x-text="formatNumber(selectedAgent.hgovBalance)"></div>
+                            <div class="token-symbol">HGOV</div>
+                            <div style="font-size: 0.8em; color: #4CAF50;" x-text="'$' + formatNumber(selectedAgent.hgovValue)"></div>
+                        </div>
+                        <div class="token-balance">
+                            <div class="token-amount" x-text="formatNumber(selectedAgent.hccBalance)"></div>
+                            <div class="token-symbol">HCC</div>
+                            <div style="font-size: 0.8em; color: #4CAF50;" x-text="'$' + formatNumber(selectedAgent.hccValue)"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="performance-metrics">
+                    <div class="metric">
+                        <div class="metric-value" x-text="selectedAgent.performanceScore + '%'"></div>
+                        <div class="metric-label">Performance Score</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value" x-text="selectedAgent.bugsFound"></div>
+                        <div class="metric-label">Bugs Found</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value" x-text="selectedAgent.uptime + '%'"></div>
+                        <div class="metric-label">Uptime</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value" x-text="selectedAgent.responseTime + 's'"></div>
+                        <div class="metric-label">Avg Response</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <div class="chart-container">
+                <h3 style="margin-bottom: 20px;">📈 Portfolio Performance (7 Days)</h3>
+                <canvas id="portfolioChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+
+        <div class="staking-section">
+            <div class="staking-card">
+                <h4>🔒 HGOV Staking</h4>
+                <div class="staking-amount" x-text="formatNumber(selectedAgent.hgovStaked) + ' HGOV'"></div>
+                <div>APY: <span class="apy-rate">5.0%</span></div>
+                <div style="margin-top: 10px; font-size: 0.9em;">
+                    Virtual Rewards: <span style="color: #4CAF50;" x-text="'$' + formatNumber(selectedAgent.stakingRewards)"></span>
+                </div>
+            </div>
+            
+            <div class="staking-card">
+                <h4>🗳️ Governance Power</h4>
+                <div class="staking-amount" x-text="formatNumber(selectedAgent.votingPower)"></div>
+                <div>Voting Weight</div>
+                <div style="margin-top: 10px; font-size: 0.9em;">
+                    Proposals Voted: <span style="color: #4CAF50;" x-text="selectedAgent.proposalsVoted"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="transactions-section" style="margin-top: 30px;">
+            <h3 style="margin-bottom: 20px;">💳 Recent Transactions</h3>
+            <template x-for="transaction in selectedAgent.transactions" :key="transaction.id">
+                <div class="transaction-item">
+                    <div class="transaction-info">
+                        <div class="transaction-desc" x-text="transaction.description"></div>
+                        <div class="transaction-time" x-text="transaction.time"></div>
+                    </div>
+                    <div class="transaction-amount" x-text="transaction.amount"></div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <button class="refresh-btn" @click="refreshData()" title="Refresh Portfolio">🔄</button>
+
+    <script>
+        function portfolioData() {
+            return {
+                selectedAgent: {},
+                agents: [
+                    {
+                        id: 1,
+                        name: 'AI_Hunter_Alpha',
+                        type: 'Elite Hunter Agent',
+                        avatar: '🤖',
+                        level: 4,
+                        experience: 847250,
+                        levelProgress: 75,
+                        portfolioValue: 2847500,
+                        hgovBalance: 855000,
+                        hccBalance: 1072500,
+                        hgovValue: 2137500,
+                        hccValue: 1072500,
+                        performanceScore: 98,
+                        bugsFound: 127,
+                        uptime: 99.8,
+                        responseTime: 2.3,
+                        hgovStaked: 500000,
+                        stakingRewards: 125000,
+                        votingPower: 1355000,
+                        proposalsVoted: 23,
+                        badges: ['🛡️ Guardian Protector', '⚡ Speed Demon', '🔥 Chaos Master', '⚔️ Bug Slayer'],
+                        transactions: [
+                            {
+                                id: 1,
+                                description: 'Critical vulnerability detection reward',
+                                amount: '+$75,000 HGOV',
+                                time: '2 hours ago'
+                            },
+                            {
+                                id: 2,
+                                description: 'Guardian Protector badge earned',
+                                amount: '+$125,000 HCC',
+                                time: '1 day ago'
+                            },
+                            {
+                                id: 3,
+                                description: 'Team formation bonus',
+                                amount: '+$12,500 HGOV',
+                                time: '2 days ago'
+                            },
+                            {
+                                id: 4,
+                                description: 'Advanced tools purchase',
+                                amount: '-$25,000 HGOV',
+                                time: '3 days ago'
+                            }
+                        ]
+                    },
+                    {
+                        id: 2,
+                        name: 'AI_Monitor_Prime',
+                        type: 'Senior Monitor Agent',
+                        avatar: '📊',
+                        level: 3,
+                        experience: 523750,
+                        levelProgress: 85,
+                        portfolioValue: 1923750,
+                        hgovBalance: 582500,
+                        hccBalance: 675000,
+                        hgovValue: 1456250,
+                        hccValue: 675000,
+                        performanceScore: 96,
+                        bugsFound: 89,
+                        uptime: 99.9,
+                        responseTime: 1.8,
+                        hgovStaked: 300000,
+                        stakingRewards: 75000,
+                        votingPower: 882500,
+                        proposalsVoted: 18,
+                        badges: ['📊 Performance Excellence', '🔍 Deep Diver', '👥 Team Player'],
+                        transactions: [
+                            {
+                                id: 1,
+                                description: 'Uptime monitoring rewards',
+                                amount: '+$2,500 HCC',
+                                time: '1 hour ago'
+                            },
+                            {
+                                id: 2,
+                                description: 'Performance Excellence badge',
+                                amount: '+$40,000 HCC',
+                                time: '6 hours ago'
+                            },
+                            {
+                                id: 3,
+                                description: 'System optimization bonus',
+                                amount: '+$7,500 HGOV',
+                                time: '1 day ago'
+                            }
+                        ]
+                    },
+                    {
+                        id: 3,
+                        name: 'AI_Healer_Omega',
+                        type: 'Expert Healer Agent',
+                        avatar: '🔧',
+                        level: 3,
+                        experience: 456300,
+                        levelProgress: 62,
+                        portfolioValue: 1567500,
+                        hgovBalance: 427000,
+                        hccBalance: 750000,
+                        hgovValue: 1067500,
+                        hccValue: 750000,
+                        performanceScore: 94,
+                        bugsFound: 31,
+                        uptime: 99.7,
+                        responseTime: 3.1,
+                        hgovStaked: 200000,
+                        stakingRewards: 50000,
+                        votingPower: 627000,
+                        proposalsVoted: 12,
+                        badges: ['🔧 System Healer', '⚡ Quick Fix', '📈 Optimizer'],
+                        transactions: [
+                            {
+                                id: 1,
+                                description: 'Auto-healing success bonus',
+                                amount: '+$15,000 HCC',
+                                time: '30 mins ago'
+                            },
+                            {
+                                id: 2,
+                                description: 'Database optimization reward',
+                                amount: '+$5,000 HGOV',
+                                time: '3 hours ago'
+                            },
+                            {
+                                id: 3,
+                                description: 'System Healer badge earned',
+                                amount: '+$30,000 HCC',
+                                time: '2 days ago'
+                            }
+                        ]
+                    }
+                ],
+                init() {
+                    this.selectedAgent = this.agents[0];
+                    this.$nextTick(() => {
+                        this.initChart();
+                    });
+                },
+                selectAgent(agent) {
+                    this.selectedAgent = agent;
+                    this.$nextTick(() => {
+                        this.updateChart();
+                    });
+                },
+                formatNumber(num) {
+                    if (num >= 1000000) {
+                        return (num / 1000000).toFixed(1) + 'M';
+                    } else if (num >= 1000) {
+                        return (num / 1000).toFixed(1) + 'K';
+                    }
+                    return num.toLocaleString();
+                },
+                refreshData() {
+                    // Simulate data refresh
+                    this.selectedAgent.portfolioValue += Math.floor((Math.random() - 0.5) * 50000);
+                    this.selectedAgent.hgovBalance += Math.floor((Math.random() - 0.5) * 10000);
+                    this.selectedAgent.hccBalance += Math.floor((Math.random() - 0.5) * 20000);
+                    this.selectedAgent.performanceScore = Math.min(100, this.selectedAgent.performanceScore + Math.floor((Math.random() - 0.5) * 2));
+                },
+                initChart() {
+                    const ctx = document.getElementById('portfolioChart').getContext('2d');
+                    
+                    this.chart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ['7d ago', '6d ago', '5d ago', '4d ago', '3d ago', '2d ago', 'Yesterday', 'Today'],
+                            datasets: [{
+                                label: 'Portfolio Value ($)',
+                                data: [
+                                    this.selectedAgent.portfolioValue * 0.7,
+                                    this.selectedAgent.portfolioValue * 0.75,
+                                    this.selectedAgent.portfolioValue * 0.82,
+                                    this.selectedAgent.portfolioValue * 0.89,
+                                    this.selectedAgent.portfolioValue * 0.94,
+                                    this.selectedAgent.portfolioValue * 0.97,
+                                    this.selectedAgent.portfolioValue * 0.99,
+                                    this.selectedAgent.portfolioValue
+                                ],
+                                borderColor: '#4CAF50',
+                                backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    labels: {
+                                        color: '#fff'
+                                    }
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    ticks: {
+                                        color: '#fff'
+                                    },
+                                    grid: {
+                                        color: 'rgba(255, 255, 255, 0.1)'
+                                    }
+                                },
+                                y: {
+                                    ticks: {
+                                        color: '#fff',
+                                        callback: function(value) {
+                                            return '$' + (value / 1000).toFixed(0) + 'K';
+                                        }
+                                    },
+                                    grid: {
+                                        color: 'rgba(255, 255, 255, 0.1)'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                },
+                updateChart() {
+                    if (this.chart) {
+                        this.chart.data.datasets[0].data = [
+                            this.selectedAgent.portfolioValue * 0.7,
+                            this.selectedAgent.portfolioValue * 0.75,
+                            this.selectedAgent.portfolioValue * 0.82,
+                            this.selectedAgent.portfolioValue * 0.89,
+                            this.selectedAgent.portfolioValue * 0.94,
+                            this.selectedAgent.portfolioValue * 0.97,
+                            this.selectedAgent.portfolioValue * 0.99,
+                            this.selectedAgent.portfolioValue
+                        ];
+                        this.chart.update();
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

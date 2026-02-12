@@ -1,0 +1,73 @@
+{
+  "session_id": "baseline_1737699600",
+  "nova_enabled": false,
+  "start_time": "2025-01-23T19:00:00Z",
+  "end_time": "2025-01-23T20:00:00Z",
+  "total_duration_minutes": 60,
+  "scenarios": [
+    {
+      "name": "VetSorcery Architecture Review",
+      "start_time": "19:00:00",
+      "tokens_used": 4250,
+      "context_repetitions": 0,
+      "time_to_context_seconds": 0,
+      "task_completion_quality": 8,
+      "notes": "First scenario, no context needed yet. Explained full architecture."
+    },
+    {
+      "name": "Poetry Engine Enhancement",
+      "start_time": "19:12:00",
+      "tokens_used": 3800,
+      "context_repetitions": 2,
+      "time_to_context_seconds": 180,
+      "task_completion_quality": 7,
+      "notes": "Had to re-explain poetry engine structure and sacred geometry concepts"
+    },
+    {
+      "name": "HardCard Payment Integration",
+      "start_time": "19:24:00",
+      "tokens_used": 5100,
+      "context_repetitions": 3,
+      "time_to_context_seconds": 240,
+      "task_completion_quality": 7,
+      "notes": "Needed to list all 8 processors again, explain WHMCS integration, describe architecture"
+    },
+    {
+      "name": "Return to VetSorcery",
+      "start_time": "19:36:00",
+      "tokens_used": 4600,
+      "context_repetitions": 4,
+      "time_to_context_seconds": 300,
+      "task_completion_quality": 6,
+      "notes": "Claude forgot WebSocket details from scenario 1, had to re-explain Firebase schema, Twilio config"
+    },
+    {
+      "name": "Cross-Project Integration",
+      "start_time": "19:48:00",
+      "tokens_used": 6200,
+      "context_repetitions": 5,
+      "time_to_context_seconds": 360,
+      "task_completion_quality": 6,
+      "notes": "Major context loss - had to re-explain both VetSorcery and HardCard architectures"
+    }
+  ],
+  "total_tokens": 23950,
+  "total_context_repetitions": 14,
+  "average_time_to_context": 216,
+  "average_task_quality": 6.8,
+  "context_switches": 4,
+  "cost_breakdown": {
+    "input_tokens": 15000,
+    "output_tokens": 8950,
+    "input_cost": 0.045,
+    "output_cost": 0.13425,
+    "total_cost": 0.17925
+  },
+  "pain_points": [
+    "Constant re-explanation of project architectures",
+    "Lost WebSocket optimization details between scenarios",
+    "Had to re-list payment processors multiple times",
+    "Cross-project context was nearly impossible to maintain"
+  ],
+  "overall_experience": 5
+}

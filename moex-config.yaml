@@ -1,0 +1,91 @@
+# MOEX Intelligence Coordinator Configuration
+
+coordinator:
+  name: "hardcard-moex"
+  version: "1.0.0"
+  project_root: "/Users/studio/00 Constellation/hardcard"
+
+# Agent Definitions
+agents:
+  claude:
+    type: "implementation"
+    workspace: "/Users/studio/00 Constellation/hardcard"
+    capabilities:
+      - "feature_implementation"
+      - "bug_fixing"
+      - "testing"
+      - "git_operations"
+      - "file_operations"
+    
+  gemini:
+    type: "analysis"
+    config: "./gemini.yaml"
+    capabilities:
+      - "code_analysis"
+      - "security_scanning"
+      - "performance_optimization"
+      - "documentation_generation"
+      - "code_review"
+
+# Task Routing Rules
+routing:
+  implementation_tasks:
+    primary: "claude"
+    review: "gemini"
+    
+  analysis_tasks:
+    primary: "gemini"
+    validation: "claude"
+    
+  documentation_tasks:
+    primary: "gemini"
+    integration: "claude"
+
+# Coordination Workflows
+workflows:
+  feature_development:
+    name: "Full Feature Development"
+    steps:
+      - name: "exploration"
+        agent: "claude"
+        action: "explore_codebase"
+        
+      - name: "planning"
+        agent: "claude" 
+        action: "create_implementation_plan"
+        
+      - name: "analysis"
+        agent: "gemini"
+        action: "analyze_impact"
+        
+      - name: "implementation"
+        agent: "claude"
+        action: "implement_feature"
+        
+      - name: "review"
+        agent: "gemini"
+        action: "comprehensive_review"
+        
+      - name: "optimization"
+        agent: "gemini"
+        action: "optimize_performance"
+        
+      - name: "documentation"
+        agent: "gemini"
+        action: "generate_docs"
+        
+      - name: "integration"
+        agent: "claude"
+        action: "commit_and_deploy"
+
+# Monitoring and Health
+monitoring:
+  health_check_interval: 300  # 5 minutes
+  performance_tracking: true
+  error_recovery: true
+  
+# Communication Channels
+communication:
+  shared_workspace: "/Users/studio/00 Constellation/hardcard/moex-workspace"
+  coordination_log: "/Users/studio/00 Constellation/hardcard/logs/moex-coordination.log"
+  status_dashboard: true

@@ -1,0 +1,43 @@
+{
+  "guardian": "guardian_1",
+  "shares": {
+    "guardian_1": {
+      "x": 1,
+      "y": "XWJ/VWVtWW1vdbqHVH/jMPZFEFG+t95q2gRzhEko19g=",
+      "for_guardian": "guardian_1",
+      "holder": "guardian_1"
+    },
+    "guardian_2": {
+      "x": 1,
+      "y": "ofzfH/S6cLTxRR+o2iY8ohdY7PdtoPspMaJRub1FLUE=",
+      "for_guardian": "guardian_2",
+      "holder": "guardian_1"
+    },
+    "guardian_3": {
+      "x": 1,
+      "y": "EeRYzq55MQ64stVeZHOBbtq7iXZYmO9mwIy5QseYWQU=",
+      "for_guardian": "guardian_3",
+      "holder": "guardian_1"
+    },
+    "guardian_4": {
+      "x": 1,
+      "y": "d2bcvvV0bA2p72TTIIf+hWezUne3ty3kSJHwB2ZpOMk=",
+      "for_guardian": "guardian_4",
+      "holder": "guardian_1"
+    },
+    "guardian_5": {
+      "x": 1,
+      "y": "pFFKKusvHyMkEE4Rom8BIvsGeLF4xab0uwdMYARyncI=",
+      "for_guardian": "guardian_5",
+      "holder": "guardian_1"
+    }
+  },
+  "metadata": {
+    "version": "1.0",
+    "created": "2025-06-28T06:33:46.287530",
+    "guardian_count": 5,
+    "threshold": 3,
+    "scheme": "SSKR-256"
+  },
+  "verification_hash": "c5b626afeeb6b47f678ce94398c1dd4280bb7172869e1dc66b62498f36c2922a"
+}

@@ -1,0 +1,30 @@
+{
+  "integration": {
+    "enabled": true,
+    "gemini_config": "./gemini.yaml",
+    "coordination_mode": "parallel",
+    "task_routing": {
+      "code_analysis": "gemini",
+      "implementation": "claude",
+      "documentation": "gemini",
+      "testing": "claude",
+      "review": "gemini"
+    }
+  },
+  "workflows": {
+    "feature_development": [
+      {"agent": "claude", "task": "explore_and_plan"},
+      {"agent": "claude", "task": "implement_feature"},
+      {"agent": "gemini", "task": "code_review"},
+      {"agent": "claude", "task": "fix_issues"},
+      {"agent": "gemini", "task": "generate_docs"},
+      {"agent": "claude", "task": "commit_and_pr"}
+    ],
+    "code_review": [
+      {"agent": "gemini", "task": "static_analysis"},
+      {"agent": "gemini", "task": "security_scan"},
+      {"agent": "gemini", "task": "performance_check"},
+      {"agent": "claude", "task": "implement_fixes"}
+    ]
+  }
+}

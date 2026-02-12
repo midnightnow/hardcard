@@ -1,0 +1,95 @@
+{
+  "kpis": {
+    "monthly_recurring_revenue": {
+      "current": 0,
+      "target_30_day": 50000,
+      "target_60_day": 200000,
+      "target_90_day": 495000,
+      "tracking_frequency": "daily"
+    },
+    "customer_acquisition": {
+      "current_customers": 0,
+      "target_enterprise": 500,
+      "target_professional": 300,
+      "target_healthcare": 250,
+      "target_consumer": 2600
+    },
+    "customer_lifetime_value": {
+      "enterprise": 4440,
+      "professional": 2400,
+      "healthcare": 4560,
+      "consumer": 300
+    },
+    "sales_metrics": {
+      "lead_conversion_rate": 0.15,
+      "average_sales_cycle_days": 30,
+      "customer_churn_rate": 0.05,
+      "expansion_revenue_rate": 0.2
+    }
+  },
+  "revenue_milestones": [
+    {
+      "milestone": "First $10K MRR",
+      "target_date": "2025-08-20T20:43:39.876636",
+      "required_customers": {
+        "enterprise": 27,
+        "professional": 0,
+        "healthcare": 0,
+        "consumer": 0
+      }
+    },
+    {
+      "milestone": "First $50K MRR",
+      "target_date": "2025-09-05T20:43:39.876642",
+      "required_customers": {
+        "enterprise": 50,
+        "professional": 50,
+        "healthcare": 25,
+        "consumer": 400
+      }
+    },
+    {
+      "milestone": "First $200K MRR",
+      "target_date": "2025-10-05T20:43:39.876645",
+      "required_customers": {
+        "enterprise": 200,
+        "professional": 150,
+        "healthcare": 100,
+        "consumer": 1200
+      }
+    },
+    {
+      "milestone": "Target $495K MRR",
+      "target_date": "2025-11-04T20:43:39.876646",
+      "required_customers": {
+        "enterprise": 500,
+        "professional": 300,
+        "healthcare": 250,
+        "consumer": 2600
+      }
+    }
+  ],
+  "tracking_dashboard": {
+    "daily_metrics": [
+      "new_leads_generated",
+      "demos_scheduled",
+      "contracts_signed",
+      "revenue_booked",
+      "customer_onboarding_completed"
+    ],
+    "weekly_metrics": [
+      "pipeline_velocity",
+      "customer_health_scores",
+      "feature_usage_analytics",
+      "support_ticket_volumes",
+      "expansion_opportunities"
+    ],
+    "monthly_metrics": [
+      "recurring_revenue_growth",
+      "customer_lifetime_value",
+      "churn_analysis",
+      "market_penetration",
+      "competitive_positioning"
+    ]
+  }
+}

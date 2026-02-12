@@ -1,0 +1,27 @@
+{
+  "floor_id": "floor_alpha",
+  "archived_at": 1770075826,
+  "fold_event": true,
+  "parent_id": "genesis",
+  "depth": 2,
+  "metrics_snapshot": {
+    "ceramic_at_fold": "0.99000000",
+    "reclaimed_to_parent": "0.89100000",
+    "seed_preserved": "0.09900000",
+    "local_shear": "0.1",
+    "cumulative_shear": "0.1900"
+  },
+  "ancestry": {
+    "parent_shear_at_birth": "0.1",
+    "decay_factor": "0.9",
+    "inheritance_formula": "S(n) = \u03c3\u2099 + \u03bb\u00b7S(n-1)"
+  },
+  "constitution": {
+    "inherited_from": "genesis",
+    "integrity_fee": "10%",
+    "anti_amnesia": true,
+    "protocol_version": "HCL-07"
+  },
+  "spawn_hash": "a7aead28bddff78c",
+  "created_at": 1770038099
+}

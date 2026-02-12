@@ -9,6 +9,7 @@ import json
 import argparse
 import time
 import hashlib
+import subprocess
 from pathlib import Path
 try:
     from hardcard_core.market import SettlementEngine
@@ -126,11 +127,15 @@ def main():
     lineage_parser.add_argument("--shear", action="store_true", help="Show cumulative shear metrics (S(n) formula)")
     lineage_parser.add_argument("--simulate", type=str, help="Simulate dimensional fold for a floor ID")
 
-    # Spawn command (Birth a child floor)
     spawn_parser = subparsers.add_parser("spawn", help="Birth a child floor from a parent floor")
     spawn_parser.add_argument("--name", type=str, required=True, help="Name/ID for the new child floor")
     spawn_parser.add_argument("--parent", type=str, default="genesis", help="Parent floor ID (default: genesis)")
+    spawn_parser.add_argument("--risk", action="store_true", help="Bypass Hyperspace safety buffers (Sovereign Override)")
     spawn_parser.add_argument("--dry-run", action="store_true", help="Simulate spawn without creating files")
+
+    # Coordinate command (Hyperspace Address Book)
+    coord_parser = subparsers.add_parser("coordinate", help="Lookup Hyperspace Probability Address")
+    coord_parser.add_argument("depth", type=int, help="Depth coordinate (generation count)")
     
     # Fold command (Compress a floor back to parent)
     fold_parser = subparsers.add_parser("fold", help="Compress a floor and reclaim ceramic to parent")
@@ -138,6 +143,12 @@ def main():
     fold_parser.add_argument("--cascade", action="store_true", default=True, help="Fold children first (default)")
     fold_parser.add_argument("--orphan", action="store_true", help="Orphan children instead of cascade fold")
     fold_parser.add_argument("--dry-run", action="store_true", help="Simulate fold without executing")
+    
+    # Consume command (Cannibalistic Recursion)
+    consume_parser = subparsers.add_parser("consume", help="Stabilize a Critical Node by consuming a Stable Node")
+    consume_parser.add_argument("--predator", type=str, required=True, help="Critical Node ID (Shear > 0.9)")
+    consume_parser.add_argument("--prey", type=str, required=True, help="Stable Node ID (Shear < 0.5)")
+    consume_parser.add_argument("--risk", action="store_true", required=True, help="Confirm destructive operation")
     
     # Mike command (Operational Layer)
     mike_parser = subparsers.add_parser("mike", help="Mike Sovereign Operational Layer")
@@ -155,6 +166,13 @@ def main():
     nexus_parser.add_argument("--agent", type=str, default="Anonymous", help="Agent ID performing action")
     nexus_parser.add_argument("--deliver", type=str, help="Deliver work for a signal hash")
     nexus_parser.add_argument("--payload", type=str, help="Payload for delivery")
+
+    # Athena command (Save Game)
+    athena_parser = subparsers.add_parser("athena", help="Athena persistent memory (Save Game)")
+    athena_subparsers = athena_parser.add_subparsers(dest="athena_command", help="Athena sub-commands")
+    athena_subparsers.add_parser("start", help="Rehydrate session context from memory")
+    athena_end_parser = athena_subparsers.add_parser("end", help="Save and anchor session summary")
+    athena_end_parser.add_argument("summary", help="Session summary to archive")
 
     args = parser.parse_args()
 
@@ -477,6 +495,35 @@ def main():
         print("─" * 64)
     
     
+    elif args.command == "coordinate":
+        from decimal import Decimal
+        from hardcard_core.lineage import calculate_theoretical_shear
+        
+        depth = args.depth
+        shear = calculate_theoretical_shear(depth)
+        
+        print("┌" + "─" * 60 + "┐")
+        print("│" + "  🌌 HYPERSPACE COORDINATE SYSTEM".ljust(60) + "│")
+        print("├" + "─" * 60 + "┤")
+        print(f"│  Target Depth:   {depth:<42}│")
+        print(f"│  Shear Signature: S({depth}) = {shear:<36}│")
+        
+        # Interpret the coordinate
+        status = "STABLE"
+        if shear >= Decimal('0.9'):
+            status = "CRITICAL (Tail End)"
+        elif shear >= Decimal('0.7'):
+            status = "WARNING (Deep Field)"
+            
+        print(f"│  Zone Status:    {status:<42}│")
+        print("├" + "─" * 60 + "┤")
+        print("│" + "  PROBABILITY PHYSICS:".ljust(60) + "│")
+        print(f"│  Recursion: S({depth}) = 0.1 + 0.9 * S({depth-1})".ljust(60) + "│")
+        print("│  To exist here, a node requires massive Ceramic mass".ljust(60) + "│")
+        print("│  or frequent dimensional folding.".ljust(60) + "│")
+        print("└" + "─" * 60 + "┘")
+
+
     elif args.command == "guard":
         from .nexus import dimensional_guard, get_floor_status
         
@@ -510,6 +557,19 @@ def main():
             if status['status'] == "WARNING":
                 print("\n💡 Tip: Add more Ceramic ($HCL) to strengthen the foundation.")
     
+    elif args.command == "consume":
+        from hardcard_core.stabilizer import Stabilizer, display_consumption_result
+        
+        if not args.risk:
+            print("❌ ERROR: Consumption is a destructive operation.")
+            print("   You must acknowledge the Sovereign Risk by adding '--risk'.")
+            return
+            
+        print(f"🍽️  Initiating Cannibalistic Recursion...")
+        stabilizer = Stabilizer()
+        result = stabilizer.consume(args.predator, args.prey)
+        print(display_consumption_result(result))
+
     elif args.audit_hyperspace:
         print("🌌 Initiating Hyperspace Safety Scan (HPSS-03)...")
         print("------------------------------------------------")
@@ -795,6 +855,19 @@ THE PIONEER'S OATH:
             else:
                 print("   ⚠️  HASH MISMATCH — Fossil may have been modified")
 
+    elif args.command == "athena":
+        scripts_dir = Path(__file__).parent.parent.parent / "scripts"
+        
+        if args.athena_command == "start":
+            start_script = scripts_dir / "athena_start.py"
+            subprocess.run([sys.executable, str(start_script)], check=True)
+            
+        elif args.athena_command == "end":
+            end_script = scripts_dir / "athena_end.py"
+            subprocess.run([sys.executable, str(end_script), args.summary], check=True)
+        else:
+            print("Usage: hardcard athena {start,end} ...")
+
     elif args.command == "lineage":
         from .lineage import LineageCalculator, calculate_recursive_shear, calculate_ceramic_flow
         from .nexus import get_floor_status
@@ -952,10 +1025,6 @@ THE PIONEER'S OATH:
             print("      hardcard audit                 # Check ceramic conservation")
 
     elif args.command == "mike":
-        from .shield import Shield
-        from pathlib import Path
-        import json
-        
         if args.action == "status":
             print("👤 MIKE OPERATIONAL LAYER STATUS")
             print("-" * 40)

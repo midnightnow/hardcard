@@ -1,0 +1,42 @@
+# Hardcard Public Distribution Manifest
+# Only include files for the Open Source release
+
+# Core Package
+include README.md
+include LICENSE
+include pyproject.toml
+
+# Documentation
+recursive-include docs *.md
+recursive-include docs/rfc *.md
+
+# Tests (Public)
+recursive-include tests *.py
+
+# Examples
+include simulate_nexus.py
+
+# Exclude Proprietary Core
+exclude hardcard_core
+recursive-exclude hardcard_core *
+
+# Exclude Development Files
+exclude .gitignore
+exclude Makefile
+exclude *.egg-info
+recursive-exclude __pycache__ *
+recursive-exclude *.pyc *
+recursive-exclude .pytest_cache *
+
+# Exclude Secrets
+exclude .env*
+exclude keys/*
+exclude *.pem
+exclude *.key
+
+# Exclude Legacy/Development
+exclude HARDCARDSUITE
+exclude claude_desktop_config.json
+exclude *.html
+exclude *.sh
+exclude launch_verify.py

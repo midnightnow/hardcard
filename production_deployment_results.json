@@ -1,0 +1,8 @@
+{
+  "deployment_start": "2025-08-05T21:34:51.981838",
+  "environment": "production",
+  "components": {
+    "frontend": {
+      "status": "error",
+      "error": "Command '['npm', 'install']' returned non-zero exit status 1.",
+      "output": 

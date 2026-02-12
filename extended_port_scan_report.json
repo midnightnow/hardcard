@@ -1,0 +1,182 @@
+{
+  "test_run_id": "1750811722703",
+  "timestamp": "2025-06-25T00:35:22.703Z",
+  "port_range": {
+    "start": 3001,
+    "end": 3009
+  },
+  "config": {
+    "base_url": "http://localhost",
+    "port_range": {
+      "start": 3001,
+      "end": 3009
+    },
+    "output_dir": "/Users/studio/hardcard/screenshots",
+    "report_file": "/Users/studio/hardcard/extended_port_scan_report.json",
+    "timeout": 10000
+  },
+  "applications": {
+    "port_3001": {
+      "name": "port_3001",
+      "url": "http://localhost:3001",
+      "timestamp": "2025-06-25T00:35:22.917Z",
+      "status": "online",
+      "tests": {
+        "critical_elements": {
+          "body": "found",
+          "#root": "found",
+          "main": "missing",
+          "nav": "missing",
+          "header": "missing"
+        },
+        "accessibility": {
+          "has_title": true,
+          "has_lang": true,
+          "has_headings": false,
+          "has_main_landmark": false,
+          "has_nav_landmark": false,
+          "images_have_alt": true
+        }
+      },
+      "load_time": 531,
+      "title": "Databutton",
+      "screenshot": "/Users/studio/hardcard/screenshots/port_3001_1750811723456.png",
+      "analysis": {
+        "frameworks_detected": {
+          "react": true,
+          "vue": false,
+          "angular": false,
+          "jquery": false
+        },
+        "page_info": {
+          "has_spa_elements": true,
+          "total_elements": 14,
+          "has_scripts": 3,
+          "has_stylesheets": 0
+        }
+      },
+      "performance": {
+        "dom_content_loaded": 0,
+        "load_complete": 0,
+        "first_paint": null,
+        "first_contentful_paint": null
+      }
+    },
+    "port_3002": {
+      "name": "port_3002",
+      "url": "http://localhost:3002",
+      "timestamp": "2025-06-25T00:35:23.724Z",
+      "status": "online",
+      "tests": {
+        "critical_elements": {
+          "body": "found",
+          "#root": "found",
+          "main": "missing",
+          "nav": "missing",
+          "header": "missing"
+        },
+        "accessibility": {
+          "has_title": true,
+          "has_lang": true,
+          "has_headings": false,
+          "has_main_landmark": false,
+          "has_nav_landmark": false,
+          "images_have_alt": true
+        }
+      },
+      "load_time": 551,
+      "title": "HARDCARD Suite",
+      "screenshot": "/Users/studio/hardcard/screenshots/port_3002_1750811724282.png",
+      "analysis": {
+        "frameworks_detected": {
+          "react": true,
+          "vue": false,
+          "angular": false,
+          "jquery": false
+        },
+        "page_info": {
+          "has_spa_elements": true,
+          "total_elements": 14,
+          "has_scripts": 3,
+          "has_stylesheets": 0
+        }
+      },
+      "performance": {
+        "dom_content_loaded": 0,
+        "load_complete": 0,
+        "first_paint": null,
+        "first_contentful_paint": null
+      }
+    },
+    "port_3003": {
+      "name": "port_3003",
+      "url": "http://localhost:3003",
+      "timestamp": "2025-06-25T00:35:24.554Z",
+      "status": "offline",
+      "tests": {},
+      "error": "Connection refused - service not running on this port"
+    },
+    "port_3004": {
+      "name": "port_3004",
+      "url": "http://localhost:3004",
+      "timestamp": "2025-06-25T00:35:24.672Z",
+      "status": "offline",
+      "tests": {},
+      "error": "Connection refused - service not running on this port"
+    },
+    "port_3005": {
+      "name": "port_3005",
+      "url": "http://localhost:3005",
+      "timestamp": "2025-06-25T00:35:24.787Z",
+      "status": "offline",
+      "tests": {},
+      "error": "Connection refused - service not running on this port"
+    },
+    "port_3006": {
+      "name": "port_3006",
+      "url": "http://localhost:3006",
+      "timestamp": "2025-06-25T00:35:24.912Z",
+      "status": "offline",
+      "tests": {},
+      "error": "Connection refused - service not running on this port"
+    },
+    "port_3007": {
+      "name": "port_3007",
+      "url": "http://localhost:3007",
+      "timestamp": "2025-06-25T00:35:25.033Z",
+      "status": "offline",
+      "tests": {},
+      "error": "Connection refused - service not running on this port"
+    },
+    "port_3008": {
+      "name": "port_3008",
+      "url": "http://localhost:3008",
+      "timestamp": "2025-06-25T00:35:25.154Z",
+      "status": "offline",
+      "tests": {},
+      "error": "Connection refused - service not running on this port"
+    },
+    "port_3009": {
+      "name": "port_3009",
+      "url": "http://localhost:3009",
+      "timestamp": "2025-06-25T00:35:25.270Z",
+      "status": "offline",
+      "tests": {},
+      "error": "Connection refused - service not running on this port"
+    }
+  },
+  "summary": {
+    "total": 9,
+    "online": 2,
+    "offline": 7,
+    "errors": 0,
+    "timeouts": 0
+  },
+  "frameworks_found": {},
+  "recommendations": [
+    {
+      "priority": "🟡 MEDIUM:",
+      "message": "Only 2 services found - you may have more services to start"
+    }
+  ]
+}

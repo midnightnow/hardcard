@@ -1,0 +1,278 @@
+{
+  "tested_pages": [
+    {
+      "url": "http://localhost:3002/familial-trust-model",
+      "pageName": "familial-trust-model",
+      "status": "broken",
+      "hasContent": true,
+      "contentLength": 678,
+      "hasElements": true,
+      "elementCount": 75,
+      "errors": [
+        "error: Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "load_time": 1264
+    },
+    {
+      "url": "http://localhost:3002/bitcoin-wallet",
+      "pageName": "bitcoin-wallet",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 499,
+      "hasElements": true,
+      "elementCount": 73,
+      "errors": [],
+      "load_time": 538
+    },
+    {
+      "url": "http://localhost:3002/vault",
+      "pageName": "vault",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 653,
+      "hasElements": true,
+      "elementCount": 81,
+      "errors": [],
+      "load_time": 539
+    },
+    {
+      "url": "http://localhost:3002/alexandria",
+      "pageName": "alexandria",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 775,
+      "hasElements": true,
+      "elementCount": 86,
+      "errors": [],
+      "load_time": 544
+    },
+    {
+      "url": "http://localhost:3002/hardcard-creator",
+      "pageName": "hardcard-creator",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 967,
+      "hasElements": true,
+      "elementCount": 169,
+      "errors": [],
+      "load_time": 609
+    },
+    {
+      "url": "http://localhost:3002/music-library",
+      "pageName": "music-library",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 1179,
+      "hasElements": true,
+      "elementCount": 160,
+      "errors": [],
+      "load_time": 553
+    },
+    {
+      "url": "http://localhost:3002/family-profiles",
+      "pageName": "family-profiles",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 1006,
+      "hasElements": true,
+      "elementCount": 150,
+      "errors": [],
+      "load_time": 641
+    },
+    {
+      "url": "http://localhost:3002/trust-dashboard-page",
+      "pageName": "trust-dashboard-page",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 715,
+      "hasElements": true,
+      "elementCount": 97,
+      "errors": [],
+      "load_time": 549
+    },
+    {
+      "url": "http://localhost:3002/investment-simulator",
+      "pageName": "investment-simulator",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 746,
+      "hasElements": true,
+      "elementCount": 114,
+      "errors": [],
+      "load_time": 551
+    },
+    {
+      "url": "http://localhost:3002/portfolio-diversification",
+      "pageName": "portfolio-diversification",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 657,
+      "hasElements": true,
+      "elementCount": 86,
+      "errors": [],
+      "load_time": 555
+    },
+    {
+      "url": "http://localhost:3002/security-dashboard",
+      "pageName": "security-dashboard",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 734,
+      "hasElements": true,
+      "elementCount": 111,
+      "errors": [],
+      "load_time": 550
+    },
+    {
+      "url": "http://localhost:3002/admin-page",
+      "pageName": "admin-page",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 728,
+      "hasElements": true,
+      "elementCount": 147,
+      "errors": [],
+      "load_time": 542
+    }
+  ],
+  "working_pages": [
+    {
+      "url": "http://localhost:3002/bitcoin-wallet",
+      "pageName": "bitcoin-wallet",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 499,
+      "hasElements": true,
+      "elementCount": 73,
+      "errors": [],
+      "load_time": 538
+    },
+    {
+      "url": "http://localhost:3002/vault",
+      "pageName": "vault",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 653,
+      "hasElements": true,
+      "elementCount": 81,
+      "errors": [],
+      "load_time": 539
+    },
+    {
+      "url": "http://localhost:3002/alexandria",
+      "pageName": "alexandria",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 775,
+      "hasElements": true,
+      "elementCount": 86,
+      "errors": [],
+      "load_time": 544
+    },
+    {
+      "url": "http://localhost:3002/hardcard-creator",
+      "pageName": "hardcard-creator",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 967,
+      "hasElements": true,
+      "elementCount": 169,
+      "errors": [],
+      "load_time": 609
+    },
+    {
+      "url": "http://localhost:3002/music-library",
+      "pageName": "music-library",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 1179,
+      "hasElements": true,
+      "elementCount": 160,
+      "errors": [],
+      "load_time": 553
+    },
+    {
+      "url": "http://localhost:3002/family-profiles",
+      "pageName": "family-profiles",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 1006,
+      "hasElements": true,
+      "elementCount": 150,
+      "errors": [],
+      "load_time": 641
+    },
+    {
+      "url": "http://localhost:3002/trust-dashboard-page",
+      "pageName": "trust-dashboard-page",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 715,
+      "hasElements": true,
+      "elementCount": 97,
+      "errors": [],
+      "load_time": 549
+    },
+    {
+      "url": "http://localhost:3002/investment-simulator",
+      "pageName": "investment-simulator",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 746,
+      "hasElements": true,
+      "elementCount": 114,
+      "errors": [],
+      "load_time": 551
+    },
+    {
+      "url": "http://localhost:3002/portfolio-diversification",
+      "pageName": "portfolio-diversification",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 657,
+      "hasElements": true,
+      "elementCount": 86,
+      "errors": [],
+      "load_time": 555
+    },
+    {
+      "url": "http://localhost:3002/security-dashboard",
+      "pageName": "security-dashboard",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 734,
+      "hasElements": true,
+      "elementCount": 111,
+      "errors": [],
+      "load_time": 550
+    },
+    {
+      "url": "http://localhost:3002/admin-page",
+      "pageName": "admin-page",
+      "status": "working",
+      "hasContent": true,
+      "contentLength": 728,
+      "hasElements": true,
+      "elementCount": 147,
+      "errors": [],
+      "load_time": 542
+    }
+  ],
+  "blank_pages": [],
+  "broken_pages": [
+    {
+      "url": "http://localhost:3002/familial-trust-model",
+      "pageName": "familial-trust-model",
+      "status": "broken",
+      "hasContent": true,
+      "contentLength": 678,
+      "hasElements": true,
+      "elementCount": 75,
+      "errors": [
+        "error: Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "load_time": 1264
+    }
+  ],
+  "functional_issues": []
+}

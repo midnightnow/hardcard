@@ -1,0 +1,122 @@
+[
+  {
+    "asset_type": "LAND",
+    "identifier": "PARCEL-8812",
+    "value_raw": 500000,
+    "signature": "30-07-73",
+    "resonance_frequency": 1.0,
+    "coordinate": [
+      7.8495,
+      0.0,
+      -0.0
+    ],
+    "meta": {
+      "geostamp": "GEO:-16.9127,145.7815|TIME:1767751564894298000|ENT:289aa520"
+    }
+  },
+  {
+    "asset_type": "LAND",
+    "identifier": "PARCEL-8813",
+    "value_raw": 500000,
+    "signature": "30-07-73",
+    "resonance_frequency": 1.0,
+    "coordinate": [
+      7.791,
+      0.5,
+      1.5793
+    ],
+    "meta": {
+      "geostamp": "GEO:-16.9149,145.7790|TIME:1767751565199403000|ENT:b0a4c69d"
+    }
+  },
+  {
+    "asset_type": "LAND",
+    "identifier": "PARCEL-9941",
+    "value_raw": 500000,
+    "signature": "30-07-73",
+    "resonance_frequency": 1.0,
+    "coordinate": [
+      7.4141,
+      1.0,
+      3.1346
+    ],
+    "meta": {
+      "geostamp": "GEO:-16.9109,145.7840|TIME:1767751565499675000|ENT:cda4fe05"
+    }
+  },
+  {
+    "asset_type": "LAND",
+    "identifier": "PARCEL-8812-SUBDIV",
+    "value_raw": 500000,
+    "signature": "30-07-73",
+    "resonance_frequency": 1.0,
+    "coordinate": [
+      6.7261,
+      1.5,
+      4.6015
+    ],
+    "meta": {
+      "geostamp": "GEO:-16.9166,145.7838|TIME:1767751565803279000|ENT:a4acf196"
+    }
+  },
+  {
+    "asset_type": "BTC",
+    "identifier": "03f03b8479ebb0a5dad4...",
+    "value_raw": 1.5,
+    "signature": "30-07-73",
+    "resonance_frequency": 1.618,
+    "coordinate": [
+      -0.1612,
+      2.0,
+      -5.4857
+    ],
+    "meta": {
+      "block_height": 840000
+    }
+  },
+  {
+    "asset_type": "BTC",
+    "identifier": "a1b2c3d4e5...",
+    "value_raw": 0.05,
+    "signature": "30-07-73",
+    "resonance_frequency": 1.618,
+    "coordinate": [
+      1.0188,
+      2.5,
+      -5.9129
+    ],
+    "meta": {
+      "block_height": 840005
+    }
+  },
+  {
+    "asset_type": "FIAT",
+    "identifier": "HSBC_HOLDING",
+    "value_raw": 50000,
+    "signature": "30-07-73",
+    "resonance_frequency": 0.618,
+    "coordinate": [
+      2.8792,
+      3.0,
+      -7.4097
+    ],
+    "meta": {
+      "M2_index": "GLOBAL_FIAT_V1"
+    }
+  },
+  {
+    "asset_type": "FIAT",
+    "identifier": "Chase_HOLDING",
+    "value_raw": 1200,
+    "signature": "30-07-73",
+    "resonance_frequency": 0.618,
+    "coordinate": [
+      3.9105,
+      3.5,
+      -6.0926
+    ],
+    "meta": {
+      "M2_index": "GLOBAL_FIAT_V1"
+    }
+  }
+]

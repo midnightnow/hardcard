@@ -1,0 +1,541 @@
+{
+  "stripe_configuration": {
+    "product": {
+      "name": "HardCard Business Excellence - Beta Program",
+      "description": "Exclusive 6-month beta access to Jim Collins' business frameworks adapted for veterinary practices",
+      "type": "service",
+      "metadata": {
+        "program_type": "beta",
+        "target_market": "veterinary_practices",
+        "framework_source": "jim_collins",
+        "duration_months": "6"
+      }
+    },
+    "price": {
+      "currency": "usd",
+      "unit_amount": 19900,
+      "recurring": {
+        "interval": "month",
+        "interval_count": 1
+      },
+      "metadata": {
+        "original_price": "39900",
+        "discount_percent": "50",
+        "beta_program": "true"
+      }
+    },
+    "setup_date": "2025-08-05T20:40:24.370667"
+  },
+  "client_subscriptions": [
+    {
+      "client_id": "peak_performance_vet",
+      "clinic_name": "Peak Performance Veterinary",
+      "owner_name": "Dr. Sarah Chen",
+      "email": "drsarahchen@peakperformancevet.com",
+      "subscription_details": {
+        "price_id": "price_beta_hardcard_199",
+        "quantity": 1,
+        "trial_period_days": 14,
+        "billing_cycle_anchor": null,
+        "collection_method": "charge_automatically",
+        "payment_behavior": "default_incomplete"
+      },
+      "metadata": {
+        "program": "beta",
+        "cohort": "vetsorcery_beta_1",
+        "monthly_revenue": 85000,
+        "baseline_strategic_clarity": 6,
+        "baseline_leadership_confidence": 7,
+        "expected_transformation": "25-40% revenue growth"
+      },
+      "beta_benefits": [
+        "50% discount off launch price",
+        "Personal onboarding with founder",
+        "Weekly feedback calls first month",
+        "Priority feature requests",
+        "Case study participation",
+        "Potential speaking opportunities"
+      ],
+      "billing_start_date": "2025-08-19",
+      "expected_ltv": 1194
+    },
+    {
+      "client_id": "coastal_veterinary",
+      "clinic_name": "Coastal Veterinary Services",
+      "owner_name": "Dr. Amanda Foster",
+      "email": "dramandafoster@coastalvetsvc.com",
+      "subscription_details": {
+        "price_id": "price_beta_hardcard_199",
+        "quantity": 1,
+        "trial_period_days": 14,
+        "billing_cycle_anchor": null,
+        "collection_method": "charge_automatically",
+        "payment_behavior": "default_incomplete"
+      },
+      "metadata": {
+        "program": "beta",
+        "cohort": "vetsorcery_beta_1",
+        "monthly_revenue": 55000,
+        "baseline_strategic_clarity": 5,
+        "baseline_leadership_confidence": 6,
+        "expected_transformation": "25-40% revenue growth"
+      },
+      "beta_benefits": [
+        "50% discount off launch price",
+        "Personal onboarding with founder",
+        "Weekly feedback calls first month",
+        "Priority feature requests",
+        "Case study participation",
+        "Potential speaking opportunities"
+      ],
+      "billing_start_date": "2025-08-19",
+      "expected_ltv": 1194
+    },
+    {
+      "client_id": "riverside_animal",
+      "clinic_name": "Riverside Animal Hospital",
+      "owner_name": "Dr. Michael Rodriguez",
+      "email": "drmichaelrodriguez@riversideanimalhosp.com",
+      "subscription_details": {
+        "price_id": "price_beta_hardcard_199",
+        "quantity": 1,
+        "trial_period_days": 14,
+        "billing_cycle_anchor": null,
+        "collection_method": "charge_automatically",
+        "payment_behavior": "default_incomplete"
+      },
+      "metadata": {
+        "program": "beta",
+        "cohort": "vetsorcery_beta_1",
+        "monthly_revenue": 65000,
+        "baseline_strategic_clarity": 7,
+        "baseline_leadership_confidence": 8,
+        "expected_transformation": "25-40% revenue growth"
+      },
+      "beta_benefits": [
+        "50% discount off launch price",
+        "Personal onboarding with founder",
+        "Weekly feedback calls first month",
+        "Priority feature requests",
+        "Case study participation",
+        "Potential speaking opportunities"
+      ],
+      "billing_start_date": "2025-08-19",
+      "expected_ltv": 1194
+    },
+    {
+      "client_id": "mountain_view_vet",
+      "clinic_name": "Mountain View Veterinary Clinic",
+      "owner_name": "Dr. Jennifer Park",
+      "email": "drjenniferpark@mountainviewvetclinic.com",
+      "subscription_details": {
+        "price_id": "price_beta_hardcard_199",
+        "quantity": 1,
+        "trial_period_days": 14,
+        "billing_cycle_anchor": null,
+        "collection_method": "charge_automatically",
+        "payment_behavior": "default_incomplete"
+      },
+      "metadata": {
+        "program": "beta",
+        "cohort": "vetsorcery_beta_1",
+        "monthly_revenue": 45000,
+        "baseline_strategic_clarity": 5,
+        "baseline_leadership_confidence": 6,
+        "expected_transformation": "25-40% revenue growth"
+      },
+      "beta_benefits": [
+        "50% discount off launch price",
+        "Personal onboarding with founder",
+        "Weekly feedback calls first month",
+        "Priority feature requests",
+        "Case study participation",
+        "Potential speaking opportunities"
+      ],
+      "billing_start_date": "2025-08-19",
+      "expected_ltv": 1194
+    },
+    {
+      "client_id": "happy_paws_vet",
+      "clinic_name": "Happy Paws Veterinary",
+      "owner_name": "Dr. Lisa Thompson",
+      "email": "drlisathompson@happypawsvet.com",
+      "subscription_details": {
+        "price_id": "price_beta_hardcard_199",
+        "quantity": 1,
+        "trial_period_days": 14,
+        "billing_cycle_anchor": null,
+        "collection_method": "charge_automatically",
+        "payment_behavior": "default_incomplete"
+      },
+      "metadata": {
+        "program": "beta",
+        "cohort": "vetsorcery_beta_1",
+        "monthly_revenue": 35000,
+        "baseline_strategic_clarity": 4,
+        "baseline_leadership_confidence": 5,
+        "expected_transformation": "25-40% revenue growth"
+      },
+      "beta_benefits": [
+        "50% discount off launch price",
+        "Personal onboarding with founder",
+        "Weekly feedback calls first month",
+        "Priority feature requests",
+        "Case study participation",
+        "Potential speaking opportunities"
+      ],
+      "billing_start_date": "2025-08-19",
+      "expected_ltv": 1194
+    },
+    {
+      "client_id": "sunset_boulevard",
+      "clinic_name": "Sunset Boulevard Pet Care",
+      "owner_name": "Dr. David Kim",
+      "email": "drdavidkim@sunsetblvdpetcare.com",
+      "subscription_details": {
+        "price_id": "price_beta_hardcard_199",
+        "quantity": 1,
+        "trial_period_days": 14,
+        "billing_cycle_anchor": null,
+        "collection_method": "charge_automatically",
+        "payment_behavior": "default_incomplete"
+      },
+      "metadata": {
+        "program": "beta",
+        "cohort": "vetsorcery_beta_1",
+        "monthly_revenue": 95000,
+        "baseline_strategic_clarity": 8,
+        "baseline_leadership_confidence": 7,
+        "expected_transformation": "25-40% revenue growth"
+      },
+      "beta_benefits": [
+        "50% discount off launch price",
+        "Personal onboarding with founder",
+        "Weekly feedback calls first month",
+        "Priority feature requests",
+        "Case study participation",
+        "Potential speaking opportunities"
+      ],
+      "billing_start_date": "2025-08-19",
+      "expected_ltv": 1194
+    }
+  ],
+  "payment_links": [
+    {
+      "client_id": "peak_performance_vet",
+      "clinic_name": "Peak Performance Veterinary",
+      "payment_link_config": {
+        "line_items": [
+          {
+            "price": "price_beta_hardcard_199",
+            "quantity": 1
+          }
+        ],
+        "mode": "subscription",
+        "success_url": "https://hardcard.co/beta/welcome?session_id={CHECKOUT_SESSION_ID}",
+        "cancel_url": "https://hardcard.co/beta/signup",
+        "allow_promotion_codes": true,
+        "billing_address_collection": "required",
+        "customer_creation": "always",
+        "metadata": {
+          "clinic_id": "peak_performance_vet",
+          "program": "beta",
+          "cohort": "vetsorcery_beta_1"
+        },
+        "subscription_data": {
+          "trial_period_days": 14,
+          "metadata": {
+            "program": "beta",
+            "cohort": "vetsorcery_beta_1",
+            "monthly_revenue": 85000,
+            "baseline_strategic_clarity": 6,
+            "baseline_leadership_confidence": 7,
+            "expected_transformation": "25-40% revenue growth"
+          }
+        }
+      },
+      "personalized_message": "\nDear Dr. Sarah Chen,\n\nWelcome to the HardCard Business Excellence Beta Program!\n\nYour exclusive pricing: $199/month (50% off our $399 launch price)\nTrial period: 14 days free\nTotal beta program value: $1,194 for 6 months\n\nThis payment link is personalized for Peak Performance Veterinary and includes:\n\u2705 Level 5 Leadership Assessment & Training\n\u2705 Veterinary Hedgehog Concept Development  \n\u2705 Practice Flywheel Builder & Optimization\n\u2705 20-Mile March Discipline Tracking\n\u2705 Personal onboarding with our founder\n\u2705 Weekly feedback calls during month 1\n\u2705 Priority support and feature requests\n\nClick below to secure your spot in this exclusive beta cohort:\n[PAYMENT_LINK_WILL_BE_GENERATED]\n\nQuestions? Reply to this email or call us directly.\n\nBest regards,\nThe HardCard Team\n",
+      "email_subject": "\ud83d\ude80 Your Exclusive HardCard Beta Access - Peak Performance Veterinary",
+      "follow_up_sequence": [
+        {
+          "day": 3,
+          "subject": "Quick question about your HardCard Beta access",
+          "message": "Just wanted to make sure you received your exclusive beta program invitation..."
+        },
+        {
+          "day": 7,
+          "subject": "Beta program closes in 48 hours",
+          "message": "As one of our selected VetSorcery clients, your spot is reserved until..."
+        }
+      ]
+    },
+    {
+      "client_id": "coastal_veterinary",
+      "clinic_name": "Coastal Veterinary Services",
+      "payment_link_config": {
+        "line_items": [
+          {
+            "price": "price_beta_hardcard_199",
+            "quantity": 1
+          }
+        ],
+        "mode": "subscription",
+        "success_url": "https://hardcard.co/beta/welcome?session_id={CHECKOUT_SESSION_ID}",
+        "cancel_url": "https://hardcard.co/beta/signup",
+        "allow_promotion_codes": true,
+        "billing_address_collection": "required",
+        "customer_creation": "always",
+        "metadata": {
+          "clinic_id": "coastal_veterinary",
+          "program": "beta",
+          "cohort": "vetsorcery_beta_1"
+        },
+        "subscription_data": {
+          "trial_period_days": 14,
+          "metadata": {
+            "program": "beta",
+            "cohort": "vetsorcery_beta_1",
+            "monthly_revenue": 55000,
+            "baseline_strategic_clarity": 5,
+            "baseline_leadership_confidence": 6,
+            "expected_transformation": "25-40% revenue growth"
+          }
+        }
+      },
+      "personalized_message": "\nDear Dr. Amanda Foster,\n\nWelcome to the HardCard Business Excellence Beta Program!\n\nYour exclusive pricing: $199/month (50% off our $399 launch price)\nTrial period: 14 days free\nTotal beta program value: $1,194 for 6 months\n\nThis payment link is personalized for Coastal Veterinary Services and includes:\n\u2705 Level 5 Leadership Assessment & Training\n\u2705 Veterinary Hedgehog Concept Development  \n\u2705 Practice Flywheel Builder & Optimization\n\u2705 20-Mile March Discipline Tracking\n\u2705 Personal onboarding with our founder\n\u2705 Weekly feedback calls during month 1\n\u2705 Priority support and feature requests\n\nClick below to secure your spot in this exclusive beta cohort:\n[PAYMENT_LINK_WILL_BE_GENERATED]\n\nQuestions? Reply to this email or call us directly.\n\nBest regards,\nThe HardCard Team\n",
+      "email_subject": "\ud83d\ude80 Your Exclusive HardCard Beta Access - Coastal Veterinary Services",
+      "follow_up_sequence": [
+        {
+          "day": 3,
+          "subject": "Quick question about your HardCard Beta access",
+          "message": "Just wanted to make sure you received your exclusive beta program invitation..."
+        },
+        {
+          "day": 7,
+          "subject": "Beta program closes in 48 hours",
+          "message": "As one of our selected VetSorcery clients, your spot is reserved until..."
+        }
+      ]
+    },
+    {
+      "client_id": "riverside_animal",
+      "clinic_name": "Riverside Animal Hospital",
+      "payment_link_config": {
+        "line_items": [
+          {
+            "price": "price_beta_hardcard_199",
+            "quantity": 1
+          }
+        ],
+        "mode": "subscription",
+        "success_url": "https://hardcard.co/beta/welcome?session_id={CHECKOUT_SESSION_ID}",
+        "cancel_url": "https://hardcard.co/beta/signup",
+        "allow_promotion_codes": true,
+        "billing_address_collection": "required",
+        "customer_creation": "always",
+        "metadata": {
+          "clinic_id": "riverside_animal",
+          "program": "beta",
+          "cohort": "vetsorcery_beta_1"
+        },
+        "subscription_data": {
+          "trial_period_days": 14,
+          "metadata": {
+            "program": "beta",
+            "cohort": "vetsorcery_beta_1",
+            "monthly_revenue": 65000,
+            "baseline_strategic_clarity": 7,
+            "baseline_leadership_confidence": 8,
+            "expected_transformation": "25-40% revenue growth"
+          }
+        }
+      },
+      "personalized_message": "\nDear Dr. Michael Rodriguez,\n\nWelcome to the HardCard Business Excellence Beta Program!\n\nYour exclusive pricing: $199/month (50% off our $399 launch price)\nTrial period: 14 days free\nTotal beta program value: $1,194 for 6 months\n\nThis payment link is personalized for Riverside Animal Hospital and includes:\n\u2705 Level 5 Leadership Assessment & Training\n\u2705 Veterinary Hedgehog Concept Development  \n\u2705 Practice Flywheel Builder & Optimization\n\u2705 20-Mile March Discipline Tracking\n\u2705 Personal onboarding with our founder\n\u2705 Weekly feedback calls during month 1\n\u2705 Priority support and feature requests\n\nClick below to secure your spot in this exclusive beta cohort:\n[PAYMENT_LINK_WILL_BE_GENERATED]\n\nQuestions? Reply to this email or call us directly.\n\nBest regards,\nThe HardCard Team\n",
+      "email_subject": "\ud83d\ude80 Your Exclusive HardCard Beta Access - Riverside Animal Hospital",
+      "follow_up_sequence": [
+        {
+          "day": 3,
+          "subject": "Quick question about your HardCard Beta access",
+          "message": "Just wanted to make sure you received your exclusive beta program invitation..."
+        },
+        {
+          "day": 7,
+          "subject": "Beta program closes in 48 hours",
+          "message": "As one of our selected VetSorcery clients, your spot is reserved until..."
+        }
+      ]
+    },
+    {
+      "client_id": "mountain_view_vet",
+      "clinic_name": "Mountain View Veterinary Clinic",
+      "payment_link_config": {
+        "line_items": [
+          {
+            "price": "price_beta_hardcard_199",
+            "quantity": 1
+          }
+        ],
+        "mode": "subscription",
+        "success_url": "https://hardcard.co/beta/welcome?session_id={CHECKOUT_SESSION_ID}",
+        "cancel_url": "https://hardcard.co/beta/signup",
+        "allow_promotion_codes": true,
+        "billing_address_collection": "required",
+        "customer_creation": "always",
+        "metadata": {
+          "clinic_id": "mountain_view_vet",
+          "program": "beta",
+          "cohort": "vetsorcery_beta_1"
+        },
+        "subscription_data": {
+          "trial_period_days": 14,
+          "metadata": {
+            "program": "beta",
+            "cohort": "vetsorcery_beta_1",
+            "monthly_revenue": 45000,
+            "baseline_strategic_clarity": 5,
+            "baseline_leadership_confidence": 6,
+            "expected_transformation": "25-40% revenue growth"
+          }
+        }
+      },
+      "personalized_message": "\nDear Dr. Jennifer Park,\n\nWelcome to the HardCard Business Excellence Beta Program!\n\nYour exclusive pricing: $199/month (50% off our $399 launch price)\nTrial period: 14 days free\nTotal beta program value: $1,194 for 6 months\n\nThis payment link is personalized for Mountain View Veterinary Clinic and includes:\n\u2705 Level 5 Leadership Assessment & Training\n\u2705 Veterinary Hedgehog Concept Development  \n\u2705 Practice Flywheel Builder & Optimization\n\u2705 20-Mile March Discipline Tracking\n\u2705 Personal onboarding with our founder\n\u2705 Weekly feedback calls during month 1\n\u2705 Priority support and feature requests\n\nClick below to secure your spot in this exclusive beta cohort:\n[PAYMENT_LINK_WILL_BE_GENERATED]\n\nQuestions? Reply to this email or call us directly.\n\nBest regards,\nThe HardCard Team\n",
+      "email_subject": "\ud83d\ude80 Your Exclusive HardCard Beta Access - Mountain View Veterinary Clinic",
+      "follow_up_sequence": [
+        {
+          "day": 3,
+          "subject": "Quick question about your HardCard Beta access",
+          "message": "Just wanted to make sure you received your exclusive beta program invitation..."
+        },
+        {
+          "day": 7,
+          "subject": "Beta program closes in 48 hours",
+          "message": "As one of our selected VetSorcery clients, your spot is reserved until..."
+        }
+      ]
+    },
+    {
+      "client_id": "happy_paws_vet",
+      "clinic_name": "Happy Paws Veterinary",
+      "payment_link_config": {
+        "line_items": [
+          {
+            "price": "price_beta_hardcard_199",
+            "quantity": 1
+          }
+        ],
+        "mode": "subscription",
+        "success_url": "https://hardcard.co/beta/welcome?session_id={CHECKOUT_SESSION_ID}",
+        "cancel_url": "https://hardcard.co/beta/signup",
+        "allow_promotion_codes": true,
+        "billing_address_collection": "required",
+        "customer_creation": "always",
+        "metadata": {
+          "clinic_id": "happy_paws_vet",
+          "program": "beta",
+          "cohort": "vetsorcery_beta_1"
+        },
+        "subscription_data": {
+          "trial_period_days": 14,
+          "metadata": {
+            "program": "beta",
+            "cohort": "vetsorcery_beta_1",
+            "monthly_revenue": 35000,
+            "baseline_strategic_clarity": 4,
+            "baseline_leadership_confidence": 5,
+            "expected_transformation": "25-40% revenue growth"
+          }
+        }
+      },
+      "personalized_message": "\nDear Dr. Lisa Thompson,\n\nWelcome to the HardCard Business Excellence Beta Program!\n\nYour exclusive pricing: $199/month (50% off our $399 launch price)\nTrial period: 14 days free\nTotal beta program value: $1,194 for 6 months\n\nThis payment link is personalized for Happy Paws Veterinary and includes:\n\u2705 Level 5 Leadership Assessment & Training\n\u2705 Veterinary Hedgehog Concept Development  \n\u2705 Practice Flywheel Builder & Optimization\n\u2705 20-Mile March Discipline Tracking\n\u2705 Personal onboarding with our founder\n\u2705 Weekly feedback calls during month 1\n\u2705 Priority support and feature requests\n\nClick below to secure your spot in this exclusive beta cohort:\n[PAYMENT_LINK_WILL_BE_GENERATED]\n\nQuestions? Reply to this email or call us directly.\n\nBest regards,\nThe HardCard Team\n",
+      "email_subject": "\ud83d\ude80 Your Exclusive HardCard Beta Access - Happy Paws Veterinary",
+      "follow_up_sequence": [
+        {
+          "day": 3,
+          "subject": "Quick question about your HardCard Beta access",
+          "message": "Just wanted to make sure you received your exclusive beta program invitation..."
+        },
+        {
+          "day": 7,
+          "subject": "Beta program closes in 48 hours",
+          "message": "As one of our selected VetSorcery clients, your spot is reserved until..."
+        }
+      ]
+    },
+    {
+      "client_id": "sunset_boulevard",
+      "clinic_name": "Sunset Boulevard Pet Care",
+      "payment_link_config": {
+        "line_items": [
+          {
+            "price": "price_beta_hardcard_199",
+            "quantity": 1
+          }
+        ],
+        "mode": "subscription",
+        "success_url": "https://hardcard.co/beta/welcome?session_id={CHECKOUT_SESSION_ID}",
+        "cancel_url": "https://hardcard.co/beta/signup",
+        "allow_promotion_codes": true,
+        "billing_address_collection": "required",
+        "customer_creation": "always",
+        "metadata": {
+          "clinic_id": "sunset_boulevard",
+          "program": "beta",
+          "cohort": "vetsorcery_beta_1"
+        },
+        "subscription_data": {
+          "trial_period_days": 14,
+          "metadata": {
+            "program": "beta",
+            "cohort": "vetsorcery_beta_1",
+            "monthly_revenue": 95000,
+            "baseline_strategic_clarity": 8,
+            "baseline_leadership_confidence": 7,
+            "expected_transformation": "25-40% revenue growth"
+          }
+        }
+      },
+      "personalized_message": "\nDear Dr. David Kim,\n\nWelcome to the HardCard Business Excellence Beta Program!\n\nYour exclusive pricing: $199/month (50% off our $399 launch price)\nTrial period: 14 days free\nTotal beta program value: $1,194 for 6 months\n\nThis payment link is personalized for Sunset Boulevard Pet Care and includes:\n\u2705 Level 5 Leadership Assessment & Training\n\u2705 Veterinary Hedgehog Concept Development  \n\u2705 Practice Flywheel Builder & Optimization\n\u2705 20-Mile March Discipline Tracking\n\u2705 Personal onboarding with our founder\n\u2705 Weekly feedback calls during month 1\n\u2705 Priority support and feature requests\n\nClick below to secure your spot in this exclusive beta cohort:\n[PAYMENT_LINK_WILL_BE_GENERATED]\n\nQuestions? Reply to this email or call us directly.\n\nBest regards,\nThe HardCard Team\n",
+      "email_subject": "\ud83d\ude80 Your Exclusive HardCard Beta Access - Sunset Boulevard Pet Care",
+      "follow_up_sequence": [
+        {
+          "day": 3,
+          "subject": "Quick question about your HardCard Beta access",
+          "message": "Just wanted to make sure you received your exclusive beta program invitation..."
+        },
+        {
+          "day": 7,
+          "subject": "Beta program closes in 48 hours",
+          "message": "As one of our selected VetSorcery clients, your spot is reserved until..."
+        }
+      ]
+    }
+  ],
+  "revenue_projections": {
+    "program_overview": {
+      "total_invited_clients": 6,
+      "beta_price_monthly": 199,
+      "program_duration_months": 6,
+      "trial_period_days": 14
+    },
+    "maximum_potential": {
+      "monthly_revenue": 1194,
+      "total_6_month_revenue": 7164,
+      "annual_recurring_revenue": 14328
+    },
+    "projected_actuals": {
+      "expected_conversion_rate": "85.0%",
+      "projected_paying_clients": 5,
+      "projected_monthly_revenue": 995,
+      "projected_total_revenue": 5970,
+      "projected_arr": 11940
+    },
+    "collins_partnership_metrics": {
+      "clients_helped": 5,
+      "monthly_coaching_revenue": 995,
+      "framework_validation_value": "Proven success with Jim Collins' frameworks",
+      "case_study_potential": "5 documented transformations",
+      "partnership_pitch_strength": "High - real revenue and documented results"
+    }
+  },
+  "setup_timestamp": "2025-08-05T20:40:24.371049"
+}

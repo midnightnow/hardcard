@@ -1,0 +1,92 @@
+{
+  "veterinary_practices": [
+    {
+      "name": "Metropolitan Veterinary Specialists",
+      "size": "15 doctors, 45 staff",
+      "revenue_potential": 380,
+      "pain_points": [
+        "HIPAA compliance",
+        "multiple locations",
+        "imaging data volume"
+      ],
+      "decision_maker": "Practice Manager",
+      "contact_timeline": "immediate"
+    },
+    {
+      "name": "Animal Emergency Center Network",
+      "size": "8 locations, 200+ staff",
+      "revenue_potential": 3040,
+      "pain_points": [
+        "24/7 operations",
+        "critical data protection",
+        "regulatory compliance"
+      ],
+      "decision_maker": "IT Director",
+      "contact_timeline": "this_week"
+    },
+    {
+      "name": "Specialized Veterinary Services Group",
+      "size": "12 clinics, regional coverage",
+      "revenue_potential": 4560,
+      "pain_points": [
+        "data synchronization",
+        "backup standardization",
+        "compliance audits"
+      ],
+      "decision_maker": "Operations Director",
+      "contact_timeline": "this_week"
+    }
+  ],
+  "medical_practices": [
+    {
+      "name": "Regional Medical Associates",
+      "size": "25 physicians, 100+ staff",
+      "revenue_potential": 370,
+      "pain_points": [
+        "HIPAA audits",
+        "EHR backup",
+        "patient data security"
+      ],
+      "decision_maker": "CIO/IT Manager",
+      "contact_timeline": "next_week"
+    },
+    {
+      "name": "Integrated Healthcare Solutions",
+      "size": "50+ providers, multiple specialties",
+      "revenue_potential": 1480,
+      "pain_points": [
+        "complex IT infrastructure",
+        "compliance requirements",
+        "data integration"
+      ],
+      "decision_maker": "Chief Technology Officer",
+      "contact_timeline": "next_week"
+    }
+  ],
+  "professional_services": [
+    {
+      "name": "Tech-Forward Law Firm",
+      "size": "50 attorneys, document-heavy",
+      "revenue_potential": 400,
+      "pain_points": [
+        "client confidentiality",
+        "document retention",
+        "disaster recovery"
+      ],
+      "decision_maker": "Managing Partner/IT Director",
+      "contact_timeline": "week_2"
+    },
+    {
+      "name": "Engineering Consulting Group",
+      "size": "30 engineers, CAD data intensive",
+      "revenue_potential": 400,
+      "pain_points": [
+        "large file backup",
+        "project data integrity",
+        "client deliverable security"
+      ],
+      "decision_maker": "Operations Manager",
+      "contact_timeline": "week_2"
+    }
+  ]
+}

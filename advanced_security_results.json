@@ -1,0 +1,24 @@
+{
+  "vulnerabilities": [
+    {
+      "type": "sensitive_data_logging",
+      "severity": "medium",
+      "file": "aiva-sdk.js",
+      "description": "Potential sensitive data logging: key"
+    },
+    {
+      "type": "weak_randomness",
+      "severity": "medium",
+      "file": "aiva-sdk.js",
+      "description": "Math.random() is not cryptographically secure"
+    }
+  ],
+  "summary": {
+    "total_vulnerabilities": 2,
+    "critical": 0,
+    "high": 0,
+    "medium": 2,
+    "risk_score": 16,
+    "files_scanned": 2
+  }
+}

@@ -1,0 +1,609 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "HardCard Veterinary Intelligence API",
+    "description": "Comprehensive API for veterinary practice management with AI phone agents",
+    "version": "2.0.0",
+    "contact": {
+      "name": "HardCard Support",
+      "email": "support@hardcard.com",
+      "url": "https://hardcard.com/support"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.hardcard.com",
+      "description": "Production server"
+    },
+    {
+      "url": "https://staging-api.hardcard.com",
+      "description": "Staging server"
+    },
+    {
+      "url": "http://localhost:8000",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Welcome endpoint",
+        "description": "Returns platform information and available services",
+        "tags": [
+          "General"
+        ],
+        "responses": {
+          "200": {
+            "description": "Platform information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "services": {
+                      "type": "object"
+                    },
+                    "endpoints": {
+                      "type": "object"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health check endpoint",
+        "description": "Returns comprehensive health status of all systems",
+        "tags": [
+          "Monitoring"
+        ],
+        "responses": {
+          "200": {
+            "description": "System health status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "application": {
+                      "type": "object"
+                    },
+                    "services": {
+                      "type": "object"
+                    },
+                    "system": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics": {
+      "get": {
+        "summary": "Prometheus metrics",
+        "description": "Returns system metrics in Prometheus format",
+        "tags": [
+          "Monitoring"
+        ],
+        "responses": {
+          "200": {
+            "description": "Prometheus metrics",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/routes/clients": {
+      "get": {
+        "summary": "List all clients",
+        "description": "Retrieve all veterinary clients in the system",
+        "tags": [
+          "Clients"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 50
+            },
+            "description": "Number of clients to return"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            },
+            "description": "Number of clients to skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of clients",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "clients": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Client"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "limit": {
+                      "type": "integer"
+                    },
+                    "offset": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create new client",
+        "description": "Create a new veterinary client",
+        "tags": [
+          "Clients"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Client created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Client"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/routes/patients": {
+      "get": {
+        "summary": "List all patients",
+        "description": "Retrieve all patients in the veterinary system",
+        "tags": [
+          "Patients"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of patients",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Patient"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/routes/appointments": {
+      "get": {
+        "summary": "List appointments",
+        "description": "Retrieve appointments with filtering options",
+        "tags": [
+          "Appointments"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter appointments by date"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "scheduled",
+                "completed",
+                "cancelled"
+              ]
+            },
+            "description": "Filter appointments by status"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of appointments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Appointment"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/routes/phone-agent/call": {
+      "post": {
+        "summary": "Initiate phone agent call",
+        "description": "Start a new AI phone agent conversation",
+        "tags": [
+          "Phone Agent"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhoneCallRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Call initiated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PhoneCallResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/muse/validation/summary": {
+      "get": {
+        "summary": "MUSE validation summary",
+        "description": "Get summary of mathematical creativity validation experiments",
+        "tags": [
+          "MUSE"
+        ],
+        "responses": {
+          "200": {
+            "description": "Validation summary",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationSummary"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Client": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email"
+        ]
+      },
+      "ClientCreate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "email"
+        ]
+      },
+      "Patient": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "species": {
+            "type": "string"
+          },
+          "breed": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer"
+          },
+          "client_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "medical_history": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "species",
+          "client_id"
+        ]
+      },
+      "Appointment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "client_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "patient_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "duration_minutes": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "scheduled",
+              "completed",
+              "cancelled"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          },
+          "created_by": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "client_id",
+          "patient_id",
+          "date"
+        ]
+      },
+      "PhoneCallRequest": {
+        "type": "object",
+        "properties": {
+          "phone_number": {
+            "type": "string"
+          },
+          "client_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "call_type": {
+            "type": "string",
+            "enum": [
+              "appointment",
+              "reminder",
+              "follow_up"
+            ]
+          },
+          "context": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "phone_number",
+          "call_type"
+        ]
+      },
+      "PhoneCallResponse": {
+        "type": "object",
+        "properties": {
+          "call_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string"
+          },
+          "estimated_duration": {
+            "type": "integer"
+          },
+          "webhook_url": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "ValidationSummary": {
+        "type": "object",
+        "properties": {
+          "total_experiments": {
+            "type": "integer"
+          },
+          "active_campaigns": {
+            "type": "integer"
+          },
+          "success_rate": {
+            "type": "number"
+          },
+          "mathematical_accuracy": {
+            "type": "number"
+          },
+          "creativity_score": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "General",
+      "description": "General platform endpoints"
+    },
+    {
+      "name": "Monitoring",
+      "description": "System monitoring and health"
+    },
+    {
+      "name": "Clients",
+      "description": "Client management operations"
+    },
+    {
+      "name": "Patients",
+      "description": "Patient management operations"
+    },
+    {
+      "name": "Appointments",
+      "description": "Appointment scheduling and management"
+    },
+    {
+      "name": "Phone Agent",
+      "description": "AI phone agent operations"
+    },
+    {
+      "name": "MUSE",
+      "description": "Mathematical creativity validation"
+    }
+  ]
+}

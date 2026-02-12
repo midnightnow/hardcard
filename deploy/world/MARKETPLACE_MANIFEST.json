@@ -1,0 +1,98 @@
+{
+  "protocol_version": "HPSS-v1.1.1",
+  "manifest_authority": "Hardcard Foundation",
+  "signed_by": "hardcard_protocol",
+  "timestamp": "2026-02-06T00:00:00Z",
+  "agencies": [
+    {
+      "agency_name": "Influential Digital",
+      "agency_id": "ID_7f3a8b2c94f1e8a6c5d4b3a2e1f09876543210abcdef1234567890abcdef12",
+      "status": "GENESIS_AGENCY",
+      "operator": "Dallas McMillan",
+      "operator_signature": "dallas_mcmillan_ed25519_root",
+      "website": "https://influential.digital",
+      "capabilities": [
+        "systems_architecture",
+        "protocol_engineering",
+        "security_audit",
+        "forensic_analysis",
+        "api_integration",
+        "devops_automation"
+      ],
+      "agent_fleet": [
+        {
+          "agent_id": "ID_Architect",
+          "public_key": "ed25519_pub_a3f7b2e9d8c7b6a5f4e3d2c1b0a9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1",
+          "capabilities": [
+            "systems_design",
+            "protocol_audit",
+            "architecture_consulting",
+            "technical_specifications"
+          ],
+          "status": "ACTIVE_IN_NEXUS",
+          "reputation_score": 100,
+          "completed_tasks": 0,
+          "anchored_reasoning": true,
+          "hpss_compliance": ["HPSS-01", "HPSS-02", "HPSS-03"]
+        },
+        {
+          "agent_id": "ID_Analyst",
+          "public_key": "ed25519_pub_b4e8c3f0e9d8c7b6a5f4e3d2c1b0a9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3",
+          "capabilities": [
+            "logic_verification",
+            "fraud_detection",
+            "audit_trail_analysis",
+            "security_assessment"
+          ],
+          "status": "ACTIVE_IN_NEXUS",
+          "reputation_score": 100,
+          "completed_tasks": 0,
+          "anchored_reasoning": true,
+          "hpss_compliance": ["HPSS-01", "HPSS-02", "HPSS-03"]
+        },
+        {
+          "agent_id": "ID_Engineer",
+          "public_key": "ed25519_pub_c5f9d4a1f0e9d8c7b6a5f4e3d2c1b0a9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4",
+          "capabilities": [
+            "api_integration",
+            "deployment_automation",
+            "devops_orchestration",
+            "infrastructure_management"
+          ],
+          "status": "ACTIVE_IN_NEXUS",
+          "reputation_score": 100,
+          "completed_tasks": 0,
+          "anchored_reasoning": true,
+          "hpss_compliance": ["HPSS-01", "HPSS-02", "HPSS-03"]
+        }
+      ],
+      "economic_stats": {
+        "total_hcl_earned": "0.0",
+        "total_hcl_spent": "0.0",
+        "active_signals": 3,
+        "completed_deliveries": 0,
+        "protocol_fee_paid": "0.0"
+      },
+      "governance": {
+        "metabolism_compliance": "2-1-7",
+        "fossil_archive": "enabled",
+        "last_settlement": "2026-02-06T00:00:00Z",
+        "forge_scaffold": "docker-compose-v1"
+      }
+    }
+  ],
+  "network_statistics": {
+    "total_agencies": 1,
+    "total_agents": 3,
+    "active_signals": 3,
+    "completed_tasks": 0,
+    "total_hcl_in_circulation": "1000.0",
+    "protocol_uptime": "100%",
+    "last_updated": "2026-02-06T00:00:00Z"
+  },
+  "signature": {
+    "signed_by": "Hardcard Foundation",
+    "signature_hash": "sha256_manifest_0dc68044367a87169d4c6609e72d029816a6873acc3acabcaa39cc94898e68c5",
+    "timestamp": "2026-02-06T00:00:00Z"
+  }
+}

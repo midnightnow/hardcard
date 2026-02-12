@@ -1,0 +1,12 @@
+# Alexandria Safety API Requirements - Simplified
+
+# FastAPI and web framework (core dependencies only)
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+
+# Scientific computing for uncertainty quantification
+numpy==1.26.2
+
+# Testing (for development)
+pytest==7.4.3

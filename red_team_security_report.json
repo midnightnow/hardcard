@@ -1,0 +1,65 @@
+{
+  "timestamp": "2025-07-04T09:40:02.829125",
+  "target": "http://localhost:8000",
+  "vulnerabilities": [
+    {
+      "severity": "high",
+      "category": "Insecure Direct Object Reference",
+      "endpoint": "/routes/api/web_portal/client/client-999",
+      "description": "Able to access other users' data without authorization",
+      "timestamp": "2025-07-04T09:40:02.916734",
+      "payload": null,
+      "response_data": "{\"detail\":\"Not authenticated\"}"
+    },
+    {
+      "severity": "high",
+      "category": "Insecure Direct Object Reference",
+      "endpoint": "/routes/api/telehealth/sessions/session-999",
+      "description": "Able to access other users' data without authorization",
+      "timestamp": "2025-07-04T09:40:02.917946",
+      "payload": null,
+      "response_data": "{\"detail\":\"Not authenticated\"}"
+    },
+    {
+      "severity": "high",
+      "category": "Insecure Direct Object Reference",
+      "endpoint": "/routes/api/web_portal/pets/pet-999",
+      "description": "Able to access other users' data without authorization",
+      "timestamp": "2025-07-04T09:40:02.919316",
+      "payload": null,
+      "response_data": "{\"detail\":\"Not authenticated\"}"
+    },
+    {
+      "severity": "high",
+      "category": "Insecure Direct Object Reference",
+      "endpoint": "/routes/api/appointments/client-999",
+      "description": "Able to access other users' data without authorization",
+      "timestamp": "2025-07-04T09:40:02.920327",
+      "payload": null,
+      "response_data": "{\"detail\":\"Not Found\"}"
+    },
+    {
+      "severity": "medium",
+      "category": "Missing Rate Limiting",
+      "endpoint": "/routes/api/telehealth/test",
+      "description": "No rate limiting detected after 100 requests",
+      "timestamp": "2025-07-04T09:40:13.776621",
+      "payload": null,
+      "response_data": null
+    }
+  ],
+  "test_summary": {
+    "total_vulnerabilities": 5,
+    "critical": 0,
+    "high": 4,
+    "medium": 1,
+    "low": 0
+  },
+  "recommendations": [
+    {
+      "priority": "urgent",
+      "action": "Address 4 high-severity vulnerabilities",
+      "details": "High-severity issues should be fixed within 24-48 hours"
+    }
+  ]
+}

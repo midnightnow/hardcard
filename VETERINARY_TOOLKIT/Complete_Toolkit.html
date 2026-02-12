@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Veterinary Clinic HR & Workflow Toolkit</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.5;
+            color: #2c3e50;
+            margin: 0;
+            padding: 20px;
+            background: white;
+        }
+        
+        .document-section {
+            page-break-before: always;
+            margin-bottom: 40px;
+        }
+        
+        .document-section:first-child {
+            page-break-before: auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #2c3e50;
+        }
+        
+        .logo-placeholder {
+            width: 60px;
+            height: 60px;
+            background: #2c3e50;
+            border-radius: 4px;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            font-size: 20px;
+            margin: 25px 0 15px 0;
+            border-bottom: 1px solid #ecf0f1;
+            padding-bottom: 8px;
+        }
+        
+        h3 {
+            color: #2c3e50;
+            font-size: 16px;
+            margin: 20px 0 10px 0;
+        }
+        
+        .role-section {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            background: #f8f9fa;
+        }
+        
+        .checklist {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        
+        .checklist li {
+            margin: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .checklist li:before {
+            content: "□";
+            position: absolute;
+            left: 0;
+            font-size: 16px;
+            color: #3498db;
+        }
+        
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+        
+        .performance-table th {
+            background: #34495e;
+            color: white;
+            padding: 10px 6px;
+            text-align: left;
+            font-size: 12px;
+        }
+        
+        .performance-table td {
+            padding: 8px 6px;
+            border-bottom: 1px solid #ecf0f1;
+            vertical-align: top;
+        }
+        
+        .performance-table tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .below-standard { border-left: 4px solid #e74c3c; }
+        .meets-standard { border-left: 4px solid #f39c12; }
+        .exceeds-standard { border-left: 4px solid #27ae60; }
+        
+        /* Station Cards */
+        .station-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: #34495e;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            margin-right: 12px;
+        }
+        
+        .card-title h4 {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+        
+        .procedure-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+        
+        .procedure-table th {
+            background: #34495e;
+            color: white;
+            padding: 8px 6px;
+            text-align: left;
+            font-size: 11px;
+        }
+        
+        .procedure-table td {
+            padding: 6px;
+            border-bottom: 1px solid #ecf0f1;
+            vertical-align: top;
+        }
+        
+        .procedure-table tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .reminder {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            color: #155724;
+            font-style: italic;
+            font-size: 12px;
+        }
+        
+        /* Training Framework */
+        .competency-grid {
+            display: grid;
+            grid-template-columns: 200px repeat(5, 1fr);
+            gap: 5px;
+            font-size: 11px;
+            margin: 15px 0;
+        }
+        
+        .competency-header {
+            background: #34495e;
+            color: white;
+            padding: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .competency-cell {
+            padding: 6px;
+            text-align: center;
+            border: 1px solid #ddd;
+            background: #f8f9fa;
+        }
+        
+        .competency-skill {
+            background: #ecf0f1;
+            padding: 6px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .training-schedule {
+            display: grid;
+            grid-template-columns: 80px 120px 1fr;
+            gap: 10px;
+            margin: 15px 0;
+            font-size: 12px;
+        }
+        
+        .schedule-header {
+            background: #34495e;
+            color: white;
+            padding: 8px;
+            font-weight: bold;
+        }
+        
+        .schedule-cell {
+            padding: 6px;
+            border: 1px solid #ddd;
+            background: #f8f9fa;
+        }
+        
+        /* Color coding for different stations */
+        .pharmacy { border-left: 6px solid #9b59b6; }
+        .pharmacy .card-icon { background: #9b59b6; }
+        
+        .kennel { border-left: 6px solid #8e44ad; }
+        .kennel .card-icon { background: #8e44ad; }
+        
+        .imaging { border-left: 6px solid #e67e22; }
+        .imaging .card-icon { background: #e67e22; }
+        
+        .treatment { border-left: 6px solid #16a085; }
+        .treatment .card-icon { background: #16a085; }
+        
+        .consult { border-left: 6px solid #2980b9; }
+        .consult .card-icon { background: #2980b9; }
+        
+        @media print {
+            body {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Table of Contents -->
+    <div class="document-section">
+        <div class="header">
+            <div class="logo-placeholder">[LOGO]</div>
+            <h1>Veterinary Clinic HR & Workflow Toolkit</h1>
+            <div style="font-size: 14px; color: #7f8c8d;">Universal, Brand-Agnostic Edition</div>
+        </div>
+
+        <h2>📋 Table of Contents</h2>
+        <ol style="line-height: 2;">
+            <li>Practice Manager Role Definition & Standards</li>
+            <li>Animal Attendant/Kennel Hand Role Definition & Standards</li>
+            <li>Induction Checklist for New Staff</li>
+            <li>Workstation Reference Cards
+                <ul>
+                    <li>Pharmacy</li>
+                    <li>Kennels/Boarding</li>
+                    <li>Imaging/Radiology</li>
+                    <li>Treatment Room</li>
+                    <li>Consult Room</li>
+                </ul>
+            </li>
+            <li>Rotating Training Plan Framework</li>
+            <li>Team Competency Tracking System</li>
+            <li>Direct Communication Guidelines</li>
+            <li>Performance Documentation Templates</li>
+        </ol>
+    </div>
+
+    <!-- Practice Manager Role -->
+    <div class="document-section">
+        <div class="header">
+            <div class="logo-placeholder">[LOGO]</div>
+            <h1>Role Definition: Practice Manager</h1>
+        </div>
+
+        <div class="role-section">
+            <h3>Mission</h3>
+            <p>To ensure the smooth, efficient, and profitable operation of the clinic by leading the administrative team, managing clinic resources, and fostering a positive workplace culture. Act as key support for the Clinic Director, enabling focus on excellent patient care.</p>
+            
+            <p><strong>Reports To:</strong> Clinic Director / Practice Owner</p>
+        </div>
+
+        <div class="role-section">
+            <h3>Key Responsibilities</h3>
+            <ul class="checklist">
+                <li>Human Resources: Staff scheduling, payroll, recruitment, onboarding, performance reviews</li>
+                <li>Financial Management: Client billing, accounts receivable, budget management, inventory control</li>
+                <li>Operational Oversight: Compliance, maintenance, IT systems, supplier relationships</li>
+                <li>Client Service Excellence: Final escalation point, complaint resolution, service standards</li>
+                <li>Strategic Support: Business planning, policy implementation, process improvement</li>
+            </ul>
+        </div>
+
+        <h3>Performance Standards</h3>
+        <table class="performance-table">
+            <thead>
+                <tr>
+                    <th>Skill Area</th>
+                    <th>Below Standard</th>
+                    <th>Meets Standard</th>
+                    <th>Exceeds Standard</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="below-standard"><strong>Financial Acumen</strong></td>
+                    <td>Inaccurate budgets, poor inventory control, late payments</td>
+                    <td>Manages budgets effectively, controls inventory, ensures timely collections</td>
+                    <td>Identifies revenue opportunities, provides strategic financial analysis</td>
+                </tr>
+                <tr>
+                    <td class="meets-standard"><strong>Team Management</strong></td>
+                    <td>Avoids conflicts, chaotic scheduling, low morale, high turnover</td>
+                    <td>Fair rosters, accurate payroll, professional HR management, positive environment</td>
+                    <td>Develops team members, builds engagement, trusted by all staff</td>
+                </tr>
+                <tr>
+                    <td class="exceeds-standard"><strong>Problem Solving</strong></td>
+                    <td>Avoids issues, blames others, no solutions for recurring problems</td>
+                    <td>Troubleshoots daily operations effectively (IT, complaints, equipment)</td>
+                    <td>Anticipates problems, implements preventative systems, crisis leadership</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Animal Attendant Role -->
+    <div class="document-section">
+        <div class="header">
+            <div class="logo-placeholder">[LOGO]</div>
+            <h1>Role Definition: Animal Attendant/Kennel Hand</h1>
+        </div>
+
+        <div class="role-section">
+            <h3>Mission</h3>
+            <p>To provide exceptional daily care for hospitalized and boarding animals, maintaining the highest standards of hygiene, comfort, and observation. Serve as the eyes and ears of the clinical team for patient monitoring.</p>
+            
+            <p><strong>Reports To:</strong> Head Nurse, Practice Manager</p>
+        </div>
+
+        <div class="role-section">
+            <h3>Key Responsibilities</h3>
+            <ul class="checklist">
+                <li>Daily animal care: feeding, watering, exercise, enrichment</li>
+                <li>Kennel cleaning and disinfection to prevent disease transmission</li>
+                <li>Patient observation and accurate record keeping</li>
+                <li>Medication administration under supervision</li>
+                <li>Assisting with patient restraint and handling</li>
+                <li>Waste management and biosecurity protocols</li>
+                <li>Equipment cleaning and maintenance</li>
+            </ul>
+        </div>
+
+        <h3>Performance Standards</h3>
+        <table class="performance-table">
+            <thead>
+                <tr>
+                    <th>Skill Area</th>
+                    <th>Below Standard</th>
+                    <th>Meets Standard</th>
+                    <th>Exceeds Standard</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="below-standard"><strong>Animal Care</strong></td>
+                    <td>Misses feedings, poor hygiene, inadequate observation</td>
+                    <td>Consistent care routines, proper hygiene, accurate observations</td>
+                    <td>Anticipates patient needs, recognizes subtle changes, calms stressed animals</td>
+                </tr>
+                <tr>
+                    <td class="meets-standard"><strong>Cleaning Standards</strong></td>
+                    <td>Incomplete cleaning, cross-contamination risk, odors</td>
+                    <td>Thorough cleaning protocols, proper disinfection, fresh environment</td>
+                    <td>Identifies process improvements, mentors others, exceeds hygiene standards</td>
+                </tr>
+                <tr>
+                    <td class="exceeds-standard"><strong>Record Keeping</strong></td>
+                    <td>Missing entries, illegible notes, delayed reporting</td>
+                    <td>Accurate, timely documentation of all observations and care provided</td>
+                    <td>Detailed observations that assist clinical decisions, proactive communication</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Induction Checklist -->
+    <div class="document-section">
+        <div class="header">
+            <div class="logo-placeholder">[LOGO]</div>
+            <h1>New Staff Induction Checklist</h1>
+        </div>
+
+        <h3>Staff Member: _________________________ Role: _________________________ Date: _____________</h3>
+
+        <div class="role-section">
+            <h3>Essential Clinical Procedures</h3>
+            <ul class="checklist">
+                <li>Patient weighing and admission</li>
+                <li>TPR monitoring and recording</li>
+                <li>IV catheter placement</li>
+                <li>Anaesthetic monitoring</li>
+                <li>Surgical preparation and scrubbing</li>
+                <li>Gram stain procedure</li>
+                <li>Blood smear preparation</li>
+                <li>PCV/TP testing</li>
+                <li>SNAP test procedures</li>
+                <li>Medication calculations and preparation</li>
+                <li>X-ray positioning and safety</li>
+                <li>Dental procedures and monitoring</li>
+                <li>Emergency procedures and traffic light system</li>
+                <li>Waste disposal and biosecurity protocols</li>
+            </ul>
+        </div>
+
+        <div class="role-section">
+            <h3>Systems and Documentation</h3>
+            <ul class="checklist">
+                <li>Practice management software</li>
+                <li>Medical record keeping</li>
+                <li>Consent form procedures</li>
+                <li>Stock management system</li>
+                <li>Appointment booking</li>
+                <li>Invoicing and payments</li>
+                <li>Laboratory request forms</li>
+                <li>Referral documentation</li>
+                <li>Client discharge instructions</li>
+                <li>Insurance claim procedures</li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <p><strong>Supervisor:</strong> _________________________</p>
+                <p><strong>Signature:</strong> _________________________</p>
+            </div>
+            <div>
+                <p><strong>New Staff:</strong> _________________________</p>
+                <p><strong>Signature:</strong> _________________________</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workstation Cards -->
+    <div class="document-section">
+        <div class="header">
+            <div class="logo-placeholder">[LOGO]</div>
+            <h1>Workstation Reference Cards</h1>
+        </div>
+
+        <!-- Pharmacy Card -->
+        <div class="station-card pharmacy">
+            <div class="card-header">
+                <div class="card-icon">💊</div>
+                <div class="card-title">
+                    <h4>Pharmacy: Dispensing & Labelling</h4>
+                </div>
+            </div>
+            
+            <table class="procedure-table">
+                <thead>
+                    <tr>
+                        <th>Step</th>
+                        <th>Procedure</th>
+                        <th>Who</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1. Check Script</td>
+                        <td>Read prescription carefully. Double-check patient, drug, dose, frequency</td>
+                        <td>Nurse/Vet</td>
+                        <td>&lt; 1 min</td>
+                    </tr>
+                    <tr>
+                        <td>2. Select Drug</td>
+                        <td>Select correct medication, check expiry date</td>
+                        <td>Nurse/Vet</td>
+                        <td>&lt; 1 min</td>
+                    </tr>
+                    <tr>
+                        <td>3. Dispense</td>
+                        <td>Count prescribed quantity accurately, wear gloves</td>
+                        <td>Nurse/Vet</td>
+                        <td>1-2 mins</td>
+                    </tr>
+                    <tr>
+                        <td>4. Label</td>
+                        <td>Print complete label: clinic details, patient/client names, drug/strength, directions, quantity</td>
+                        <td>Nurse/Vet</td>
+                        <td>&lt; 2 mins</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="reminder">
+                <strong>Five Rights:</strong> Right Patient, Right Drug, Right Dose, Right Route, Right Time. Check every time.
+            </div>
+        </div>
+
+        <!-- Kennel Card -->
+        <div class="station-card kennel">
+            <div class="card-header">
+                <div class="card-icon">🏠</div>
+                <div class="card-title">
+                    <h4>Kennels: Daily Care & Cleaning</h4>
+                </div>
+            </div>
+            
+            <table class="procedure-table">
+                <thead>
+                    <tr>
+                        <th>Step</th>
+                        <th>Procedure</th>
+                        <th>Who</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1. Observe</td>
+                        <td>Check animal's demeanor, breathing, bedding/food/water status</td>
+                        <td>Kennel Hand</td>
+                        <td>&lt; 1 min</td>
+                    </tr>
+                    <tr>
+                        <td>2. Care</td>
+                        <td>Fresh food/water per chart, medications, exercise/enrichment</td>
+                        <td>Kennel Hand</td>
+                        <td>5-10 mins</td>
+                    </tr>
+                    <tr>
+                        <td>3. Clean</td>
+                        <td>Remove patient, dispose waste, clean and disinfect all surfaces</td>
+                        <td>Kennel Hand</td>
+                        <td>5-10 mins</td>
+                    </tr>
+                    <tr>
+                        <td>4. Record</td>
+                        <td>Fresh bedding, return patient, record observations and intake/output</td>
+                        <td>Kennel Hand</td>
+                        <td>&lt; 2 mins</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="reminder">
+                Record observations immediately. Small details could be vital clinical signs.
+            </div>
+        </div>
+
+        <!-- Imaging Card -->
+        <div class="station-card imaging">
+            <div class="card-header">
+                <div class="card-icon">📷</div>
+                <div class="card-title">
+                    <h4>Imaging: X-ray Procedures</h4>
+                </div>
+            </div>
+            
+            <table class="procedure-table">
+                <thead>
+                    <tr>
+                        <th>Step</th>
+                        <th>Procedure</th>
+                        <th>Who</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1. Prepare</td>
+                        <td>Check patient ID, position correctly, use restraint aids/sandbags</td>
+                        <td>Nurse/Vet</td>
+                        <td>2-3 mins</td>
+                    </tr>
+                    <tr>
+                        <td>2. Safety</td>
+                        <td>Clear area, wear PPE, announce "X-ray", check positioning</td>
+                        <td>Nurse/Vet</td>
+                        <td>&lt; 1 min</td>
+                    </tr>
+                    <tr>
+                        <td>3. Expose</td>
+                        <td>Set technique (kV, mAs), expose, check image quality</td>
+                        <td>Nurse/Vet</td>
+                        <td>&lt; 1 min</td>
+                    </tr>
+                    <tr>
+                        <td>4. Label</td>
+                        <td>Label image with patient details, date, view, submit to vet</td>
+                        <td>Nurse/Vet</td>
+                        <td>&lt; 1 min</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="reminder">
+                Radiation safety is everyone's responsibility. Never expose without proper positioning and PPE.
+            </div>
+        </div>
+
+        <!-- Treatment Room Card -->
+        <div class="station-card treatment">
+            <div class="card-header">
+                <div class="card-icon">🩹</div>
+                <div class="card-title">
+                    <h4>Treatment Room: Patient Procedures</h4>
+                </div>
+            </div>
+            
+            <table class="procedure-table">
+                <thead>
+                    <tr>
+                        <th>Step</th>
+                        <th>Procedure</th>
+                        <th>Who</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1. Setup</td>
+                        <td>Gather equipment, prepare workspace, check patient chart</td>
+                        <td>Nurse</td>
+                        <td>1-2 mins</td>
+                    </tr>
+                    <tr>
+                        <td>2. Restrain</td>
+                        <td>Position patient safely, use appropriate restraint for procedure</td>
+                        <td>Nurse</td>
+                        <td>1-2 mins</td>
+                    </tr>
+                    <tr>
+                        <td>3. Assist</td>
+                        <td>Support vet during procedure, monitor patient, hand instruments</td>
+                        <td>Nurse</td>
+                        <td>Variable</td>
+                    </tr>
+                    <tr>
+                        <td>4. Clean</td>
+                        <td>Clean equipment, disinfect surfaces, restock supplies</td>
+                        <td>Nurse</td>
+                        <td>2-3 mins</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="reminder">
+                Patient safety first. If restraint becomes difficult, stop and reassess approach.
+            </div>
+        </div>
+
+        <!-- Consult Room Card -->
+        <div class="station-card consult">
+            <div class="card-header">
+                <div class="card-icon">🩺</div>
+                <div class="card-title">
+                    <h4>Consult Room: Appointment Support</h4>
+                </div>
+            </div>
+            
+            <table class="procedure-table">
+                <thead>
+                    <tr>
+                        <th>Step</th>
+                        <th>Procedure</th>
+                        <th>Who</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1. Prepare</td>
+                        <td>Clean room, check equipment, review patient history</td>
+                        <td>Nurse</td>
+                        <td>1-2 mins</td>
+                    </tr>
+                    <tr>
+                        <td>2. Greet</td>
+                        <td>Welcome client, confirm patient details, take TPR/weight</td>
+                        <td>Nurse</td>
+                        <td>2-3 mins</td>
+                    </tr>
+                    <tr>
+                        <td>3. Support</td>
+                        <td>Assist vet with examination, restrain patient, take notes</td>
+                        <td>Nurse</td>
+                        <td>Variable</td>
+                    </tr>
+                    <tr>
+                        <td>4. Conclude</td>
+                        <td>Schedule follow-up, provide instructions, clean room</td>
+                        <td>Nurse</td>
+                        <td>2-3 mins</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="reminder">
+                First impressions matter. A clean, organized room builds client confidence.
+            </div>
+        </div>
+    </div>
+
+    <!-- Training Framework -->
+    <div class="document-section">
+        <div class="header">
+            <div class="logo-placeholder">[LOGO]</div>
+            <h1>Rotating Training Plan Framework</h1>
+        </div>
+
+        <h3>How It Works</h3>
+        <p>Each month, a designated "Skill Champion" leads a 30-minute practical training session. This builds mastery in the trainer and confidence in the team.</p>
+
+        <h3>Example Annual Schedule</h3>
+        <div class="training-schedule">
+            <div class="schedule-header">Month</div>
+            <div class="schedule-header">Champion</div>
+            <div class="schedule-header">Training Topic</div>
+            
+            <div class="schedule-cell">Jan</div>
+            <div class="schedule-cell">Nurse A</div>
+            <div class="schedule-cell">IV Catheter Placement: Tips for tricky veins</div>
+            
+            <div class="schedule-cell">Feb</div>
+            <div class="schedule-cell">Nurse B</div>
+            <div class="schedule-cell">Anaesthetic Monitoring: Interpreting the capnograph</div>
+            
+            <div class="schedule-cell">Mar</div>
+            <div class="schedule-cell">Nurse C</div>
+            <div class="schedule-cell">Laboratory Skills: Perfecting the blood smear</div>
+            
+            <div class="schedule-cell">Apr</div>
+            <div class="schedule-cell">Nurse D</div>
+            <div class="schedule-cell">Client Communication: Handling difficult conversations</div>
+            
+            <div class="schedule-cell">May</div>
+            <div class="schedule-cell">Nurse A</div>
+            <div class="schedule-cell">Fluid Therapy: Calculating and setting up CRIs</div>
+            
+            <div class="schedule-cell">Jun</div>
+            <div class="schedule-cell">Nurse B</div>
+            <div class="schedule-cell">Emergency Triage: Crash cart and initial assessment</div>
+        </div>
+
+        <h3>Team Competency Tracking Matrix</h3>
+        <p style="font-size: 12px; font-style: italic;">Print A3, laminate, use whiteboard markers to update</p>
+        
+        <div class="competency-grid">
+            <div class="competency-header">Core Nursing Skill</div>
+            <div class="competency-header">Nurse A</div>
+            <div class="competency-header">Nurse B</div>
+            <div class="competency-header">Nurse C</div>
+            <div class="competency-header">Nurse D</div>
+            <div class="competency-header">Nurse E</div>
+            
+            <div class="competency-skill">IV Catheter Placement</div>
+            <div class="competency-cell">🏆</div>
+            <div class="competency-cell">✅</div>
+            <div class="competency-cell">🟡</div>
+            <div class="competency-cell">✅</div>
+            <div class="competency-cell">🟡</div>
+            
+            <div class="competency-skill">Anaesthetic Monitoring</div>
+            <div class="competency-cell">✅</div>
+            <div class="competency-cell">🏆</div>
+            <div class="competency-cell">✅</div>
+            <div class="competency-cell">🟡</div>
+            <div class="competency-cell">✅</div>
+            
+            <div class="competency-skill">Laboratory Skills</div>
+            <div class="competency-cell">🟡</div>
+            <div class="competency-cell">✅</div>
+            <div class="competency-cell">🏆</div>
+            <div class="competency-cell">✅</div>
+            <div class="competency-cell">✅</div>
+            
+            <div class="competency-skill">Client Communication</div>
+            <div class="competency-cell">✅</div>
+            <div class="competency-cell">✅</div>
+            <div class="competency-cell">✅</div>
+            <div class="competency-cell">🏆</div>
+            <div class="competency-cell">🟡</div>
+            
+            <div class="competency-skill">Emergency Triage</div>
+            <div class="competency-cell">✅</div>
+            <div class="competency-cell">🏆</div>
+            <div class="competency-cell">✅</div>
+            <div class="competency-cell">🟡</div>
+            <div class="competency-cell">✅</div>
+        </div>
+
+        <p style="font-size: 12px;"><strong>Key:</strong> 🟡 In Training (requires supervision) • ✅ Competent (independent) • 🏆 Trainer/Champion</p>
+    </div>
+
+    <!-- Direct Communication -->
+    <div class="document-section">
+        <div class="header">
+            <div class="logo-placeholder">[LOGO]</div>
+            <h1>Direct Communication Guidelines</h1>
+        </div>
+
+        <h3>Addressing Issues Immediately</h3>
+        <div style="background: #f8f9fa; border-left: 4px solid #e74c3c; padding: 15px; margin: 15px 0;">
+            <p style="margin: 0;"><strong>Example Phrases:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li>"The weight wasn't recorded. Please do that now."</li>
+                <li>"This is part of the job. It needs to be done."</li>
+                <li>"Patient safety requires this step."</li>
+                <li>"If you need help with the process, ask. But it must be completed."</li>
+            </ul>
+        </div>
+
+        <h3>Performance Documentation</h3>
+        <table style="width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 12px;">
+            <thead>
+                <tr style="background: #34495e; color: white;">
+                    <th style="padding: 8px; text-align: left;">Date</th>
+                    <th style="padding: 8px; text-align: left;">Staff Member</th>
+                    <th style="padding: 8px; text-align: left;">Issue</th>
+                    <th style="padding: 8px; text-align: left;">Action Taken</th>
+                    <th style="padding: 8px; text-align: left;">Outcome</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">&nbsp;</td></tr>
+                <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">&nbsp;</td></tr>
+                <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">&nbsp;</td></tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

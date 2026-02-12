@@ -1,0 +1,43 @@
+# Echidna configuration for Hardcard Governance fuzzing
+
+# Test mode
+testMode: assertion
+
+# Contract to test
+contractAddr: "0x0000000000000000000000000000000000000000"
+deployContracts: [["GuardianCouncilEchidna", "0x0000000000000000000000000000000000000000"]]
+
+# Fuzzing parameters
+testLimit: 50000000        # Number of transactions to run
+seqLen: 100               # Length of transaction sequence
+shrinkLimit: 5000         # Shrinking attempts
+
+# Corpus
+corpusDir: "./echidna-corpus"
+coverage: true
+
+# Output
+outputFormat: text
+printCoverage: true
+
+# Solidity compiler
+cryticArgs: ["--solc-remaps", "@openzeppelin=node_modules/@openzeppelin"]
+solcArgs: ["--optimize", "--optimize-runs", "200"]
+contractName: "GuardianCouncilEchidna"
+
+# Sender addresses for fuzzing
+sender: ["0x10000", "0x20000", "0x30000"]
+
+# Gas settings
+gasLimit: 12500000
+gasPrice: 0
+
+# Timeout
+timeout: 86400  # 24 hours
+
+# Filters
+filterBlacklist: true
+filterFunctions: ["echidna_", "test_"]
+
+# Coverage-guided fuzzing
+coverageFormats: ["txt", "html", "lcov"]

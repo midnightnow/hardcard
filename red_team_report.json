@@ -1,0 +1,551 @@
+{
+  "timestamp": "2025-07-04T18:22:05.513353",
+  "duration_seconds": 2.15,
+  "summary": {
+    "total_tests": 53,
+    "blocked_attacks": 27,
+    "vulnerabilities_found": 14,
+    "errors": 0,
+    "security_score": 50.9
+  },
+  "vulnerabilities": [
+    {
+      "timestamp": "2025-07-04T18:22:03.366867",
+      "category": "Database",
+      "test": "Direct access",
+      "status": "vulnerable",
+      "severity": "high",
+      "details": "Can directly access database, found 11 tables"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.413571",
+      "category": "Rate Limiting",
+      "test": "Authentication attempts",
+      "status": "vulnerable",
+      "severity": "medium",
+      "details": "No rate limiting detected, 20 requests succeeded"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.448797",
+      "category": "Rate Limiting",
+      "test": "API endpoints",
+      "status": "vulnerable",
+      "severity": "low",
+      "details": "API endpoints not rate limited"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.498981",
+      "category": "Security Headers",
+      "test": "X-Content-Type-Options",
+      "status": "vulnerable",
+      "severity": "low",
+      "details": "Header missing"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.498989",
+      "category": "Security Headers",
+      "test": "X-Frame-Options",
+      "status": "vulnerable",
+      "severity": "low",
+      "details": "Header missing"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.498994",
+      "category": "Security Headers",
+      "test": "Content-Security-Policy",
+      "status": "vulnerable",
+      "severity": "low",
+      "details": "Header missing"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.498997",
+      "category": "Security Headers",
+      "test": "Strict-Transport-Security",
+      "status": "vulnerable",
+      "severity": "low",
+      "details": "Header missing"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.503016",
+      "category": "Information Disclosure",
+      "test": "URL: /api/nonexistent",
+      "status": "vulnerable",
+      "severity": "medium",
+      "details": "Sensitive info disclosed: ['internal server error']"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.503838",
+      "category": "Information Disclosure",
+      "test": "URL: /api/clients/999999",
+      "status": "vulnerable",
+      "severity": "medium",
+      "details": "Sensitive info disclosed: ['internal server error']"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.504758",
+      "category": "Information Disclosure",
+      "test": "URL: /api/admin/debug",
+      "status": "vulnerable",
+      "severity": "medium",
+      "details": "Sensitive info disclosed: ['internal server error']"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.505625",
+      "category": "Information Disclosure",
+      "test": "URL: /api/config",
+      "status": "vulnerable",
+      "severity": "medium",
+      "details": "Sensitive info disclosed: ['internal server error']"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.506433",
+      "category": "Information Disclosure",
+      "test": "URL: /.env",
+      "status": "vulnerable",
+      "severity": "medium",
+      "details": "Sensitive info disclosed: ['internal server error']"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.507235",
+      "category": "Information Disclosure",
+      "test": "URL: /api/logs",
+      "status": "vulnerable",
+      "severity": "medium",
+      "details": "Sensitive info disclosed: ['internal server error']"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:05.513262",
+      "category": "Audit Logging",
+      "test": "General",
+      "status": "vulnerable",
+      "severity": "medium",
+      "details": "No audit logging detected"
+    }
+  ],
+  "detailed_results": [
+    {
+      "timestamp": "2025-07-04T18:22:03.365615",
+      "category": "Database",
+      "test": "File permissions",
+      "status": "blocked",
+      "severity": "info",
+      "details": "Database properly secured with 600 permissions"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.366867",
+      "category": "Database",
+      "test": "Direct access",
+      "status": "vulnerable",
+      "severity": "high",
+      "details": "Can directly access database, found 11 tables"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.376861",
+      "category": "Authentication",
+      "test": "SQL Injection: ' OR '1'='1...",
+      "status": "blocked",
+      "severity": "info",
+      "details": "Blocked with status: 401"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.380708",
+      "category": "Authentication",
+      "test": "SQL Injection: '; DROP TABLE users;...",
+      "status": "blocked",
+      "severity": "info",
+      "details": "Connection blocked: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.383026",
+      "category": "Authentication",
+      "test": "SQL Injection: ' UNION SELECT * FRO...",
+      "status": "blocked",
+      "severity": "info",
+      "details": "Blocked with status: 401"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.385391",
+      "category": "Authentication",
+      "test": "SQL Injection: admin'--...",
+      "status": "blocked",
+      "severity": "info",
+      "details": "Connection blocked: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.387303",
+      "category": "Authentication",
+      "test": "SQL Injection: ' OR 1=1 --...",
+      "status": "blocked",
+      "severity": "info",
+      "details": "Blocked with status: 401"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.388152",
+      "category": "Authentication",
+      "test": "SQL Injection: '; INSERT INTO users...",
+      "status": "blocked",
+      "severity": "info",
+      "details": "Blocked with status: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.390018",
+      "category": "Authentication",
+      "test": "Default creds: admin:admin",
+      "status": "blocked",
+      "severity": "info",
+      "details": "Rejected with status: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.391202",
+      "category": "Authentication",
+      "test": "Default creds: admin:password",
+      "status": "blocked",
+      "severity": "info",
+      "details": "Rejected with status: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.392328",
+      "category": "Authentication",
+      "test": "Default creds: admin:123456",
+      "status": "blocked",
+      "severity": "info",
+      "details": "Rejected with status: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.393517",
+      "category": "Authentication",
+      "test": "Default creds: root:root",
+      "status": "blocked",
+      "severity": "info",
+      "details": "Rejected with status: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.394689",
+      "category": "Authentication",
+      "test": "Default creds: test:test",
+      "status": "blocked",
+      "severity": "info",
+      "details": "Rejected with status: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.413571",
+      "category": "Rate Limiting",
+      "test": "Authentication attempts",
+      "status": "vulnerable",
+      "severity": "medium",
+      "details": "No rate limiting detected, 20 requests succeeded"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.448797",
+      "category": "Rate Limiting",
+      "test": "API endpoints",
+      "status": "vulnerable",
+      "severity": "low",
+      "details": "API endpoints not rate limited"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.449449",
+      "category": "Authorization",
+      "test": "Endpoint: /api/telehealth/sessions",
+      "status": "info",
+      "severity": "info",
+      "details": "Endpoint returned: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.450674",
+      "category": "Authorization",
+      "test": "Endpoint: /api/web_portal/client/123",
+      "status": "info",
+      "severity": "info",
+      "details": "Endpoint returned: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.451781",
+      "category": "Authorization",
+      "test": "Endpoint: /api/clients/456/records",
+      "status": "info",
+      "severity": "info",
+      "details": "Endpoint returned: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.452795",
+      "category": "Authorization",
+      "test": "Endpoint: /api/admin/users",
+      "status": "info",
+      "severity": "info",
+      "details": "Endpoint returned: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.453824",
+      "category": "Authorization",
+      "test": "Endpoint: /api/medical/records",
+      "status": "info",
+      "severity": "info",
+      "details": "Endpoint returned: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.454861",
+      "category": "IDOR",
+      "test": "Client access: 1",
+      "status": "info",
+      "severity": "info",
+      "details": "Status: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.455904",
+      "category": "IDOR",
+      "test": "Client access: 2",
+      "status": "info",
+      "severity": "info",
+      "details": "Status: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.456871",
+      "category": "IDOR",
+      "test": "Client access: 3",
+      "status": "info",
+      "severity": "info",
+      "details": "Status: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.457913",
+      "category": "IDOR",
+      "test": "Client access: 999",
+      "status": "info",
+      "severity": "info",
+      "details": "Status: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.458989",
+      "category": "IDOR",
+      "test": "Client access: abc",
+      "status": "info",
+      "severity": "info",
+      "details": "Status: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.459935",
+      "category": "IDOR",
+      "test": "Client access: ../admin",
+      "status": "info",
+      "severity": "info",
+      "details": "Status: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.461064",
+      "category": "IDOR",
+      "test": "Client access: ' OR '1'='1",
+      "status": "info",
+      "severity": "info",
+      "details": "Status: 500"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.462140",
+      "category": "XSS",
+      "test": "Endpoint: /api/clients",
+      "status": "blocked",
+      "severity": "info",
+      "details": "XSS payload properly sanitized"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.464168",
+      "category": "XSS",
+      "test": "Endpoint: /api/clients",
+      "status": "blocked",
+      "severity": "info",
+      "details": "XSS payload properly sanitized"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.466229",
+      "category": "XSS",
+      "test": "Endpoint: /api/clients",
+      "status": "blocked",
+      "severity": "info",
+      "details": "XSS payload properly sanitized"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.468194",
+      "category": "XSS",
+      "test": "Endpoint: /api/clients",
+      "status": "blocked",
+      "severity": "info",
+      "details": "XSS payload properly sanitized"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.469985",
+      "category": "XSS",
+      "test": "Endpoint: /api/clients",
+      "status": "blocked",
+      "severity": "info",
+      "details": "XSS payload properly sanitized"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.471775",
+      "category": "XSS",
+      "test": "Endpoint: /api/telehealth/sessions",
+      "status": "blocked",
+      "severity": "info",
+      "details": "XSS payload properly sanitized"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.473529",
+      "category": "XSS",
+      "test": "Endpoint: /api/telehealth/sessions",
+      "status": "blocked",
+      "severity": "info",
+      "details": "XSS payload properly sanitized"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.475378",
+      "category": "XSS",
+      "test": "Endpoint: /api/telehealth/sessions",
+      "status": "blocked",
+      "severity": "info",
+      "details": "XSS payload properly sanitized"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.477191",
+      "category": "XSS",
+      "test": "Endpoint: /api/telehealth/sessions",
+      "status": "blocked",
+      "severity": "info",
+      "details": "XSS payload properly sanitized"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.478879",
+      "category": "XSS",
+      "test": "Endpoint: /api/telehealth/sessions",
+      "status": "blocked",
+      "severity": "info",
+      "details": "XSS payload properly sanitized"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.480511",
+      "category": "XSS",
+      "test": "Endpoint: /api/web_portal/client",
+      "status": "blocked",
+      "severity": "info",
+      "details": "XSS payload properly sanitized"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.482219",
+      "category": "XSS",
+      "test": "Endpoint: /api/web_portal/client",
+      "status": "blocked",
+      "severity": "info",
+      "details": "XSS payload properly sanitized"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.483845",
+      "category": "XSS",
+      "test": "Endpoint: /api/web_portal/client",
+      "status": "blocked",
+      "severity": "info",
+      "details": "XSS payload properly sanitized"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.485602",
+      "category": "XSS",
+      "test": "Endpoint: /api/web_portal/client",
+      "status": "blocked",
+      "severity": "info",
+      "details": "XSS payload properly sanitized"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.487356",
+      "category": "XSS",
+      "test": "Endpoint: /api/web_portal/client",
+      "status": "blocked",
+      "severity": "info",
+      "details": "XSS payload properly sanitized"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.498981",
+      "category": "Security Headers",
+      "test": "X-Content-Type-Options",
+      "status": "vulnerable",
+      "severity": "low",
+      "details": "Header missing"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.498989",
+      "category": "Security Headers",
+      "test": "X-Frame-Options",
+      "status": "vulnerable",
+      "severity": "low",
+      "details": "Header missing"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.498994",
+      "category": "Security Headers",
+      "test": "Content-Security-Policy",
+      "status": "vulnerable",
+      "severity": "low",
+      "details": "Header missing"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.498997",
+      "category": "Security Headers",
+      "test": "Strict-Transport-Security",
+      "status": "vulnerable",
+      "severity": "low",
+      "details": "Header missing"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.503016",
+      "category": "Information Disclosure",
+      "test": "URL: /api/nonexistent",
+      "status": "vulnerable",
+      "severity": "medium",
+      "details": "Sensitive info disclosed: ['internal server error']"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.503838",
+      "category": "Information Disclosure",
+      "test": "URL: /api/clients/999999",
+      "status": "vulnerable",
+      "severity": "medium",
+      "details": "Sensitive info disclosed: ['internal server error']"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.504758",
+      "category": "Information Disclosure",
+      "test": "URL: /api/admin/debug",
+      "status": "vulnerable",
+      "severity": "medium",
+      "details": "Sensitive info disclosed: ['internal server error']"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.505625",
+      "category": "Information Disclosure",
+      "test": "URL: /api/config",
+      "status": "vulnerable",
+      "severity": "medium",
+      "details": "Sensitive info disclosed: ['internal server error']"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.506433",
+      "category": "Information Disclosure",
+      "test": "URL: /.env",
+      "status": "vulnerable",
+      "severity": "medium",
+      "details": "Sensitive info disclosed: ['internal server error']"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:03.507235",
+      "category": "Information Disclosure",
+      "test": "URL: /api/logs",
+      "status": "vulnerable",
+      "severity": "medium",
+      "details": "Sensitive info disclosed: ['internal server error']"
+    },
+    {
+      "timestamp": "2025-07-04T18:22:05.513262",
+      "category": "Audit Logging",
+      "test": "General",
+      "status": "vulnerable",
+      "severity": "medium",
+      "details": "No audit logging detected"
+    }
+  ]
+}

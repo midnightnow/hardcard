@@ -1,0 +1,95 @@
+{
+  "project": {
+    "name": "hardcard",
+    "root": "/Users/studio/hardcard",
+    "version": "1.0.0",
+    "description": "Veterinary Software Platform"
+  },
+  "model": {
+    "name": "gemini-pro",
+    "temperature": 0.1,
+    "max_tokens": 4096,
+    "top_p": 0.95
+  },
+  "agents": {
+    "analysis": {
+      "description": "Code analysis and optimization specialist",
+      "model": "gemini-pro",
+      "temperature": 0.05,
+      "specialties": ["performance_analysis", "code_quality", "security_scanning", "dependency_audit"]
+    },
+    "documentation": {
+      "description": "Documentation generation specialist", 
+      "model": "gemini-pro",
+      "temperature": 0.2,
+      "specialties": ["api_documentation", "code_comments", "user_guides", "technical_specifications"]
+    },
+    "review": {
+      "description": "Code review and quality assurance",
+      "model": "gemini-pro", 
+      "temperature": 0.1,
+      "specialties": ["code_review", "pull_request_analysis", "best_practices_enforcement", "architectural_review"]
+    }
+  },
+  "workflows": {
+    "code_analysis": {
+      "steps": ["static_analysis", "performance_profiling", "security_scan", "dependency_check"],
+      "output_format": "json"
+    },
+    "documentation_generation": {
+      "steps": ["code_parsing", "api_extraction", "documentation_generation", "format_validation"],
+      "output_format": "markdown"
+    },
+    "code_review": {
+      "steps": ["syntax_check", "style_validation", "security_review", "performance_review", "maintainability_check"],
+      "output_format": "markdown"
+    }
+  },
+  "integration": {
+    "claude_workspace": "/Users/studio/hardcard",
+    "moex_coordinator": true,
+    "health_monitoring": true,
+    "git_hooks": true
+  },
+  "quality_gates": {
+    "code_quality_threshold": 85,
+    "security_scan_required": true,
+    "performance_check_required": true,
+    "documentation_coverage": 90
+  },
+  "file_types": {
+    "typescript": {
+      "extensions": [".ts", ".tsx"],
+      "analysis_tools": ["eslint", "tsc", "prettier"]
+    },
+    "python": {
+      "extensions": [".py"],
+      "analysis_tools": ["pylint", "black", "mypy"]
+    },
+    "javascript": {
+      "extensions": [".js", ".jsx"],
+      "analysis_tools": ["eslint", "prettier"]
+    },
+    "markdown": {
+      "extensions": [".md"],
+      "analysis_tools": ["markdownlint"]
+    }
+  },
+  "output": {
+    "format": "structured",
+    "include_metrics": true,
+    "include_suggestions": true,
+    "include_examples": true
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "/Users/studio/hardcard/logs/gemini-cli.log",
+    "rotation": "daily"
+  },
+  "security": {
+    "scan_dependencies": true,
+    "check_vulnerabilities": true,
+    "validate_secrets": true,
+    "enforce_best_practices": true
+  }
+}

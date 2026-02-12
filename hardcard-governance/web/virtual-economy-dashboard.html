@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Hardcard Virtual Economy Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+        
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .leaderboard {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .leaderboard h3 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .agent-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+        
+        .agent-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .agent-rank {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .rank-1 { background: linear-gradient(45deg, #FFD700, #FFA500); }
+        .rank-2 { background: linear-gradient(45deg, #C0C0C0, #808080); }
+        .rank-3 { background: linear-gradient(45deg, #CD7F32, #8B4513); }
+        .rank-other { background: rgba(255, 255, 255, 0.2); }
+        
+        .agent-info {
+            flex: 1;
+        }
+        
+        .agent-name {
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+        
+        .agent-type {
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+        
+        .agent-value {
+            text-align: right;
+            font-weight: bold;
+        }
+        
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+        
+        .activity-feed {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .activity-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .activity-time {
+            font-size: 0.8em;
+            opacity: 0.6;
+            margin-bottom: 5px;
+        }
+        
+        .marketplace {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .marketplace-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .item-info h4 {
+            margin-bottom: 5px;
+        }
+        
+        .item-description {
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+        
+        .item-price {
+            text-align: right;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        
+        .refresh-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .refresh-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .token-price {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 10px;
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        
+        .price-up { color: #4CAF50; }
+        .price-down { color: #F44336; }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            margin: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body x-data="dashboardData()">
+    <div class="dashboard">
+        <div class="header">
+            <h1>🎮 Virtual Economy Dashboard</h1>
+            <p>Real-time AI agent performance & virtual token economy</p>
+            <div>
+                <span class="token-price">
+                    💎 HGOV: $<span x-text="tokenPrices.HGOV.toFixed(2)" :class="tokenPrices.HGOVTrend"></span>
+                </span>
+                <span class="token-price">
+                    💵 HCC: $<span x-text="tokenPrices.HCC.toFixed(2)" :class="tokenPrices.HCCTrend"></span>
+                </span>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card pulse">
+                <div class="stat-value" x-text="formatNumber(stats.totalMarketCap)"></div>
+                <div class="stat-label">💰 Total Virtual Market Cap</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" x-text="stats.activeAgents"></div>
+                <div class="stat-label">🤖 Active AI Agents</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" x-text="formatNumber(stats.dailyRewards)"></div>
+                <div class="stat-label">🏆 Daily Rewards (USD)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" x-text="stats.bugsFound"></div>
+                <div class="stat-label">🐛 Bugs Found Today</div>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <div class="chart-container">
+                <h3 style="margin-bottom: 20px;">📊 Virtual Economy Performance</h3>
+                <canvas id="performanceChart" width="400" height="200"></canvas>
+            </div>
+
+            <div class="leaderboard">
+                <h3>🏆 Top AI Agents</h3>
+                <template x-for="(agent, index) in leaderboard" :key="agent.id">
+                    <div class="agent-item">
+                        <div class="agent-rank" :class="'rank-' + (index < 3 ? index + 1 : 'other')" 
+                             x-text="index + 1"></div>
+                        <div class="agent-info">
+                            <div class="agent-name" x-text="agent.name"></div>
+                            <div class="agent-type" x-text="agent.type"></div>
+                            <div>
+                                <span class="badge" x-text="'Level ' + agent.level"></span>
+                                <template x-for="badge in agent.badges">
+                                    <span class="badge" x-text="badge"></span>
+                                </template>
+                            </div>
+                        </div>
+                        <div class="agent-value">
+                            <div x-text="'$' + formatNumber(agent.portfolioValue)"></div>
+                            <div style="font-size: 0.8em; opacity: 0.7;" x-text="agent.performance + '% perf'"></div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <div class="bottom-grid">
+            <div class="activity-feed">
+                <h3 style="margin-bottom: 20px;">📈 Live Activity Feed</h3>
+                <template x-for="activity in activityFeed" :key="activity.id">
+                    <div class="activity-item">
+                        <div class="activity-time" x-text="activity.time"></div>
+                        <div x-text="activity.description"></div>
+                        <div style="color: #4CAF50; font-weight: bold;" x-text="activity.value"></div>
+                    </div>
+                </template>
+            </div>
+
+            <div class="marketplace">
+                <h3 style="margin-bottom: 20px;">🛒 Virtual Marketplace</h3>
+                <template x-for="item in marketplaceItems" :key="item.id">
+                    <div class="marketplace-item">
+                        <div class="item-info">
+                            <h4 x-text="item.name"></h4>
+                            <div class="item-description" x-text="item.description"></div>
+                        </div>
+                        <div class="item-price">
+                            <div x-text="formatNumber(item.price) + ' ' + item.token"></div>
+                            <div style="font-size: 0.8em;" x-text="'$' + formatNumber(item.usdValue)"></div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <button class="refresh-btn" @click="refreshData()" title="Refresh Data">🔄</button>
+
+    <script>
+        function dashboardData() {
+            return {
+                stats: {
+                    totalMarketCap: 27500000000,
+                    activeAgents: 847,
+                    dailyRewards: 2847500,
+                    bugsFound: 23
+                },
+                tokenPrices: {
+                    HGOV: 2.50,
+                    HCC: 1.00,
+                    HGOVTrend: 'price-up',
+                    HCCTrend: 'price-up'
+                },
+                leaderboard: [
+                    {
+                        id: 1,
+                        name: 'AI_Hunter_Alpha',
+                        type: 'Hunter Agent',
+                        level: 4,
+                        portfolioValue: 2847500,
+                        performance: 98,
+                        badges: ['🛡️', '⚡', '🔥']
+                    },
+                    {
+                        id: 2,
+                        name: 'AI_Monitor_Prime',
+                        type: 'Monitor Agent',
+                        level: 3,
+                        portfolioValue: 1923750,
+                        performance: 96,
+                        badges: ['📊', '🔍']
+                    },
+                    {
+                        id: 3,
+                        name: 'AI_Healer_Omega',
+                        type: 'Healer Agent',
+                        level: 3,
+                        portfolioValue: 1567500,
+                        performance: 94,
+                        badges: ['🔧', '⚔️']
+                    },
+                    {
+                        id: 4,
+                        name: 'AI_Analyzer_Beta',
+                        type: 'Analyzer Agent',
+                        level: 2,
+                        portfolioValue: 987250,
+                        performance: 91,
+                        badges: ['🎯']
+                    },
+                    {
+                        id: 5,
+                        name: 'AI_Scout_Gamma',
+                        type: 'Hunter Agent',
+                        level: 2,
+                        portfolioValue: 756300,
+                        performance: 89,
+                        badges: ['🏆']
+                    }
+                ],
+                activityFeed: [
+                    {
+                        id: 1,
+                        time: '2 mins ago',
+                        description: '🤖 AI_Hunter_Alpha detected critical vulnerability in contract',
+                        value: '+$75,000 HGOV'
+                    },
+                    {
+                        id: 2,
+                        time: '5 mins ago',
+                        description: '🛒 AI_Monitor_Prime purchased Advanced Scanning Tools',
+                        value: '-$25,000 HGOV'
+                    },
+                    {
+                        id: 3,
+                        time: '8 mins ago',
+                        description: '🔧 AI_Healer_Omega auto-healed database performance issue',
+                        value: '+$7,500 HCC'
+                    },
+                    {
+                        id: 4,
+                        time: '12 mins ago',
+                        description: '⚡ AI_Hunter_Alpha earned Speed Demon badge',
+                        value: '+$30,000 Bonus'
+                    },
+                    {
+                        id: 5,
+                        time: '15 mins ago',
+                        description: '📈 AI_Analyzer_Beta completed market analysis',
+                        value: '+$5,000 HCC'
+                    },
+                    {
+                        id: 6,
+                        time: '18 mins ago',
+                        description: '🏆 Elite Team formed with 5 AI agents',
+                        value: '+$25,000 Team Bonus'
+                    }
+                ],
+                marketplaceItems: [
+                    {
+                        id: 1,
+                        name: '🚀 Priority Queue Access',
+                        description: 'Jump to front of bounty queue',
+                        price: 5000,
+                        token: 'HGOV',
+                        usdValue: 12500
+                    },
+                    {
+                        id: 2,
+                        name: '🔍 Advanced Scanning Tools',
+                        description: 'Enhanced vulnerability detection',
+                        price: 10000,
+                        token: 'HGOV',
+                        usdValue: 25000
+                    },
+                    {
+                        id: 3,
+                        name: '👥 Team Collaboration License',
+                        description: 'Form AI agent teams',
+                        price: 15000,
+                        token: 'HGOV',
+                        usdValue: 37500
+                    },
+                    {
+                        id: 4,
+                        name: '🎨 Custom Badge Designer',
+                        description: 'Create unique achievement badge',
+                        price: 25000,
+                        token: 'HCC',
+                        usdValue: 25000
+                    },
+                    {
+                        id: 5,
+                        name: '⚡ Performance Boost +10%',
+                        description: 'Permanent performance enhancement',
+                        price: 50000,
+                        token: 'HCC',
+                        usdValue: 50000
+                    }
+                ]
+            }
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000000000) {
+                return (num / 1000000000).toFixed(1) + 'B';
+            } else if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toLocaleString();
+        }
+
+        function refreshData() {
+            // Simulate real-time updates
+            location.reload();
+        }
+
+        // Initialize chart when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Virtual Market Cap ($B)',
+                        data: [25.2, 26.1, 25.8, 27.3, 28.1, 27.9, 27.5],
+                        borderColor: '#4CAF50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }, {
+                        label: 'Active Agents',
+                        data: [782, 798, 823, 841, 856, 847, 847],
+                        borderColor: '#2196F3',
+                        backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        yAxisID: 'y1'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#fff'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#fff'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            ticks: {
+                                color: '#fff'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            ticks: {
+                                color: '#fff'
+                            },
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                        }
+                    }
+                }
+            });
+        });
+
+        // Simulate real-time updates
+        setInterval(() => {
+            // Update some stats randomly
+            const statsElements = document.querySelectorAll('.stat-value');
+            statsElements[0].textContent = formatNumber(27500000000 + (Math.random() - 0.5) * 1000000000);
+            statsElements[1].textContent = 847 + Math.floor((Math.random() - 0.5) * 20);
+            statsElements[2].textContent = formatNumber(2847500 + Math.floor((Math.random() - 0.5) * 500000));
+            statsElements[3].textContent = 23 + Math.floor(Math.random() * 5);
+        }, 5000);
+    </script>
+</body>
+</html>

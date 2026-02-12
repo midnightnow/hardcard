@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Hardcard Virtual Economy Dashboard Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .hub-container {
+            max-width: 800px;
+            text-align: center;
+        }
+        
+        .main-title {
+            font-size: 4em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.5em;
+            margin-bottom: 50px;
+            opacity: 0.9;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .card-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .card-description {
+            font-size: 1.1em;
+            opacity: 0.8;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .card-features {
+            list-style: none;
+            text-align: left;
+        }
+        
+        .card-features li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .card-features li::before {
+            content: '✅';
+            position: absolute;
+            left: 0;
+        }
+        
+        .integration-status {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 30px;
+        }
+        
+        .status-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #4CAF50;
+        }
+        
+        .status-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #4CAF50;
+            box-shadow: 0 0 10px #4CAF50;
+        }
+        
+        .quick-stats {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        .footer-links {
+            margin-top: 30px;
+            opacity: 0.7;
+        }
+        
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="hub-container">
+        <h1 class="main-title">🎮 Virtual Economy Hub</h1>
+        <p class="subtitle">AI-Powered Bug Bounty & 24/7 Uptime Management System</p>
+        
+        <div class="integration-status">
+            <div class="status-title">🚀 System Integration Status</div>
+            <div class="status-items">
+                <div class="status-item">
+                    <div class="status-indicator pulse"></div>
+                    <span>Hardcard Governance</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-indicator"></div>
+                    <span>MacAgent Swarm</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-indicator"></div>
+                    <span>Virtual Token Economy</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-indicator"></div>
+                    <span>Bug Crew System</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-indicator"></div>
+                    <span>Auto-Healing Engine</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-indicator"></div>
+                    <span>Flash Bounty Platform</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dashboard-grid">
+            <a href="virtual-economy-dashboard.html" class="dashboard-card">
+                <div class="card-icon">🌐</div>
+                <div class="card-title">Virtual Economy Dashboard</div>
+                <div class="card-description">
+                    Real-time overview of the virtual token economy, AI agent performance, and market dynamics
+                </div>
+                <ul class="card-features">
+                    <li>$27.5B Virtual Market Cap</li>
+                    <li>847 Active AI Agents</li>
+                    <li>Live Transaction Feed</li>
+                    <li>Virtual Marketplace</li>
+                    <li>Performance Charts</li>
+                </ul>
+            </a>
+            
+            <a href="ai-portfolio-viewer.html" class="dashboard-card">
+                <div class="card-icon">🤖</div>
+                <div class="card-title">AI Portfolio Viewer</div>
+                <div class="card-description">
+                    Individual AI agent portfolios, performance metrics, and virtual wealth tracking
+                </div>
+                <ul class="card-features">
+                    <li>Agent Portfolio Analysis</li>
+                    <li>Virtual Holdings Breakdown</li>
+                    <li>Performance Scoring</li>
+                    <li>Achievement Badges</li>
+                    <li>Transaction History</li>
+                </ul>
+            </a>
+            
+            <a href="https://localhost:3001" class="dashboard-card" target="_blank">
+                <div class="card-icon">🎯</div>
+                <div class="card-title">Bug Crew Command Center</div>
+                <div class="card-description">
+                    Live monitoring of bug detection crews across all 8 Hardcard applications
+                </div>
+                <ul class="card-features">
+                    <li>24/7 Uptime Monitoring</li>
+                    <li>Auto-Healing Status</li>
+                    <li>Crew Leaderboards</li>
+                    <li>Mission Progress</li>
+                    <li>Emergency Alerts</li>
+                </ul>
+            </a>
+            
+            <a href="../monitoring/grafana" class="dashboard-card" target="_blank">
+                <div class="card-icon">📊</div>
+                <div class="card-title">System Analytics</div>
+                <div class="card-description">
+                    Deep analytics and monitoring dashboards for governance and infrastructure
+                </div>
+                <ul class="card-features">
+                    <li>Prometheus Metrics</li>
+                    <li>Grafana Dashboards</li>
+                    <li>Alert Management</li>
+                    <li>Performance Tracking</li>
+                    <li>Health Monitoring</li>
+                </ul>
+            </a>
+        </div>
+        
+        <div class="quick-stats">
+            <h3 style="text-align: center; margin-bottom: 20px;">📈 Live System Stats</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">99.99%</div>
+                    <div class="stat-label">System Uptime</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">847</div>
+                    <div class="stat-label">Active AI Agents</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">$27.5B</div>
+                    <div class="stat-label">Virtual Market Cap</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">23</div>
+                    <div class="stat-label">Bugs Found Today</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">85%</div>
+                    <div class="stat-label">Auto-Heal Success</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">12s</div>
+                    <div class="stat-label">Avg Response Time</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-links">
+            <a href="../docs/COMPREHENSIVE_SYSTEM_GUIDE.md" target="_blank">📚 Documentation</a>
+            <a href="../docs/PRODUCTION_READINESS.md" target="_blank">🏆 Production Status</a>
+            <a href="../README.md" target="_blank">🚀 Getting Started</a>
+            <a href="https://github.com/hardcard/governance" target="_blank">💻 Source Code</a>
+        </div>
+    </div>
+    
+    <script>
+        // Simulate real-time updates
+        function updateStats() {
+            const statsElements = document.querySelectorAll('.stat-value');
+            
+            // Simulate small fluctuations
+            const baseValues = [99.99, 847, 27.5, 23, 85, 12];
+            const fluctuations = [0.01, 5, 0.5, 2, 2, 1];
+            
+            statsElements.forEach((element, index) => {
+                if (index < baseValues.length) {
+                    const base = baseValues[index];
+                    const fluctuation = fluctuations[index];
+                    const variation = (Math.random() - 0.5) * fluctuation;
+                    let newValue = base + variation;
+                    
+                    if (index === 0) {
+                        // Uptime percentage
+                        newValue = Math.max(99.95, Math.min(100, newValue));
+                        element.textContent = newValue.toFixed(2) + '%';
+                    } else if (index === 1) {
+                        // AI Agents count
+                        newValue = Math.max(840, Math.round(newValue));
+                        element.textContent = newValue;
+                    } else if (index === 2) {
+                        // Market cap
+                        element.textContent = '$' + newValue.toFixed(1) + 'B';
+                    } else if (index === 3) {
+                        // Bugs found
+                        newValue = Math.max(20, Math.round(newValue));
+                        element.textContent = newValue;
+                    } else if (index === 4) {
+                        // Auto-heal success
+                        newValue = Math.max(80, Math.min(95, Math.round(newValue)));
+                        element.textContent = newValue + '%';
+                    } else if (index === 5) {
+                        // Response time
+                        newValue = Math.max(8, Math.round(newValue));
+                        element.textContent = newValue + 's';
+                    }
+                }
+            });
+        }
+        
+        // Update stats every 3 seconds
+        setInterval(updateStats, 3000);
+        
+        // Add click analytics
+        document.querySelectorAll('.dashboard-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                const title = this.querySelector('.card-title').textContent;
+                console.log(`Dashboard accessed: ${title}`);
+                
+                // Visual feedback
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+{
+  "seeds": [
+    "0xGENESIS_ALPHA_5884f932"
+  ],
+  "peers": [],
+  "known_agents": [
+    "Genesis_Node_Alpha",
+    "Test_User_Beta",
+    "Dallas_Genesis",
+    "Dallas_Genesis_Terminal"
+  ],
+  "created_at": 1770021633,
+  "spawn_events": [
+    {
+      "child_id": "floor_alpha",
+      "parent_id": "genesis",
+      "spawn_hash": "a7aead28bddff78c",
+      "timestamp": 1770038099
+    },
+    {
+      "child_id": "floor_beta",
+      "parent_id": "floor_alpha",
+      "spawn_hash": "df6c82b70d307bbe",
+      "timestamp": 1770038107
+    }
+  ],
+  "nodes": [
+    {
+      "floor_id": "floor_alpha",
+      "parent_id": "genesis",
+      "status": "FOLDED",
+      "fossil_hash": "be4987c7af6e4c09"
+    },
+    {
+      "floor_id": "floor_beta",
+      "parent_id": "floor_alpha",
+      "status": "FOLDED",
+      "fossil_hash": "6b8cfb0972ef4b61"
+    }
+  ],
+  "fold_events": [
+    {
+      "floor_id": "floor_beta",
+      "fossil_hash": "6b8cfb0972ef4b61",
+      "timestamp": 1770075826
+    },
+    {
+      "floor_id": "floor_alpha",
+      "fossil_hash": "be4987c7af6e4c09",
+      "timestamp": 1770075826
+    }
+  ]
+}

@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HardCard Members Area - Private Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .glass {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .domain-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .domain-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .domain-card:hover::before {
+            opacity: 1;
+        }
+        
+        .domain-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.3);
+        }
+        
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        .status-live {
+            background: #10b981;
+            box-shadow: 0 0 10px #10b981;
+            animation: pulse-green 2s infinite;
+        }
+        
+        .status-dev {
+            background: #f59e0b;
+            box-shadow: 0 0 10px #f59e0b;
+            animation: pulse-yellow 2s infinite;
+        }
+        
+        .status-offline {
+            background: #ef4444;
+            box-shadow: 0 0 10px #ef4444;
+        }
+        
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 10px #10b981; }
+            50% { box-shadow: 0 0 20px #10b981; }
+            100% { box-shadow: 0 0 10px #10b981; }
+        }
+        
+        @keyframes pulse-yellow {
+            0% { box-shadow: 0 0 10px #f59e0b; }
+            50% { box-shadow: 0 0 20px #f59e0b; }
+            100% { box-shadow: 0 0 10px #f59e0b; }
+        }
+        
+        .asset-category {
+            transition: all 0.3s ease;
+        }
+        
+        .asset-category:hover {
+            transform: scale(1.02);
+            border-color: var(--primary);
+        }
+        
+        .upload-zone {
+            border: 2px dashed rgba(99, 102, 241, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .upload-zone:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+        
+        .upload-zone.dragover {
+            border-color: var(--accent);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .tab-active {
+            border-bottom: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .secure-badge {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="glass-dark sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-2xl font-bold flex items-center">
+                        <i class="fas fa-crown text-yellow-400 mr-2"></i>
+                        HardCard Members Area
+                    </h1>
+                    <span class="secure-badge">
+                        <i class="fas fa-lock mr-1"></i>SECURED
+                    </span>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <button onclick="showNotifications()" class="relative">
+                        <i class="fas fa-bell text-xl hover:text-primary transition-colors"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                    </button>
+                    <div class="flex items-center space-x-3">
+                        <img src="https://ui-avatars.com/api/?name=Admin&background=6366f1&color=fff" class="w-10 h-10 rounded-full">
+                        <div>
+                            <p class="text-sm font-semibold">Admin</p>
+                            <p class="text-xs text-gray-400">Premium Member</p>
+                        </div>
+                    </div>
+                    <button onclick="logout()" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Navigation Tabs -->
+    <div class="glass-dark mt-2">
+        <div class="container mx-auto px-6">
+            <nav class="flex space-x-8 py-4">
+                <button onclick="switchTab('domains')" id="domains-tab" class="tab-active pb-2 font-semibold transition-all">
+                    <i class="fas fa-globe mr-2"></i>Domain Portfolio
+                </button>
+                <button onclick="switchTab('assets')" id="assets-tab" class="pb-2 font-semibold transition-all hover:text-primary">
+                    <i class="fas fa-vault mr-2"></i>Asset Vault
+                </button>
+                <button onclick="switchTab('analytics')" id="analytics-tab" class="pb-2 font-semibold transition-all hover:text-primary">
+                    <i class="fas fa-chart-line mr-2"></i>Analytics
+                </button>
+                <button onclick="switchTab('settings')" id="settings-tab" class="pb-2 font-semibold transition-all hover:text-primary">
+                    <i class="fas fa-cog mr-2"></i>Settings
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <!-- Domain Portfolio Section -->
+        <div id="domains-content" class="tab-content">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold mb-2">Domain Portfolio</h2>
+                <p class="text-gray-400">Manage and monitor all your digital properties</p>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="glass rounded-lg p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-400 text-sm">Total Domains</p>
+                            <p class="text-3xl font-bold mt-1">6</p>
+                        </div>
+                        <i class="fas fa-globe text-primary text-2xl"></i>
+                    </div>
+                </div>
+                <div class="glass rounded-lg p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-400 text-sm">Active Sites</p>
+                            <p class="text-3xl font-bold mt-1">4</p>
+                        </div>
+                        <i class="fas fa-check-circle text-green-400 text-2xl"></i>
+                    </div>
+                </div>
+                <div class="glass rounded-lg p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-400 text-sm">Monthly Visitors</p>
+                            <p class="text-3xl font-bold mt-1">12.5K</p>
+                        </div>
+                        <i class="fas fa-users text-purple-400 text-2xl"></i>
+                    </div>
+                </div>
+                <div class="glass rounded-lg p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-400 text-sm">Total Value</p>
+                            <p class="text-3xl font-bold mt-1">$125K</p>
+                        </div>
+                        <i class="fas fa-dollar-sign text-yellow-400 text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Domain Gallery -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- HardCard.ai -->
+                <div class="domain-card glass rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold">hardcard.ai</h3>
+                        <span class="status-indicator status-live"></span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">AI-Powered Business Platform</p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Status:</span>
+                            <span class="text-green-400">Live</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">SSL:</span>
+                            <span class="text-green-400">Active</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Renewal:</span>
+                            <span>Aug 2025</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex space-x-2">
+                        <button onclick="window.open('https://hardcard.ai', '_blank')" class="flex-1 bg-primary hover:bg-purple-600 text-white py-2 px-4 rounded-lg transition-colors">
+                            <i class="fas fa-external-link-alt mr-2"></i>Visit
+                        </button>
+                        <button onclick="showDomainDetails('hardcard.ai')" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition-colors">
+                            <i class="fas fa-cog mr-2"></i>Manage
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TeleVetMedicine.com -->
+                <div class="domain-card glass rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold">televetmedicine.com</h3>
+                        <span class="status-indicator status-live"></span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Veterinary Telemedicine Platform</p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Status:</span>
+                            <span class="text-green-400">Live</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">SSL:</span>
+                            <span class="text-green-400">Active</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Renewal:</span>
+                            <span>Sep 2025</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex space-x-2">
+                        <button onclick="window.open('https://televetmedicine.com', '_blank')" class="flex-1 bg-primary hover:bg-purple-600 text-white py-2 px-4 rounded-lg transition-colors">
+                            <i class="fas fa-external-link-alt mr-2"></i>Visit
+                        </button>
+                        <button onclick="showDomainDetails('televetmedicine.com')" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition-colors">
+                            <i class="fas fa-cog mr-2"></i>Manage
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CairnsNews.com -->
+                <div class="domain-card glass rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold">cairnsnews.com</h3>
+                        <span class="status-indicator status-live"></span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Local News & Information Portal</p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Status:</span>
+                            <span class="text-green-400">Live</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">SSL:</span>
+                            <span class="text-green-400">Active</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Renewal:</span>
+                            <span>Oct 2025</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex space-x-2">
+                        <button onclick="window.open('https://cairnsnews.com', '_blank')" class="flex-1 bg-primary hover:bg-purple-600 text-white py-2 px-4 rounded-lg transition-colors">
+                            <i class="fas fa-external-link-alt mr-2"></i>Visit
+                        </button>
+                        <button onclick="showDomainDetails('cairnsnews.com')" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition-colors">
+                            <i class="fas fa-cog mr-2"></i>Manage
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Paid.capital -->
+                <div class="domain-card glass rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold">paid.capital</h3>
+                        <span class="status-indicator status-dev"></span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Investment & Capital Platform</p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Status:</span>
+                            <span class="text-yellow-400">Development</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">SSL:</span>
+                            <span class="text-green-400">Active</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Renewal:</span>
+                            <span>Nov 2025</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex space-x-2">
+                        <button onclick="window.open('https://paid.capital', '_blank')" class="flex-1 bg-primary hover:bg-purple-600 text-white py-2 px-4 rounded-lg transition-colors">
+                            <i class="fas fa-external-link-alt mr-2"></i>Visit
+                        </button>
+                        <button onclick="showDomainDetails('paid.capital')" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition-colors">
+                            <i class="fas fa-cog mr-2"></i>Manage
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Hempex.com -->
+                <div class="domain-card glass rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold">hempex.com</h3>
+                        <span class="status-indicator status-dev"></span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Hemp Products Marketplace</p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Status:</span>
+                            <span class="text-yellow-400">Development</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">SSL:</span>
+                            <span class="text-green-400">Active</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Renewal:</span>
+                            <span>Dec 2025</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex space-x-2">
+                        <button onclick="window.open('https://hempex.com', '_blank')" class="flex-1 bg-primary hover:bg-purple-600 text-white py-2 px-4 rounded-lg transition-colors">
+                            <i class="fas fa-external-link-alt mr-2"></i>Visit
+                        </button>
+                        <button onclick="showDomainDetails('hempex.com')" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition-colors">
+                            <i class="fas fa-cog mr-2"></i>Manage
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ZenPay.me -->
+                <div class="domain-card glass rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold">zenpay.me</h3>
+                        <span class="status-indicator status-live"></span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Payment Processing Solution</p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Status:</span>
+                            <span class="text-green-400">Live</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">SSL:</span>
+                            <span class="text-green-400">Active</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Renewal:</span>
+                            <span>Jan 2026</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex space-x-2">
+                        <button onclick="window.open('https://zenpay.me', '_blank')" class="flex-1 bg-primary hover:bg-purple-600 text-white py-2 px-4 rounded-lg transition-colors">
+                            <i class="fas fa-external-link-alt mr-2"></i>Visit
+                        </button>
+                        <button onclick="showDomainDetails('zenpay.me')" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition-colors">
+                            <i class="fas fa-cog mr-2"></i>Manage
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Asset Vault Section -->
+        <div id="assets-content" class="tab-content hidden">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold mb-2">Asset Vault</h2>
+                <p class="text-gray-400">Secure storage for business documents and financial records</p>
+            </div>
+
+            <!-- Upload Zone -->
+            <div class="upload-zone glass rounded-lg p-8 mb-8 text-center" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                <i class="fas fa-cloud-upload-alt text-5xl text-primary mb-4"></i>
+                <p class="text-xl mb-2">Drop files here to upload</p>
+                <p class="text-gray-400 mb-4">or</p>
+                <button onclick="document.getElementById('fileInput').click()" class="bg-primary hover:bg-purple-600 text-white py-2 px-6 rounded-lg transition-colors">
+                    <i class="fas fa-file-upload mr-2"></i>Browse Files
+                </button>
+                <input type="file" id="fileInput" multiple class="hidden" onchange="handleFileSelect(event)">
+                <p class="text-sm text-gray-500 mt-4">Maximum file size: 50MB. Encrypted storage.</p>
+            </div>
+
+            <!-- Asset Categories -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="asset-category glass rounded-lg p-6 cursor-pointer" onclick="openCategory('financial')">
+                    <i class="fas fa-file-invoice-dollar text-3xl text-green-400 mb-3"></i>
+                    <h3 class="text-lg font-semibold mb-1">Financial Documents</h3>
+                    <p class="text-gray-400 text-sm">12 files</p>
+                </div>
+                <div class="asset-category glass rounded-lg p-6 cursor-pointer" onclick="openCategory('business')">
+                    <i class="fas fa-briefcase text-3xl text-blue-400 mb-3"></i>
+                    <h3 class="text-lg font-semibold mb-1">Business Documents</h3>
+                    <p class="text-gray-400 text-sm">8 files</p>
+                </div>
+                <div class="asset-category glass rounded-lg p-6 cursor-pointer" onclick="openCategory('legal')">
+                    <i class="fas fa-gavel text-3xl text-purple-400 mb-3"></i>
+                    <h3 class="text-lg font-semibold mb-1">Legal & Contracts</h3>
+                    <p class="text-gray-400 text-sm">5 files</p>
+                </div>
+                <div class="asset-category glass rounded-lg p-6 cursor-pointer" onclick="openCategory('strategic')">
+                    <i class="fas fa-chess text-3xl text-yellow-400 mb-3"></i>
+                    <h3 class="text-lg font-semibold mb-1">Strategic Plans</h3>
+                    <p class="text-gray-400 text-sm">7 files</p>
+                </div>
+            </div>
+
+            <!-- Recent Files -->
+            <div class="glass rounded-lg p-6">
+                <h3 class="text-xl font-semibold mb-4">Recent Files</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 hover:bg-gray-800 rounded-lg transition-colors">
+                        <div class="flex items-center space-x-4">
+                            <i class="fas fa-file-pdf text-red-400 text-2xl"></i>
+                            <div>
+                                <p class="font-medium">Q4 2024 Financial Report.pdf</p>
+                                <p class="text-sm text-gray-400">Uploaded 2 days ago • 2.4 MB</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fas fa-share"></i>
+                            </button>
+                            <button class="text-gray-400 hover:text-red-400 transition-colors">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between p-3 hover:bg-gray-800 rounded-lg transition-colors">
+                        <div class="flex items-center space-x-4">
+                            <i class="fas fa-file-excel text-green-400 text-2xl"></i>
+                            <div>
+                                <p class="font-medium">Revenue Projections 2025.xlsx</p>
+                                <p class="text-sm text-gray-400">Uploaded 1 week ago • 1.1 MB</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fas fa-share"></i>
+                            </button>
+                            <button class="text-gray-400 hover:text-red-400 transition-colors">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between p-3 hover:bg-gray-800 rounded-lg transition-colors">
+                        <div class="flex items-center space-x-4">
+                            <i class="fas fa-file-powerpoint text-orange-400 text-2xl"></i>
+                            <div>
+                                <p class="font-medium">Investor Pitch Deck v3.pptx</p>
+                                <p class="text-sm text-gray-400">Uploaded 2 weeks ago • 8.7 MB</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fas fa-share"></i>
+                            </button>
+                            <button class="text-gray-400 hover:text-red-400 transition-colors">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Section -->
+        <div id="analytics-content" class="tab-content hidden">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold mb-2">Analytics Dashboard</h2>
+                <p class="text-gray-400">Performance metrics across all properties</p>
+            </div>
+
+            <!-- Analytics content will be added here -->
+            <div class="glass rounded-lg p-8 text-center">
+                <i class="fas fa-chart-line text-5xl text-primary mb-4"></i>
+                <p class="text-xl">Analytics dashboard coming soon</p>
+                <p class="text-gray-400 mt-2">Track visitors, revenue, and performance metrics</p>
+            </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div id="settings-content" class="tab-content hidden">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold mb-2">Settings</h2>
+                <p class="text-gray-400">Manage your account and preferences</p>
+            </div>
+
+            <!-- Settings content will be added here -->
+            <div class="glass rounded-lg p-8 text-center">
+                <i class="fas fa-cog text-5xl text-primary mb-4"></i>
+                <p class="text-xl">Settings panel coming soon</p>
+                <p class="text-gray-400 mt-2">Configure security, notifications, and access controls</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Tab switching
+        function switchTab(tabName) {
+            // Hide all content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('[id$="-tab"]').forEach(tab => {
+                tab.classList.remove('tab-active');
+            });
+            
+            // Show selected content and activate tab
+            document.getElementById(tabName + '-content').classList.remove('hidden');
+            document.getElementById(tabName + '-tab').classList.add('tab-active');
+        }
+
+        // Domain management
+        function showDomainDetails(domain) {
+            alert(`Opening management panel for ${domain}`);
+            // TODO: Implement domain management modal
+        }
+
+        // File handling
+        function handleDrop(e) {
+            e.preventDefault();
+            e.target.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.target.classList.add('dragover');
+        }
+
+        function handleDragLeave(e) {
+            e.target.classList.remove('dragover');
+        }
+
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            console.log('Uploading files:', files);
+            // TODO: Implement file upload to secure storage
+            alert(`Uploading ${files.length} file(s) to secure vault`);
+        }
+
+        function openCategory(category) {
+            alert(`Opening ${category} documents`);
+            // TODO: Implement category view
+        }
+
+        // Notifications
+        function showNotifications() {
+            alert('Notifications panel coming soon');
+        }
+
+        // Logout
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = '/';
+            }
+        }
+
+        // Check authentication
+        function checkAuth() {
+            const auth = localStorage.getItem('hardcard_auth');
+            if (!auth) {
+                window.location.href = '/members-auth.html';
+                return false;
+            }
+            
+            const authData = JSON.parse(auth);
+            // Check if auth is less than 24 hours old
+            const authTime = new Date(authData.timestamp);
+            const now = new Date();
+            const hoursDiff = (now - authTime) / (1000 * 60 * 60);
+            
+            if (hoursDiff >= 24) {
+                localStorage.removeItem('hardcard_auth');
+                window.location.href = '/members-auth.html';
+                return false;
+            }
+            
+            // Update user display
+            const userElements = document.querySelectorAll('[id$="-tab"]');
+            if (authData.email) {
+                document.querySelector('.flex.items-center.space-x-3 p').textContent = authData.email.split('@')[0];
+            }
+            
+            return true;
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            console.log('Members area loaded');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+{
+  "name": "HardCard Development Environment",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspace",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": true,
+      "upgradePackages": true,
+      "username": "vscode",
+      "userUid": "1000",
+      "userGid": "1000"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest",
+      "ppa": true
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "installDirectlyFromGitHubRelease": true,
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11",
+      "installTools": true,
+      "installJupyterlab": false,
+      "configureJupyterlabAllowOrigin": "",
+      "installJupyterlabExtensions": ""
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts",
+      "nodeGypDependencies": true,
+      "installYarnUsingApt": false,
+      "nvmVersion": "latest"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "moby": true,
+      "dockerDashComposeVersion": "v2",
+      "enableNonRootDocker": true
+    },
+    "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+      "version": "latest",
+      "helm": "latest",
+      "minikube": "none"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Python
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter",
+        "ms-python.isort",
+        "ms-python.debugpy",
+        "charliermarsh.ruff",
+        
+        // JavaScript/TypeScript
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-typescript-next",
+        
+        // Database
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg",
+        
+        // Docker & DevOps
+        "ms-azuretools.vscode-docker",
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "redhat.vscode-yaml",
+        
+        // Git
+        "eamodio.gitlens",
+        "mhutchie.git-graph",
+        "donjayamanne.githistory",
+        
+        // Testing
+        "hbenl.vscode-test-explorer",
+        "littlefoxteam.vscode-python-test-adapter",
+        
+        // Code Quality
+        "SonarSource.sonarlint-vscode",
+        "streetsidesoftware.code-spell-checker",
+        
+        // Productivity
+        "christian-kohler.path-intellisense",
+        "wayou.vscode-todo-highlight",
+        "gruntfuggly.todo-tree",
+        "alefragnani.Bookmarks",
+        "vscodevim.vim",
+        
+        // API Development
+        "42Crunch.vscode-openapi",
+        "humao.rest-client",
+        
+        // Documentation
+        "yzhang.markdown-all-in-one",
+        "bierner.markdown-mermaid",
+        "davidanson.vscode-markdownlint",
+        
+        // Security
+        "firefox-devtools.vscode-firefox-debug",
+        "paloaltonetworks.prisma-cloud"
+      ],
+      
+      "settings": {
+        // Python
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "python.formatting.provider": "black",
+        "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
+        "python.linting.mypyEnabled": true,
+        "python.testing.pytestEnabled": true,
+        "python.testing.unittestEnabled": false,
+        "python.analysis.typeCheckingMode": "strict",
+        
+        // JavaScript/TypeScript
+        "typescript.updateImportsOnFileMove.enabled": "always",
+        "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+        
+        // Editor
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": true,
+          "source.fixAll.eslint": true
+        },
+        "editor.rulers": [80, 120],
+        "editor.wordWrap": "bounded",
+        "editor.wordWrapColumn": 120,
+        
+        // Files
+        "files.exclude": {
+          "**/__pycache__": true,
+          "**/.pytest_cache": true,
+          "**/*.pyc": true,
+          "**/.mypy_cache": true,
+          "**/node_modules": true,
+          "**/.next": true,
+          "**/dist": true,
+          "**/build": true
+        },
+        
+        // Git
+        "git.autofetch": true,
+        "git.confirmSync": false,
+        "gitlens.views.repositories.branches.layout": "tree",
+        
+        // Terminal
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.fontFamily": "MesloLGS NF",
+        
+        // Security
+        "security.workspace.trust.untrustedFiles": "open",
+        
+        // Hardcard-specific
+        "hardcard.environment": "development",
+        "hardcard.modules": ["legacy-vault", "agentauth", "vetsorcery", "hardcard-core"],
+        "hardcard.testFramework": "pytest",
+        "hardcard.apiFramework": "fastapi"
+      }
+    }
+  },
+
+  "forwardPorts": [
+    3000,  // Frontend
+    8000,  // AgentAuth API
+    8001,  // Legacy Vault API
+    8002,  // VetSorcery API
+    5432,  // PostgreSQL
+    6379,  // Redis
+    9090,  // Prometheus metrics
+    3333,  // Test monitor dashboard
+    4317   // OpenTelemetry
+  ],
+
+  "postCreateCommand": "bash .devcontainer/scripts/post-create.sh",
+  "postStartCommand": "bash .devcontainer/scripts/post-start.sh",
+  "postAttachCommand": "bash .devcontainer/scripts/post-attach.sh",
+
+  "remoteUser": "vscode",
+  
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
+    "source=hardcard-vscode-extensions,target=/home/vscode/.vscode-server/extensions,type=volume",
+    "source=hardcard-pip-cache,target=/home/vscode/.cache/pip,type=volume",
+    "source=hardcard-npm-cache,target=/home/vscode/.npm,type=volume"
+  ],
+
+  "runArgs": [
+    "--cap-add=SYS_PTRACE",
+    "--security-opt",
+    "seccomp=unconfined",
+    "--network=host"
+  ],
+
+  "remoteEnv": {
+    "HARDCARD_ENV": "development",
+    "PYTHONPATH": "/workspace",
+    "PATH": "/home/vscode/.local/bin:${PATH}"
+  }
+}

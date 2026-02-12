@@ -1,0 +1,70 @@
+{
+  "network": "mainnet",
+  "gasPrice": 50,
+  "timeout": 600,
+  "guardianAddresses": [
+    "0x742A4c4B0f1d6C2A1b8B3f8Ce5f123456789abcD",
+    "0x843B5d5C1e2e7D3B2c9C4f9De6f234567890bcDe",
+    "0x944C6e6D2f3f8E4C3d0D5f0Ef7f345678901cdEf",
+    "0xA45D7f7E3g4g9F5D4e1E6f1Fg8g456789012deF0",
+    "0xB56E8g8F4h5h0G6E5f2F7g2Gh9h567890123efG1"
+  ],
+  "initialDelay": 172800,
+  "votingDelay": 13140,
+  "votingPeriod": 45818,
+  "quorumPercentage": 57,
+  "proposalThreshold": 1000000,
+  "emergencyDelay": 3600,
+  "maxProposalActions": 10,
+  "description": "Production deployment configuration for Ethereum mainnet",
+  "validationRules": {
+    "minGuardians": 3,
+    "maxGuardians": 5,
+    "minDelay": 172800,
+    "minVotingPeriod": 50400,
+    "maxQuorum": 100,
+    "minQuorum": 50
+  },
+  "deploymentChecks": {
+    "verifyContracts": true,
+    "runPostDeploymentTests": true,
+    "saveArtifacts": true,
+    "notifyTeam": true
+  },
+  "security": {
+    "requireMultisigConfirmation": true,
+    "enableEmergencyPause": true,
+    "maxGasPrice": 100,
+    "deployerWhitelist": [
+      "0x1234567890123456789012345678901234567890"
+    ]
+  },
+  "governance": {
+    "timelockAdminRole": "TIMELOCK_ADMIN",
+    "proposerRole": "PROPOSER",
+    "executorRole": "EXECUTOR",
+    "cancellerRole": "CANCELLER",
+    "guardianRole": "GUARDIAN",
+    "rootOwnerRole": "ROOT_OWNER"
+  },
+  "monitoring": {
+    "enableMetrics": true,
+    "metricsEndpoint": "https://monitoring.hardcard.io/metrics",
+    "alertWebhook": "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK",
+    "healthCheckInterval": 300
+  },
+  "integrations": {
+    "etherscan": {
+      "enabled": true,
+      "apiKey": "YOUR_ETHERSCAN_API_KEY"
+    },
+    "ipfs": {
+      "enabled": true,
+      "gateway": "https://ipfs.io/ipfs/"
+    },
+    "ens": {
+      "enabled": true,
+      "domain": "governance.hardcard.eth"
+    }
+  }
+}

@@ -65,6 +65,17 @@ pip install -e .
 hardcard anchor "Checkpoint: Training epoch 47 - validation loss 0.023"
 ```
 
+### Save Game (Persistent Memory - Athena)
+Hardcard uses Project Athena to provide persistent memory across sessions. Use this to ensure your AI collaborator never loses context.
+
+```bash
+# 1. Start a session (rehydrate context)
+hardcard athena start
+
+# 2. End a session (archive context & anchor summary)
+hardcard athena end "Session Summary: Finalized L5 Google Application. Decision: Use project-level CLAUDE.md as an AI BIOS."
+```
+
 **Output:**
 ```
 🏛️  HARDCARD ANCHOR SEALED

@@ -1,0 +1,272 @@
+{
+  "info": {
+    "name": "HardCard Veterinary API",
+    "description": "Complete API collection for HardCard veterinary platform",
+    "version": "2.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{hardcard_api_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://api.hardcard.com",
+      "type": "string"
+    },
+    {
+      "key": "hardcard_api_token",
+      "value": "your_token_here",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "\ud83c\udfe5 Health & Monitoring",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health"
+              ]
+            },
+            "description": "Check system health and status"
+          }
+        },
+        {
+          "name": "System Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "status"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Prometheus Metrics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/metrics",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "metrics"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "\ud83d\udc65 Client Management",
+      "item": [
+        {
+          "name": "List Clients",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/routes/clients?limit=50&offset=0",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "routes",
+                "clients"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Client",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Dr. Sarah Johnson\",\n  \"email\": \"sarah@example.com\",\n  \"phone\": \"+1234567890\",\n  \"address\": \"123 Main St, City, State\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/routes/clients",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "routes",
+                "clients"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "\ud83d\udc15 Patient Management",
+      "item": [
+        {
+          "name": "List Patients",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/routes/patients",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "routes",
+                "patients"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "\ud83d\udcc5 Appointments",
+      "item": [
+        {
+          "name": "List Appointments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/routes/appointments?date=2025-07-19&status=scheduled",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "routes",
+                "appointments"
+              ],
+              "query": [
+                {
+                  "key": "date",
+                  "value": "2025-07-19"
+                },
+                {
+                  "key": "status",
+                  "value": "scheduled"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "\ud83d\udcde AI Phone Agent",
+      "item": [
+        {
+          "name": "Initiate Phone Call",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone_number\": \"+1234567890\",\n  \"call_type\": \"appointment\",\n  \"context\": {\n    \"preferred_time\": \"morning\",\n    \"service_type\": \"checkup\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/routes/phone-agent/call",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "routes",
+                "phone-agent",
+                "call"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "\ud83c\udfad MUSE Validation",
+      "item": [
+        {
+          "name": "Validation Summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/muse/validation/summary",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "muse",
+                "validation",
+                "summary"
+              ]
+            }
+          }
+        },
+        {
+          "name": "MUSE Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/muse/status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "muse",
+                "status"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

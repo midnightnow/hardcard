@@ -1,0 +1,54 @@
+[
+  {
+    "index": 0,
+    "parcel_id": "PARCEL-8812",
+    "owner_signature_hash": "8b388be396827eb26335b5a938edf2fa4918768b5cfb521c2cc0ba5d7947296c",
+    "geostamp": "GEO:-16.9127,145.7815|TIME:1767751564894298000|ENT:289aa520",
+    "prev_hash": "05ba9b83809849b92a82481e9718b8f68850d49683cfba73e9e4bfa03670fece",
+    "coordinate": [
+      -4.1452,
+      0.0,
+      -2.796
+    ],
+    "solidified_hash": "bf7b45205ffa3b38718398a407d5ece5b7f23fc02ce1f5768ae5d48809d32f1c"
+  },
+  {
+    "index": 1,
+    "parcel_id": "PARCEL-8813",
+    "owner_signature_hash": "ac9b7defa4885f6b0b6b8ea6e79c17b09d49af46ae7a79abfd4f70a852eed813",
+    "geostamp": "GEO:-16.9149,145.7790|TIME:1767751565199403000|ENT:b0a4c69d",
+    "prev_hash": "bf7b45205ffa3b38718398a407d5ece5b7f23fc02ce1f5768ae5d48809d32f1c",
+    "coordinate": [
+      -2.525,
+      0.2,
+      4.3734
+    ],
+    "solidified_hash": "531b4e3021e8a9c447a006e7c9006457c48d1ea5937da456dfa8e87c14838236"
+  },
+  {
+    "index": 2,
+    "parcel_id": "PARCEL-9941",
+    "owner_signature_hash": "eb70cd4745bf9359220988e1bebb42263fde16e583fa09e48a304ca053136ec5",
+    "geostamp": "GEO:-16.9109,145.7840|TIME:1767751565499675000|ENT:cda4fe05",
+    "prev_hash": "531b4e3021e8a9c447a006e7c9006457c48d1ea5937da456dfa8e87c14838236",
+    "coordinate": [
+      -1.9105,
+      0.4,
+      4.7286
+    ],
+    "solidified_hash": "f42020ec619cc63fc9dd1e2d1a04e8073a6949df6af6892631b43b36ab7057fa"
+  },
+  {
+    "index": 3,
+    "parcel_id": "PARCEL-8812-SUBDIV",
+    "owner_signature_hash": "8b388be396827eb26335b5a938edf2fa4918768b5cfb521c2cc0ba5d7947296c",
+    "geostamp": "GEO:-16.9166,145.7838|TIME:1767751565803279000|ENT:a4acf196",
+    "prev_hash": "f42020ec619cc63fc9dd1e2d1a04e8073a6949df6af6892631b43b36ab7057fa",
+    "coordinate": [
+      -5.1116,
+      0.6,
+      0.6276
+    ],
+    "solidified_hash": "2ee1c01a1477423a646874d2641c1956b5bbd8ae54746a4df03256998dec2493"
+  }
+]

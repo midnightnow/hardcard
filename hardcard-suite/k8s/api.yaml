@@ -1,0 +1,182 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: api-secret
+  namespace: hardcard-suite
+type: Opaque
+data:
+  # Base64 encoded secrets
+  jwt-secret-key: eW91ci1zdXBlci1zZWNyZXQtand0LWtleS1jaGFuZ2UtaW4tcHJvZHVjdGlvbg==
+  coingecko-api-key: ""  # Add your CoinGecko API key here
+  sentry-dsn: ""         # Add your Sentry DSN here
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-config
+  namespace: hardcard-suite
+data:
+  DATABASE_HOST: postgres-service
+  DATABASE_PORT: "5432"
+  DATABASE_NAME: hardcard
+  DATABASE_USER: hardcard_user
+  REDIS_HOST: redis-service
+  REDIS_PORT: "6379"
+  ENVIRONMENT: production
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: hardcard-suite
+  labels:
+    app: api
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: api
+        version: v1
+    spec:
+      containers:
+      - name: api
+        image: ghcr.io/hardcard-suite/api:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+          name: http
+        envFrom:
+        - configMapRef:
+            name: api-config
+        env:
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-password
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret
+              key: redis-password
+        - name: JWT_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: api-secret
+              key: jwt-secret-key
+        - name: COINGECKO_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: api-secret
+              key: coingecko-api-key
+        - name: SENTRY_DSN
+          valueFrom:
+            secretKeyRef:
+              name: api-secret
+              key: sentry-dsn
+        - name: DATABASE_URL
+          value: "postgresql://$(DATABASE_USER):$(DATABASE_PASSWORD)@$(DATABASE_HOST):$(DATABASE_PORT)/$(DATABASE_NAME)"
+        - name: REDIS_URL
+          value: "redis://default:$(REDIS_PASSWORD)@$(REDIS_HOST):$(REDIS_PORT)/0"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+        startupProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 30
+      initContainers:
+      - name: wait-for-postgres
+        image: postgres:15-alpine
+        command:
+        - /bin/sh
+        - -c
+        - |
+          until pg_isready -h postgres-service -p 5432 -U hardcard_user; do
+            echo "Waiting for postgres..."
+            sleep 2
+          done
+      - name: wait-for-redis
+        image: redis:7-alpine
+        command:
+        - /bin/sh
+        - -c
+        - |
+          until redis-cli -h redis-service -p 6379 ping; do
+            echo "Waiting for redis..."
+            sleep 2
+          done
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+  namespace: hardcard-suite
+  labels:
+    app: api
+spec:
+  type: ClusterIP
+  selector:
+    app: api
+  ports:
+  - port: 8000
+    targetPort: 8000
+    protocol: TCP
+    name: http
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-hpa
+  namespace: hardcard-suite
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80

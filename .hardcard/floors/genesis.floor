@@ -1,0 +1,12 @@
+{
+  "floor_id": "genesis",
+  "parent_id": null,
+  "depth": 1,
+  "initial_state": {
+    "ceramic_mass": "9.89100000",
+    "clay_volume": "10.0",
+    "local_shear": "0.1",
+    "cumulative_shear": "0.1"
+  },
+  "status": "STABLE"
+}
