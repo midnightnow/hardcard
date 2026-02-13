@@ -1,0 +1,39 @@
+{
+  "7690e60a4499b7aa5cc3c4e17201312c813febbec18a08f633cd0d1cae9e2b81": {
+    "coordinate": {
+      "seed": "0xGENESIS_AUTHOR",
+      "depth": 50,
+      "branch": "TAIL_END_AUTHOR_SYNTHESIS",
+      "hash": "7690e60a4499b7aa5cc3c4e17201312c813febbec18a08f633cd0d1cae9e2b81"
+    },
+    "physics": {
+      "theoretical_shear": "0.9949",
+      "entropy_status": "TAIL_END"
+    },
+    "meta": {
+      "agent_id": "Dallas_McMillan",
+      "timestamp": 1770943700
+    },
+    "content_dna": {
+      "type": "AI_Vet_Book_DNA",
+      "version": "1.0.0",
+      "author": "Dallas McMillan",
+      "narrative_engine": "Infinite Probability",
+      "assets": [
+        "AI_Vet_Book_Omnibus.md",
+        "author_dna_revelation.md"
+      ],
+      "coordinates": {
+        "seed": "0xGENESIS_AUTHOR",
+        "depth": 50,
+        "branch": "TAIL_END_AUTHOR_SYNTHESIS"
+      },
+      "themes": [
+        "Sovereignty",
+        "Economics",
+        "Tail-End Probability",
+        "Veterinary AI"
+      ]
+    }
+  }
+}

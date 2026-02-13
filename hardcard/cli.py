@@ -167,6 +167,17 @@ def main():
     nexus_parser.add_argument("--deliver", type=str, help="Deliver work for a signal hash")
     nexus_parser.add_argument("--payload", type=str, help="Payload for delivery")
 
+    # Address Book / Infinite Probability Directory
+    index_parser = subparsers.add_parser("index", help="Index a reality DNA into the Coordinate Directory")
+    index_parser.add_argument("--seed", required=True, help="Starting Point Seed")
+    index_parser.add_argument("--depth", type=int, required=True, help="Probability Depth")
+    index_parser.add_argument("--branch", required=True, help="Branch Coordinate")
+    index_parser.add_argument("--dna", required=True, help="JSON path to Content DNA")
+    index_parser.add_argument("--agent", required=True, help="Author Agent ID")
+
+    reconstruct_parser = subparsers.add_parser("reconstruct", help="Expand a hyperspace coordinate into a workspace")
+    reconstruct_parser.add_argument("--coord", required=True, help="Coordinate Hash or ID")
+
     # Athena command (Save Game)
     athena_parser = subparsers.add_parser("athena", help="Athena persistent memory (Save Game)")
     athena_subparsers = athena_parser.add_subparsers(dest="athena_command", help="Athena sub-commands")
@@ -569,6 +580,32 @@ def main():
         stabilizer = Stabilizer()
         result = stabilizer.consume(args.predator, args.prey)
         print(display_consumption_result(result))
+
+    elif args.command == "index":
+        from .address_book import get_address_book
+        book = get_address_book()
+        
+        try:
+            dna_path = Path(args.dna)
+            dna_content = json.loads(dna_path.read_text())
+        except Exception as e:
+            print(f"❌ Error loading DNA from {args.dna}: {e}")
+            return
+
+        coord_hash = book.index_reality(args.seed, args.depth, args.branch, dna_content, args.agent)
+        print(f"✅ Reality Indexed at Coordinate: {coord_hash}")
+        print(f"   Use: hardcard reconstruct --coord {coord_hash[:8]}")
+
+    elif args.command == "reconstruct":
+        from .address_book import get_address_book
+        book = get_address_book()
+        
+        workspace = book.reconstruct(args.coord)
+        if workspace:
+            print("\n🚀 WORKSPACE EXPANDED")
+            print(json.dumps(workspace, indent=2))
+        else:
+            print(f"❌ Error: Coordinate {args.coord} not found in directory.")
 
     elif args.audit_hyperspace:
         print("🌌 Initiating Hyperspace Safety Scan (HPSS-03)...")

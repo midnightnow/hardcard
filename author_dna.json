@@ -1,0 +1,21 @@
+{
+    "type": "AI_Vet_Book_DNA",
+    "version": "1.0.0",
+    "author": "Dallas McMillan",
+    "narrative_engine": "Infinite Probability",
+    "assets": [
+        "AI_Vet_Book_Omnibus.md",
+        "author_dna_revelation.md"
+    ],
+    "coordinates": {
+        "seed": "0xGENESIS_AUTHOR",
+        "depth": 50,
+        "branch": "TAIL_END_AUTHOR_SYNTHESIS"
+    },
+    "themes": [
+        "Sovereignty",
+        "Economics",
+        "Tail-End Probability",
+        "Veterinary AI"
+    ]
+}
