@@ -36,8 +36,6 @@ Identity()	Ed25519 key pair management
 What This Is NOT
 ❌ Not a marketplace → hardcard.world
 
-❌ Not a veterinary suite → private repository
-
 ❌ Not a blockchain → just math
 
 Install
