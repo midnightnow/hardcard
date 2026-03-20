@@ -34,8 +34,8 @@ verify(claim, content)	Verify content matches claimed hash
 Chain()	Hash chain for sequential verification
 Identity()	Ed25519 key pair management
 What This Is NOT
-❌ Not a marketplace → hardcard.world
-
+❌ Not a marketplace → https://github.com/midnightnow/hardcard-world
+See demo at hardcard.world (HardCard implementation as decentralized economic substrate for marketplace and related functions
 ❌ Not a blockchain → just math
 
 Install
