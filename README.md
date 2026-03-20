@@ -1,5 +1,3 @@
-
-```
 # Hardcard
 
 **Mathematical verification primitives for any data.**
@@ -28,33 +26,25 @@ assert chain.verify() == True
 id = Identity()
 signature = id.sign(b"message")
 assert id.verify(b"message", signature, id.public_key)
-```
+Core Primitives
+Function	Description
+anchor(content)	Create SHA-256 hash of canonical JSON
+link(prev_hash, content)	Create hash that chains to previous state
+verify(claim, content)	Verify content matches claimed hash
+Chain()	Hash chain for sequential verification
+Identity()	Ed25519 key pair management
+What This Is NOT
+❌ Not a marketplace → hardcard.world
 
-## Core Primitives
+❌ Not a veterinary suite → private repository
 
-| Function | Description |
-|----------|-------------|
-| `anchor(content)` | Create SHA-256 hash of canonical JSON |
-| `link(prev_hash, content)` | Create hash that chains to previous state |
-| `verify(claim, content)` | Verify content matches claimed hash |
-| `Chain()` | Hash chain for sequential verification |
-| `Identity()` | Ed25519 key pair management |
+❌ Not a blockchain → just math
 
-## What This Is NOT
-
-- ❌ Not a marketplace → [hardcard.world](https://hardcard.world)
-- ❌ Not a veterinary suite → private repository
-- ❌ Not a blockchain → just math
-
-## Install
-
-```bash
+Install
 pip install hardcard
-```
 
-## CLI
-
-```bash
+CLI
+text
 # Create a hash
 hardcard anchor '{"decision":"approve"}'
 
@@ -67,20 +57,5 @@ hardcard chain --verify
 
 # Generate Ed25519 identity
 hardcard identity --generate
-```
-
-## License
-
+License
 MIT
-```
-
-Just:
-1. Open your `README.md` file
-2. Delete everything in it
-3. Paste this in
-4. Save
-5. `git add README.md`
-6. `git commit -m "docs: update README"`
-7. `git push`
-
-Done!
