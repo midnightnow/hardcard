@@ -1,42 +1,44 @@
+
+```
 # Hardcard
 
 **Mathematical verification primitives for any data.**
 
-Think of it as a forge for truth—every decision stamped into an immutable record. But unlike a forge that cares about heat and metal, Hardcard cares only about math.
+A zero-dependency library providing cryptographic primitives for tamper-evident proofs and digital signatures.
 
 ## What It Does
 
 ```python
 from hardcard import anchor, verify, Chain, Identity
 
-# Stamp any decision into an unforgeable record
+# Create a verifiable hash of any content
 receipt = anchor({"decision": "approve loan", "amount": 50000})
 # → "a1b2c3..."
 
-# Later, verify it hasn't been tampered with
+# Verify content matches a claimed hash
 assert verify(receipt, {"decision": "approve loan", "amount": 50000}) == True
 
-# Chain decisions together
+# Chain events together for tamper-evident history
 chain = Chain()
-chain.add("Genesis")
-chain.add("Decision 1")
+chain.add("Genesis block")
+chain.add("Transaction 1")
 assert chain.verify() == True
 
-# Sign with Ed25519
+# Sign and verify with Ed25519
 id = Identity()
-sig = id.sign(b"message")
-assert id.verify(b"message", sig, id.public_key)
+signature = id.sign(b"message")
+assert id.verify(b"message", signature, id.public_key)
 ```
 
-## The Math (Not the Metaphor)
+## Core Primitives
 
-| Function | What it does |
-|----------|--------------|
-| `anchor(data)` | SHA-256 hash of canonical JSON |
-| `link(prev, data)` | Hash that includes previous state |
-| `verify(hash, data)` | Recomputes and compares |
-| `Chain()` | Linked list of hashes |
-| `Identity()` | Ed25519 signatures |
+| Function | Description |
+|----------|-------------|
+| `anchor(content)` | Create SHA-256 hash of canonical JSON |
+| `link(prev_hash, content)` | Create hash that chains to previous state |
+| `verify(claim, content)` | Verify content matches claimed hash |
+| `Chain()` | Hash chain for sequential verification |
+| `Identity()` | Ed25519 key pair management |
 
 ## What This Is NOT
 
@@ -53,21 +55,32 @@ pip install hardcard
 ## CLI
 
 ```bash
-# Create a receipt
+# Create a hash
 hardcard anchor '{"decision":"approve"}'
 
-# Verify it
+# Verify content
 hardcard verify a1b2c3 '{"decision":"approve"}'
 
-# Chain events
+# Manage a chain
 hardcard chain --add "Event 1"
-hardcard chain --add "Event 2"
 hardcard chain --verify
 
-# Generate identity
+# Generate Ed25519 identity
 hardcard identity --generate
 ```
 
 ## License
 
 MIT
+```
+
+Just:
+1. Open your `README.md` file
+2. Delete everything in it
+3. Paste this in
+4. Save
+5. `git add README.md`
+6. `git commit -m "docs: update README"`
+7. `git push`
+
+Done!
