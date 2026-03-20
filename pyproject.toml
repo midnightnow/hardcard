@@ -1,0 +1,25 @@
+[project]
+name = "hardcard"
+version = "1.1.0"
+description = "A mathematical verification library for tamper-evident proofs"
+authors = [{name = "midnightnow"}]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "pynacl>=1.5.0"
+]
+
+[project.scripts]
+hardcard = "hardcard.cli.main:main"
+
+[project.urls]
+Homepage = "https://hardcard.ai"
+Repository = "https://github.com/midnightnow/hardcard"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["hardcard*"]
